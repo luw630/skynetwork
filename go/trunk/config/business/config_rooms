@@ -1,0 +1,356 @@
+uniqueid=1
+table_conf_list_1 = {
+    begin_id   = 10100,
+    table_num  = 48,    
+    table_conf = {
+        conf_version = 2,
+        table_room_type = 1,     --桌子的房间类型
+        table_game_type = 1,
+        small_blinds = 5,
+        min_player_num = 2,      --最少开始游戏人数
+        max_player_num = 9,      --桌子座位数
+        big_blinds = 10,
+        min_carry = 200,
+        max_carry =	2000,
+        game_draw_rate = 10,      --房费占大盲的百分比
+        prop_price = 20,
+        table_name = "新手赛",
+        calculate_win_expbase = 2,
+        calculate_win_expratio = 1,
+        calculate_lose_exp = 3,     
+        everyday_max_exp = 500,  --每天玩家能获得的最大经验值
+        max_wait_num = 300,      --最大旁观人数
+        action_timeout = 1500,  --玩家操作超时时间单位10ms
+        ante = 0,                --前注
+        continuous_timeout = 2,  --连续超时判定次数
+        robot_type = 3,
+        robot_level = 0,
+        robot_min_num = 1,
+        robot_max_num = 2,
+        robot_continue_time = 1800,    --单位s
+        robot_enter_maxtime = 60,   --单位s
+        robot_enter_mintime = 10,    --单位s
+
+    }
+}
+
+table_conf_list_11 = {
+    begin_id   = 10148,
+    table_num  = 2,    
+    table_conf = {
+        conf_version = 2,
+        table_room_type = 1,     --桌子的房间类型
+        table_game_type = 1,
+        small_blinds = 5,
+        min_player_num = 2,      --最少开始游戏人数
+        max_player_num = 9,      --桌子座位数
+        big_blinds = 10,
+        min_carry = 200,
+        max_carry = 2000,
+        game_draw_rate = 10,      --房费占大盲的百分比
+        prop_price = 20,
+        table_name = "新手赛",
+        calculate_win_expbase = 2,
+        calculate_win_expratio = 1,
+        calculate_lose_exp = 3,     
+        everyday_max_exp = 500,  --每天玩家能获得的最大经验值
+        max_wait_num = 300,      --最大旁观人数
+        action_timeout = 1500,  --玩家操作超时时间单位10ms
+        ante = 0,                --前注
+        continuous_timeout = 2,  --连续超时判定次数
+        robot_type = 2,
+        robot_level = 0,
+        robot_min_num = 1,
+        robot_max_num = 7,
+        robot_continue_time = 1800,    --单位s
+        robot_enter_maxtime = 60,   --单位s
+        robot_enter_mintime = 10,    --单位s
+    }
+}
+
+table_conf_list_2 = {
+    begin_id   = 10200,
+    table_num  = 48,
+    table_conf = {
+        conf_version = 3,
+        table_room_type = 2,     --桌子的房间类型
+        table_game_type = 1,
+        small_blinds = 25,
+        min_player_num = 2,      --最少开始游戏人数
+        max_player_num = 9,      --桌子座位数
+        big_blinds = 50,
+        min_carry = 1000,
+        max_carry = 10000,
+        game_draw_rate = 10,      --房费占大盲的百分比
+        prop_price = 20,
+        table_name = "高手赛",
+        calculate_win_expbase = 2,
+        calculate_win_expratio = 3,
+        calculate_lose_exp = 3,     
+        everyday_max_exp = 500,  --每天玩家能获得的最大经验值
+        max_wait_num = 300,      --最大旁观人数
+        action_timeout = 1500,   --玩家操作超时时间单位10ms
+        ante = 0,                --前注
+        continuous_timeout = 2,  --连续超时判定次数
+        robot_type = 3,
+        robot_level = 0,
+        robot_min_num = 0,
+        robot_max_num = 0,
+        robot_continue_time = 1800,    --单位s
+        robot_enter_maxtime = 60,   --单位s
+        robot_enter_mintime = 10,    --单位s
+    }
+}
+
+table_conf_list_21 = {
+    begin_id   = 10248,
+    table_num  = 2,
+    table_conf = {
+        conf_version = 4,
+        table_room_type = 2,     --桌子的房间类型
+        table_game_type = 1,
+        small_blinds = 25,
+        min_player_num = 2,      --最少开始游戏人数
+        max_player_num = 9,      --桌子座位数
+        big_blinds = 50,
+        min_carry = 1000,
+        max_carry = 10000,
+        game_draw_rate = 10,      --房费占大盲的百分比
+        prop_price = 20,
+        table_name = "高手赛",
+        calculate_win_expbase = 2,
+        calculate_win_expratio = 3,
+        calculate_lose_exp = 3,     
+        everyday_max_exp = 500,  --每天玩家能获得的最大经验值
+        max_wait_num = 300,      --最大旁观人数
+        action_timeout = 1500,   --玩家操作超时时间单位10ms
+        ante = 0,                --前注
+        continuous_timeout = 2,  --连续超时判定次数
+        robot_type = 2,
+        robot_level = 0,
+        robot_min_num = 1,
+        robot_max_num = 1,
+        robot_continue_time = 1800,    --单位s
+        robot_enter_maxtime = 60,   --单位s
+        robot_enter_mintime = 10,    --单位s
+    }
+}
+
+table_conf_list_3 = {
+    begin_id   = 10300,
+    table_num  = 50,
+    table_conf = {
+        conf_version = 2,
+        table_room_type = 3,     --桌子的房间类型
+        table_game_type = 1,
+        small_blinds = 50,
+        min_player_num = 2,      --最少开始游戏人数
+        max_player_num = 9,      --桌子座位数
+        big_blinds = 100,
+        min_carry = 2000,
+        max_carry = 20000,
+        game_draw_rate = 10,      --房费占大盲的百分比
+        prop_price = 20,
+        table_name = "精英赛",
+        calculate_win_expbase = 2,
+        calculate_win_expratio = 5,
+        calculate_lose_exp = 3,     
+        everyday_max_exp = 500,  --每天玩家能获得的最大经验值
+        max_wait_num = 300,      --最大旁观人数
+        action_timeout = 1500,   --玩家操作超时时间单位10ms
+        ante = 0,                --前注
+        continuous_timeout = 2,  --连续超时判定次数
+        robot_type = 3,
+        robot_level = 0,
+        robot_min_num = 0,
+        robot_max_num = 0,
+        robot_continue_time = 1800,    --单位s
+        robot_enter_maxtime = 180,   --单位s
+        robot_enter_mintime = 30,    --单位s
+    }
+}
+
+table_conf_list_4 = {
+    begin_id  = 10400,
+    table_num  = 50,
+    table_conf = {
+        conf_version = 2,
+        table_room_type = 5,     --桌子的房间类型
+        table_game_type = 2,     --桌子游戏类型
+        small_blinds = 0,
+        big_blinds = 0,
+        min_player_num = 6,      --最少开始游戏人数
+        max_player_num = 6,      --桌子座位数
+        min_carry = 0,
+        max_carry = 0,
+        game_draw_rate = 0,      --房费占大盲的百分比
+        prop_price = 20,
+        table_name = "100速战",
+        calculate_win_expbase = 0,
+        calculate_win_expratio = 0,
+        calculate_lose_exp = 0,     
+        everyday_max_exp = 0,  --每天玩家能获得的最大经验值
+        max_wait_num = 300,      --最大旁观人数
+        action_timeout = 1500,   --玩家操作超时时间单位10ms
+        ante = 0,                --前注
+        continuous_timeout = 2,  --连续超时判定次数
+        --SNG相关配置
+        sng_initcarry = 5000,
+        service_charge = 10,   --服务费
+        signup_fee = {
+            [1] = {
+                id = 1,
+                num = 100,
+            },
+        },
+        blind_template_index = 4,
+        award_template_index = 11,
+    }
+}
+
+table_conf_list_5 = {
+    begin_id  = 10500,
+    table_num  = 50,
+    table_conf = {
+        conf_version = 2,
+        table_room_type = 5,     --桌子的房间类型
+        table_game_type = 3,     --桌子游戏类型
+        small_blinds = 0,
+        big_blinds = 0,
+        min_player_num = 6,      --最少开始游戏人数
+        max_player_num = 6,      --桌子座位数
+        min_carry = 0,
+        max_carry = 0,
+        game_draw_rate = 0,      --房费占大盲的百分比
+        prop_price = 20,
+        table_name = "1k速战",
+        calculate_win_expbase = 0,
+        calculate_win_expratio = 0,
+        calculate_lose_exp = 0,     
+        everyday_max_exp = 0,  --每天玩家能获得的最大经验值
+        max_wait_num = 300,      --最大旁观人数
+        action_timeout = 1500,   --玩家操作超时时间单位10ms
+        ante = 0,                --前注
+        continuous_timeout = 2,  --连续超时判定次数
+
+        --SNG相关配置
+        sng_initcarry = 5000,
+        service_charge = 100,   --服务费
+        signup_fee = {
+            [1] = {
+                id = 1,
+                num = 1000,
+            },
+        },
+        blind_template_index = 4,
+        award_template_index = 12,
+    }
+}
+
+table_conf_list_6 = {
+    begin_id  = 10600,
+    table_num  = 50,
+    table_conf = {
+        conf_version = 2,
+        table_room_type = 5,     --桌子的房间类型
+        table_game_type = 4,     --桌子游戏类型
+        small_blinds = 0,
+        big_blinds = 0,
+        min_player_num = 6,      --最少开始游戏人数
+        max_player_num = 6,      --桌子座位数
+        min_carry = 0,
+        max_carry = 0,
+        game_draw_rate = 0,      --房费占大盲的百分比
+        prop_price = 20,
+        table_name = "10k速战",
+        calculate_win_expbase = 0,
+        calculate_win_expratio = 0,
+        calculate_lose_exp = 0,     
+        everyday_max_exp = 0,  --每天玩家能获得的最大经验值
+        max_wait_num = 300,      --最大旁观人数
+        action_timeout = 1500,   --玩家操作超时时间单位10ms
+        ante = 0,                --前注
+        continuous_timeout = 2,  --连续超时判定次数
+
+        --SNG相关配置
+        sng_initcarry = 5000,
+        service_charge = 1000,   --服务费
+        signup_fee = {
+            [1] = {
+                id = 1,
+                num = 10000,
+            },
+        },
+        blind_template_index = 4,
+        award_template_index = 13,
+    }
+}
+
+table_conf_list_7 = {
+    begin_id   = 10700,
+    table_num  = 50,
+    table_conf = {
+        conf_version = 2,
+        table_room_type = 7,     --桌子的房间类型
+        table_game_type = 1,
+        small_blinds = 100,
+        min_player_num = 2,      --最少开始游戏人数
+        max_player_num = 9,      --桌子座位数
+        big_blinds = 200,
+        min_carry = 4000,
+        max_carry = 40000,
+        game_draw_rate = 10,      --房费占大盲的百分比
+        prop_price = 20,
+        table_name = "大师赛",
+        calculate_win_expbase = 2,
+        calculate_win_expratio = 5,
+        calculate_lose_exp = 3,     
+        everyday_max_exp = 500,  --每天玩家能获得的最大经验值
+        max_wait_num = 300,      --最大旁观人数
+        action_timeout = 1500,   --玩家操作超时时间单位10ms
+        ante = 0,                --前注
+        continuous_timeout = 2,  --连续超时判定次数
+        robot_type = 3,
+        robot_level = 0,
+        robot_min_num = 0,
+        robot_max_num = 0,
+        robot_continue_time = 1800,    --单位s
+        robot_enter_maxtime = 180,   --单位s
+        robot_enter_mintime = 30,    --单位s
+    }
+}
+
+table_conf_list_8 = { --单挑赛
+    begin_id   = 10800,
+    table_num  = 50,
+    table_conf = {
+        conf_version = 3,
+        table_room_type = 8,     --桌子的房间类型
+        table_game_type = 1,
+        small_blinds = 25,
+        min_player_num = 2,      --最少开始游戏人数
+        max_player_num = 2,      --桌子座位数
+        big_blinds = 50,
+        min_carry = 1000,
+        max_carry = 10000,
+        game_draw_rate = 10,      --房费占大盲的百分比
+        prop_price = 20,
+        table_name = "决斗赛",
+        calculate_win_expbase = 2,
+        calculate_win_expratio = 5,
+        calculate_lose_exp = 3,     
+        everyday_max_exp = 500,  --每天玩家能获得的最大经验值
+        max_wait_num = 300,      --最大旁观人数
+        action_timeout = 1500,   --玩家操作超时时间单位10ms
+        ante = 0,                --前注
+        continuous_timeout = 2,  --连续超时判定次数
+        robot_type = 3,
+        robot_level = 0,
+        robot_min_num = 0,
+        robot_max_num = 0,
+        robot_continue_time = 1800,    --单位s
+        robot_enter_maxtime = 180,   --单位s
+        robot_enter_mintime = 30,    --单位s
+    }
+}
+

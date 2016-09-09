@@ -1,0 +1,2920 @@
+version=304
+matchtemplatecfg={
+	[305]	= {  --12:30 聚众金卡赛
+		id=305,
+	    name = "聚众金卡赛",
+	    des = "1.每三分钟升盲一次\n2.赛前30分钟允许入场，请提前进场准备\n3.开赛后15分钟内允许报名入场\n4.比赛中途退出视为退赛 \n5.比赛不允许重购\n6.比赛不允许增购\n7.比赛开始后剩余3人则不能进入赛场",
+	    picture_url = "",
+	    match_type = 6,
+	    style = {
+	    	bg_name = "5.png",
+	    	title_name = "jys.png",--可以直接配置汉字，如果不使用现有图片的话
+	    	sub_title_bg = "9.png",
+	    	sub_title = "金卡赛",--左上角显示
+	    	suffix_bg = "",
+            suffix_title = "",--右下角现实
+	    },
+
+	    start_time = "2016-6-7 11:00:00",
+
+	    --显示排序优先级
+	    match_seq = 2,
+
+	    --报名条件
+	    signing_conditions = {
+	    	[1] = {
+	      		id=1,
+	      		num=500,
+	    	},
+	    },
+	    --排名奖励模板
+	    award_template_id = 115,
+	    --循环模板
+	    cycle_template_id = 2,
+	    --涨盲模板
+	    blind_template_id = 4,
+	    --初始筹码
+	    match_init_chips = 6000,
+	    --比赛最大旁观人数
+	    max_wait_num = 500,
+	    action_timeout = 2000,
+	    --比赛开始时单桌最大玩家数
+	    start_max_table_playernum = 6,
+	    --比赛的最大报名人数
+	    match_max_player_num = 2000,
+	    --比赛的最少开赛人数
+	    match_min_player_num = 3,
+	    --用于不同比赛服务器加载不同比赛
+	    match_svrd_id = "",
+
+	    --用于已报名玩家开赛前提醒单位s
+	    match_remind_time = {
+	    	[1] = 60,
+	    },
+		--比赛开始前相对开始时间的报名开始时间单位s
+		match_signup_start_time = 86400,
+	    --比赛开始前相对开始时间的报名结束时间单位s
+	    match_signup_end_time = 10,
+	    conf_version = 14,
+	    
+	    --比赛未报名玩家开赛前提醒
+	    match_remind_all_time = {
+	    	[1] = 600,
+	    	[2] = 300,
+	    	[3] = 240,
+	    },
+
+	    --比赛结束后多长时间后从列表中删除 单位s
+	    matchend_del_time=86400,
+	    --比赛开赛前多长时间可以进入比赛单位s
+	    match_enter_time_before=600,
+
+		--比赛开始前什么时候推送
+		--如果在这个时间之后报名，则在开赛那一刻推送
+		match_push_notice_time=300,
+		
+	    --比赛上线时间
+	    match_show_time="2016-3-20 12:00:00",
+	    --比赛下线时间
+	    match_off_time="2016-12-30 2:00:00",
+	    --改选项用于指定是否打印日志
+	    is_debug = false,
+	   	--是否仅允许过百玩家参加
+		is_onlywhite = false,
+		--比赛截止进入人数
+		stop_enter_playernum = 5,
+		--支持rebuy盲注阶段配置
+		rebuy = {
+			begin_blind_index = 1,
+			end_blind_index = 5, --rebuy盲注级别控制延时报名和延时进入时间，算法 时间=累加盲注表的1到end_blind_index盲注级别的time
+			num = 2,
+		},
+
+		--rebuy条件
+	    rebuy_conditions = {
+	    	[1] = {  --索引是次数
+	      		id=1,
+	      		num=500,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=500,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=500,
+	    	},
+	    },
+
+		--支持addbuy盲注阶段配置
+		addbuy = {
+			begin_blind_index = 6,
+			end_blind_index = 6,
+			num = 0,			
+			addbuy_chips = 5000,
+		},
+
+		addbuy_conditions = {
+	    	[1] = {		--索引是次数
+	      		id=1,
+	      		num=1000,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=1000,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=1000,
+	      	}
+	    },
+		
+		--筹码为0时踢出倒计时(单位s)
+		kicked_time = 40, 					    
+		--连续超时判定次数
+		continuous_timeout = 2,
+		match_type_flag = {
+	    	"日常赛",
+	    },
+	    isopen_floadpool = false,
+	    --服务费比率
+	    service_charge_ratio = 10,
+		signup_fee = 0,
+		--赏金百分比
+		reward_ratio = 0,
+	},
+	[306]	= {  --11点 1W赏金赛
+		id=306,
+	    name = "10000赏金赛",
+	    des = "1.每两分钟升盲一次\n2.赛前30分钟允许入场，请提前进场准备\n3.开赛后15分钟内允许报名入场\n4.比赛中途退出视为退赛 \n5.比赛不允许重购\n6.比赛不允许增购\n7.比赛开始后剩余3人则不能进入赛场",
+	    picture_url = "",
+		match_type = 6,
+	    style = {
+	    	bg_name = "3.png",
+	    	title_name = "dss.png",--可以直接配置汉字，如果不使用现有图片的话
+	    	sub_title_bg = "",
+	    	sub_title = "",--左上角显示
+	    	suffix_bg = "7.png",
+            suffix_title = "一万奖金",--右下角现实
+	    },
+
+
+	    start_time = "2016-3-21 10:00:00",
+
+	    --显示排序优先级
+	    match_seq = 2,
+
+	    --报名条件
+	    signing_conditions = {
+	    	[1] = {
+	      		id=1,
+	      		num=0,
+	    	},
+	    },
+	    --排名奖励模板
+	    award_template_id = 116,
+	    --循环模板
+	    cycle_template_id = 2,
+	    --涨盲模板
+	    blind_template_id = 4,
+	    --初始筹码
+	    match_init_chips = 6000,
+	    --比赛最大旁观人数
+	    max_wait_num = 500,
+	    action_timeout = 2000,
+	    --比赛开始时单桌最大玩家数
+	    start_max_table_playernum = 6,
+	    --比赛的最大报名人数
+	    match_max_player_num = 2000,
+	    --比赛的最少开赛人数
+	    match_min_player_num = 3,
+	    --用于不同比赛服务器加载不同比赛
+	    match_svrd_id = "",
+
+	    --用于已报名玩家开赛前提醒单位s
+	    match_remind_time = {
+	    	[1] = 60,
+	    },
+		--比赛开始前相对开始时间的报名开始时间单位s
+		match_signup_start_time = 86400,
+	    --比赛开始前相对开始时间的报名结束时间单位s
+	    match_signup_end_time = 10,
+	    conf_version = 14,
+	    
+	    --比赛未报名玩家开赛前提醒
+	    match_remind_all_time = {
+	    	[1] = 600,
+	    	[2] = 300,
+	    	[3] = 240,
+	    },
+
+	    --比赛结束后多长时间后从列表中删除 单位s
+	    matchend_del_time=86400,
+	    --比赛开赛前多长时间可以进入比赛单位s
+	    match_enter_time_before=600,
+
+		--比赛开始前什么时候推送
+		--如果在这个时间之后报名，则在开赛那一刻推送
+		match_push_notice_time=300,
+		
+	    --比赛上线时间
+	    match_show_time="2016-3-20 12:00:00",
+	    --比赛下线时间
+	    match_off_time="2016-12-26 2:00:00",
+	    --改选项用于指定是否打印日志
+	    is_debug = false,
+	   	--是否仅允许过百玩家参加
+		is_onlywhite = false,
+		--比赛截止进入人数
+		stop_enter_playernum = 5,
+		--支持rebuy盲注阶段配置
+		rebuy = {
+			begin_blind_index = 1,
+			end_blind_index = 5,--rebuy盲注级别控制延时报名和延时进入时间，算法 时间=累加盲注表的1到end_blind_index盲注级别的time
+			num = 2,
+		},
+
+		--rebuy条件
+	    rebuy_conditions = {
+	    	[1] = {  --索引是次数
+	      		id=1,
+	      		num=500,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=500,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=500,
+	    	},
+	    },
+
+		--支持addbuy盲注阶段配置
+		addbuy = {
+			begin_blind_index = 6,
+			end_blind_index = 6,
+			num = 0,			
+			addbuy_chips = 5000,
+		},
+
+		addbuy_conditions = {
+	    	[1] = {		--索引是次数
+	      		id=1,
+	      		num=1000,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=1000,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=1000,
+	      	}
+	    },
+
+		--筹码为0时踢出倒计时(单位s)
+		kicked_time = 40, 					    
+		--连续超时判定次数
+		continuous_timeout = 2,
+		match_type_flag = {
+		"日常赛",
+	    },
+	   	isopen_floadpool = false,
+	   	--服务费比率
+	    service_charge_ratio = 10,
+		signup_fee = 0,
+		--赏金百分比
+		reward_ratio = 0,
+	},
+	[301]	= {  --11点 1W赏金赛
+		id=301,
+	    name = "10000赏金赛",
+	    des = "1.每两分钟升盲一次\n2.赛前30分钟允许入场，请提前进场准备\n3.开赛后15分钟内允许报名入场\n4.比赛中途退出视为退赛 \n5.比赛不允许重购\n6.比赛不允许增购\n7.比赛开始后剩余3人则不能进入赛场",
+	    picture_url = "",
+		match_type = 6,
+	    style = {
+	    	bg_name = "3.png",
+	    	title_name = "dss.png",--可以直接配置汉字，如果不使用现有图片的话
+	    	sub_title_bg = "",
+	    	sub_title = "",--左上角显示
+	    	suffix_bg = "7.png",
+            suffix_title = "一万奖金",--右下角现实
+	    },
+
+
+	    start_time = "2016-6-8 17:30:00",
+
+	    --显示排序优先级
+	    match_seq = 2,
+
+	    --报名条件
+	    signing_conditions = {
+	    	[1] = {
+	      		id=1,
+	      		num=0,
+	    	},
+	    },
+	    --排名奖励模板
+	    award_template_id = 116,
+	    --循环模板
+	    cycle_template_id = 2,
+	    --涨盲模板
+	    blind_template_id = 4,
+	    --初始筹码
+	    match_init_chips = 6000,
+	    --比赛最大旁观人数
+	    max_wait_num = 500,
+	    action_timeout = 2000,
+	    --比赛开始时单桌最大玩家数
+	    start_max_table_playernum = 6,
+	    --比赛的最大报名人数
+	    match_max_player_num = 2000,
+	    --比赛的最少开赛人数
+	    match_min_player_num = 3,
+	    --用于不同比赛服务器加载不同比赛
+	    match_svrd_id = "",
+
+	    --用于已报名玩家开赛前提醒单位s
+	    match_remind_time = {
+	    	[1] = 60,
+	    },
+		--比赛开始前相对开始时间的报名开始时间单位s
+		match_signup_start_time = 86400,
+	    --比赛开始前相对开始时间的报名结束时间单位s
+	    match_signup_end_time = 10,
+	    conf_version = 14,
+	    
+	    --比赛未报名玩家开赛前提醒
+	    match_remind_all_time = {
+	    	[1] = 600,
+	    	[2] = 300,
+	    	[3] = 240,
+	    },
+
+	    --比赛结束后多长时间后从列表中删除 单位s
+	    matchend_del_time=86400,
+	    --比赛开赛前多长时间可以进入比赛单位s
+	    match_enter_time_before=600,
+
+		--比赛开始前什么时候推送
+		--如果在这个时间之后报名，则在开赛那一刻推送
+		match_push_notice_time=300,
+		
+	    --比赛上线时间
+	    match_show_time="2016-3-20 12:00:00",
+	    --比赛下线时间
+	    match_off_time="2016-12-26 2:00:00",
+	    --改选项用于指定是否打印日志
+	    is_debug = false,
+	   	--是否仅允许过百玩家参加
+		is_onlywhite = false,
+		--比赛截止进入人数
+		stop_enter_playernum = 5,
+		--支持rebuy盲注阶段配置
+		rebuy = {
+			begin_blind_index = 1,
+			end_blind_index = 5,--rebuy盲注级别控制延时报名和延时进入时间，算法 时间=累加盲注表的1到end_blind_index盲注级别的time
+			num = 2,
+		},
+
+		--rebuy条件
+	    rebuy_conditions = {
+	    	[1] = {  --索引是次数
+	      		id=1,
+	      		num=500,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=500,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=500,
+	    	},
+	    },
+
+		--支持addbuy盲注阶段配置
+		addbuy = {
+			begin_blind_index = 6,
+			end_blind_index = 6,
+			num = 0,			
+			addbuy_chips = 5000,
+		},
+
+		addbuy_conditions = {
+	    	[1] = {		--索引是次数
+	      		id=1,
+	      		num=1000,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=1000,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=1000,
+	      	}
+	    },
+
+		--筹码为0时踢出倒计时(单位s)
+		kicked_time = 40, 					    
+		--连续超时判定次数
+		continuous_timeout = 2,
+		match_type_flag = {
+		"日常赛",
+	    },
+	   	isopen_floadpool = false,
+		signup_fee = 0,
+		--赏金百分比
+		reward_ratio = 0,
+	},
+	[102]	= {  --15点 聚众金卡赛
+		id=102,
+	    name = "聚众金卡赛",
+	    des = "1.每三分钟升盲一次\n2.赛前30分钟允许入场，请提前进场准备\n3.开赛后15分钟内允许报名入场\n4.比赛中途退出视为退赛 \n5.比赛不允许重购\n6.比赛不允许增购\n7.比赛开始后剩余3人则不能进入赛场",
+	    picture_url = "",
+		match_type = 6,
+	    style = {
+	    	bg_name = "5.png",
+	    	title_name = "jys.png",--可以直接配置汉字，如果不使用现有图片的话
+	    	sub_title_bg = "9.png",
+	    	sub_title = "金卡赛",--左上角显示
+	    	suffix_bg = "",
+            suffix_title = "",--右下角现实
+	    },
+
+	    start_time = "2016-3-21 15:00:00",
+
+	    --显示排序优先级
+	    match_seq = 2,
+
+	    --报名条件
+	    signing_conditions = {
+	    	[1] = {
+	      		id=1,
+	      		num=500,
+	    	},
+	    },
+	    --排名奖励模板
+	    award_template_id = 115,
+	    --循环模板
+	    cycle_template_id = 2,
+	    --涨盲模板
+	    blind_template_id = 4,
+	    --初始筹码
+	    match_init_chips = 6000,
+	    --比赛最大旁观人数
+	    max_wait_num = 500,
+	    action_timeout = 2000,
+	    --比赛开始时单桌最大玩家数
+	    start_max_table_playernum = 6,
+	    --比赛的最大报名人数
+	    match_max_player_num = 2000,
+	    --比赛的最少开赛人数
+	    match_min_player_num = 3,
+	    --用于不同比赛服务器加载不同比赛
+	    match_svrd_id = "",
+
+	    --用于已报名玩家开赛前提醒单位s
+	    match_remind_time = {
+	    	[1] = 60,
+	    },
+		--比赛开始前相对开始时间的报名开始时间单位s
+		match_signup_start_time = 86400,
+	    --比赛开始前相对开始时间的报名结束时间单位s
+	    match_signup_end_time = 10,
+	    conf_version = 14,
+	    
+	    --比赛未报名玩家开赛前提醒
+	    match_remind_all_time = {
+	    	[1] = 600,
+	    	[2] = 300,
+	    	[3] = 240,
+	    },
+
+	    --比赛结束后多长时间后从列表中删除 单位s
+	    matchend_del_time=86400,
+	    --比赛开赛前多长时间可以进入比赛单位s
+	    match_enter_time_before=600,
+
+		--比赛开始前什么时候推送
+		--如果在这个时间之后报名，则在开赛那一刻推送
+		match_push_notice_time=300,
+		
+	    --比赛上线时间
+	    match_show_time="2016-3-20 4:00:00",
+	    --比赛下线时间
+	    match_off_time="2016-12-26 2:00:00",
+	    --改选项用于指定是否打印日志
+	    is_debug = false,
+	   	--是否仅允许过百玩家参加
+		is_onlywhite = false,
+		--比赛截止进入人数
+		stop_enter_playernum = 5,
+		--支持rebuy盲注阶段配置
+		rebuy = {
+			begin_blind_index = 1,
+			end_blind_index = 5,
+			num = 2,
+		},
+
+		--rebuy条件
+	    rebuy_conditions = {
+	    	[1] = {  --索引是次数
+	      		id=1,
+	      		num=500,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=500,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=500,
+	    	},
+	    },
+
+		--支持addbuy盲注阶段配置
+		addbuy = {
+			begin_blind_index = 5,
+			end_blind_index = 5,
+			num = 0,			
+			addbuy_chips = 5000,
+		},
+
+		addbuy_conditions = {
+	    	[1] = {		--索引是次数
+	      		id=1,
+	      		num=1000,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=1000,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=1000,
+	      	}
+	    },
+		
+		--筹码为0时踢出倒计时(单位s)
+		kicked_time = 40, 					    
+		--连续超时判定次数
+		continuous_timeout = 2,
+		match_type_flag = {
+		"日常赛",
+	    },
+	   	isopen_floadpool = false,
+	   	--服务费比率
+	    service_charge_ratio = 10,
+		signup_fee = 0,
+		--赏金百分比
+		reward_ratio = 0,
+	},
+	[103]	= {  --16点 1W赏金赛
+		id=103,
+	    name = "10000赏金赛",
+	    des = "1.每两分钟升盲一次\n2.赛前30分钟允许入场，请提前进场准备\n3.开赛后15分钟内允许报名入场\n4.比赛中途退出视为退赛 \n5.比赛不允许重购\n6.比赛不允许增购\n7.比赛开始后剩余3人则不能进入赛场",
+	    picture_url = "",
+		match_type = 6,
+	    style = {
+	    	bg_name = "3.png",
+	    	title_name = "dss.png",--可以直接配置汉字，如果不使用现有图片的话
+	    	sub_title_bg = "",
+	    	sub_title = "",--左上角显示
+	    	suffix_bg = "7.png",
+            suffix_title = "一万奖金",--右下角现实
+	    },
+
+
+	    start_time = "2016-3-21 16:00:00",
+
+	    --显示排序优先级
+	    match_seq = 2,
+
+	    --报名条件
+	    signing_conditions = {
+	    	[1] = {
+	      		id=1,
+	      		num=0,
+	    	},
+	    },
+	    --排名奖励模板
+	    award_template_id = 116,
+	    --循环模板
+	    cycle_template_id = 2,
+	    --涨盲模板
+	    blind_template_id = 4,
+	    --初始筹码
+	    match_init_chips = 6000,
+	    --比赛最大旁观人数
+	    max_wait_num = 500,
+	    action_timeout = 2000,
+	    --比赛开始时单桌最大玩家数
+	    start_max_table_playernum = 6,
+	    --比赛的最大报名人数
+	    match_max_player_num = 2000,
+	    --比赛的最少开赛人数
+	    match_min_player_num = 3,
+	    --用于不同比赛服务器加载不同比赛
+	    match_svrd_id = "",
+
+	    --用于已报名玩家开赛前提醒单位s
+	    match_remind_time = {
+	    	[1] = 60,
+	    },
+		--比赛开始前相对开始时间的报名开始时间单位s
+		match_signup_start_time = 86400,
+	    --比赛开始前相对开始时间的报名结束时间单位s
+	    match_signup_end_time = 10,
+	    conf_version = 14,
+	    
+	    --比赛未报名玩家开赛前提醒
+	    match_remind_all_time = {
+	    	[1] = 600,
+	    	[2] = 300,
+	    	[3] = 240,
+	    },
+
+	    --比赛结束后多长时间后从列表中删除 单位s
+	    matchend_del_time=86400,
+	    --比赛开赛前多长时间可以进入比赛单位s
+	    match_enter_time_before=600,
+
+		--比赛开始前什么时候推送
+		--如果在这个时间之后报名，则在开赛那一刻推送
+		match_push_notice_time=300,
+		
+	    --比赛上线时间
+	    match_show_time="2016-3-20 4:00:00",
+	    --比赛下线时间
+	    match_off_time="2016-12-26 2:00:00",
+	    --改选项用于指定是否打印日志
+	    is_debug = false,
+	   	--是否仅允许过百玩家参加
+		is_onlywhite = false,
+		--比赛截止进入人数
+		stop_enter_playernum = 5,
+		--支持rebuy盲注阶段配置
+		rebuy = {
+			begin_blind_index = 1,
+			end_blind_index = 5,--rebuy盲注级别控制延时报名和延时进入时间，算法 时间=累加盲注表的1到end_blind_index盲注级别的time
+			num = 2,
+		},
+
+		--rebuy条件
+	    rebuy_conditions = {
+	    	[1] = {  --索引是次数
+	      		id=1,
+	      		num=500,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=500,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=500,
+	    	},
+	    },
+
+		--支持addbuy盲注阶段配置
+		addbuy = {
+			begin_blind_index = 6,
+			end_blind_index = 6,
+			num = 0,			
+			addbuy_chips = 5000,
+		},
+
+		addbuy_conditions = {
+	    	[1] = {		--索引是次数
+	      		id=1,
+	      		num=1000,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=1000,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=1000,
+	      	}
+	    },
+
+		--筹码为0时踢出倒计时(单位s)
+		kicked_time = 40, 					    
+		--连续超时判定次数
+		continuous_timeout = 2,
+		match_type_flag = {
+		"日常赛",
+	    },
+	    isopen_floadpool = false,
+	   	--服务费比率
+	    service_charge_ratio = 10,
+		signup_fee = 0,
+		--赏金百分比
+		reward_ratio = 0,
+	},
+	[109]	= {  --22点 聚众金卡赛
+		id=109,
+	    name = "聚众金卡赛",
+	    des = "1.每三分钟升盲一次\n2.赛前30分钟允许入场，请提前进场准备\n3.开赛后15分钟内允许报名入场\n4.比赛中途退出视为退赛 \n5.比赛不允许重购\n6.比赛不允许增购\n7.比赛开始后剩余3人则不能进入赛场",
+	    picture_url = "",
+		match_type = 6,
+	    style = {
+	    	bg_name = "5.png",
+	    	title_name = "jys.png",--可以直接配置汉字，如果不使用现有图片的话
+	    	sub_title_bg = "9.png",
+	    	sub_title = "金卡赛",--左上角显示
+	    	suffix_bg = "",
+            suffix_title = "",--右下角现实
+	    },
+
+	    start_time = "2016-3-21 22:15:00",
+
+	    --显示排序优先级
+	    match_seq = 2,
+
+	    --报名条件
+	    signing_conditions = {
+	    	[1] = {
+	      		id=1,
+	      		num=500,
+	    	},
+	    },
+	    --排名奖励模板
+	    award_template_id = 115,
+	    --循环模板
+	    cycle_template_id = 2,
+	    --涨盲模板
+	    blind_template_id = 4,
+	    --初始筹码
+	    match_init_chips = 6000,
+	    --比赛最大旁观人数
+	    max_wait_num = 500,
+	    action_timeout = 2000,
+	    --比赛开始时单桌最大玩家数
+	    start_max_table_playernum = 6,
+	    --比赛的最大报名人数
+	    match_max_player_num = 2000,
+	    --比赛的最少开赛人数
+	    match_min_player_num = 3,
+	    --用于不同比赛服务器加载不同比赛
+	    match_svrd_id = "",
+
+	    --用于已报名玩家开赛前提醒单位s
+	    match_remind_time = {
+	    	[1] = 60,
+	    },
+		--比赛开始前相对开始时间的报名开始时间单位s
+		match_signup_start_time = 86400,
+	    --比赛开始前相对开始时间的报名结束时间单位s
+	    match_signup_end_time = 10,
+	    conf_version = 14,
+	    
+	    --比赛未报名玩家开赛前提醒
+	    match_remind_all_time = {
+	    	[1] = 600,
+	    	[2] = 300,
+	    	[3] = 240,
+	    },
+
+	    --比赛结束后多长时间后从列表中删除 单位s
+	    matchend_del_time=86400,
+	    --比赛开赛前多长时间可以进入比赛单位s
+	    match_enter_time_before=600,
+
+		--比赛开始前什么时候推送
+		--如果在这个时间之后报名，则在开赛那一刻推送
+		match_push_notice_time=300,
+		
+	    --比赛上线时间
+	    match_show_time="2016-3-20 4:00:00",
+	    --比赛下线时间
+	    match_off_time="2016-12-26 2:00:00",
+	    --改选项用于指定是否打印日志
+	    is_debug = false,
+	   	--是否仅允许过百玩家参加
+		is_onlywhite = false,
+		--比赛截止进入人数
+		stop_enter_playernum = 5,
+		--支持rebuy盲注阶段配置
+		rebuy = {
+			begin_blind_index = 1,
+			end_blind_index = 5,--rebuy盲注级别控制延时报名和延时进入时间，算法 时间=累加盲注表的1到end_blind_index盲注级别的time
+			num = 2,
+		},
+
+		--rebuy条件
+	    rebuy_conditions = {
+	    	[1] = {  --索引是次数
+	      		id=1,
+	      		num=500,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=500,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=500,
+	    	},
+	    },
+
+		--支持addbuy盲注阶段配置
+		addbuy = {
+			begin_blind_index = 6,
+			end_blind_index = 6,
+			num = 0,			
+			addbuy_chips = 5000,
+		},
+
+		addbuy_conditions = {
+	    	[1] = {		--索引是次数
+	      		id=1,
+	      		num=1000,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=1000,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=1000,
+	      	}
+	    },
+		
+		--筹码为0时踢出倒计时(单位s)
+		kicked_time = 40, 					    
+		--连续超时判定次数
+		continuous_timeout = 2,
+		match_type_flag = {
+	    	"日常赛",
+	    },
+	   	--服务费比率
+	    service_charge_ratio = 10,
+	    isopen_floadpool = false,
+		signup_fee = 0,
+		--赏金百分比
+		reward_ratio = 0,
+	},
+	[320]	= {  --周一至周五100元京东赛
+		id=320,
+	    name = "聚众粉金卡挑战赛",
+	    des = "1.每四分钟升盲一次\n2.赛前30分钟允许入场，请提前进场准备\n3.开赛后15分钟内允许报名入场\n4.比赛中途退出视为退赛 \n5.比赛在1-5盲注级别允许重购1次\n6.比赛不允许增购\n7.比赛开始后剩余5人则不能进入赛场",
+	    picture_url = "",
+		match_type = 6,
+	    style = {
+	    	bg_name = "4.png",
+	    	title_name = "tzs.png",--可以直接配置汉字，如果不使用现有图片的话
+	    	sub_title_bg = "6.png",
+	    	sub_title = "粉金卡",--左上角显示
+	    	suffix_bg = "6.png",
+            suffix_title = "每日挑战",--右下角现实
+	    },
+
+	    start_time = "2016-7-4 20:45:00",
+
+	    --显示排序优先级
+	    match_seq = 2,
+
+	    --报名条件
+	    signing_conditions = {
+	    	[1] = {
+	      		id=1,
+	      		num=500,
+	    	},
+	    },
+	    --排名奖励模板
+	    award_template_id = 109,
+	    --循环模板
+	    cycle_template_id = 9,
+	    --涨盲模板
+	    blind_template_id = 4,
+	    --初始筹码
+	    match_init_chips = 8000,
+	    --比赛最大旁观人数
+	    max_wait_num = 500,
+	    action_timeout = 2000,
+	    --比赛开始时单桌最大玩家数
+	    start_max_table_playernum = 6,
+	    --比赛的最大报名人数
+	    match_max_player_num = 2000,
+	    --比赛的最少开赛人数
+	    match_min_player_num = 3,
+	    --用于不同比赛服务器加载不同比赛
+	    match_svrd_id = "",
+
+	    --用于已报名玩家开赛前提醒单位s
+	    match_remind_time = {
+	    	[1] = 60,
+	    },
+		--比赛开始前相对开始时间的报名开始时间单位s
+		match_signup_start_time = 86400,
+	    --比赛开始前相对开始时间的报名结束时间单位s
+	    match_signup_end_time = 10,
+	    conf_version = 12,
+	    
+	    --比赛未报名玩家开赛前提醒
+	    match_remind_all_time = {
+	    	[1] = 600,
+	    	[2] = 300,
+	    	[3] = 240,
+	    },
+
+	    --比赛结束后多长时间后从列表中删除 单位s
+	    matchend_del_time=86400,
+	    --比赛开赛前多长时间可以进入比赛单位s
+	    match_enter_time_before=600,
+
+		--比赛开始前什么时候推送
+		--如果在这个时间之后报名，则在开赛那一刻推送
+		match_push_notice_time=300,
+		
+	    --比赛上线时间
+	    match_show_time="2016-3-27 20:00:00",
+	    --比赛下线时间
+	    match_off_time="2016-12-2 2:00:00",
+	    --改选项用于指定是否打印日志
+	    is_debug = false,
+	   	--是否仅允许过百玩家参加
+		is_onlywhite = false,
+		--比赛截止进入人数
+		stop_enter_playernum = 5,
+		--支持rebuy盲注阶段配置
+		rebuy = {
+			begin_blind_index = 1,
+			end_blind_index = 6,--rebuy盲注级别控制延时报名和延时进入时间，算法 时间=累加盲注表的1到end_blind_index盲注级别的time
+			num = 4,
+		},
+
+		--rebuy条件
+	    rebuy_conditions = {
+	    	[1] = {  --索引是次数
+	      		id=1,
+	      		num=500,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=500,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=500,
+	    	},
+	    	[4] = {		--索引是次数
+	      		id=1,
+	      		num=500,
+	    	},
+	    },
+
+		--支持addbuy盲注阶段配置
+		addbuy = {
+			begin_blind_index = 7,
+			end_blind_index = 7,
+			num = 1,			
+			addbuy_chips = 12000,
+		},
+
+		addbuy_conditions = {
+	    	[1] = {		--索引是次数
+	      		id=1,
+	      		num=500,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=500,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=500,
+	      	}
+	    },
+		
+		--筹码为0时踢出倒计时(单位s)
+		kicked_time = 40, 					    
+		--连续超时判定次数
+		continuous_timeout = 2,
+		match_type_flag = {
+	    "日常赛","大奖赛",
+	    },
+	   	isopen_floadpool = false,
+	    --服务费比率
+	    service_charge_ratio = 10,
+		signup_fee = 0,
+		--赏金百分比
+		reward_ratio = 0,
+	},
+	[321]	= {  --周一至周五星期六资格赛
+		id=321,
+	    name = "周末资格赛",
+	    des = "1.每三分钟升盲一次\n2.赛前30分钟允许入场，请提前进场准备\n3.开赛后15分钟内允许报名入场\n4.比赛中途退出视为退赛 \n5.比赛不允许重购\n6.比赛不允许增购\n7.比赛开始后剩余5人则不能进入赛场",
+	    picture_url = "",
+		match_type = 6,
+	    style = {
+	    	bg_name = "2.png",
+	    	title_name = "zgs.png",--可以直接配置汉字，如果不使用现有图片的话
+	    	sub_title_bg = "3.png",
+	    	sub_title = "周  末",--左上角显示
+	    	suffix_bg = "3.png",
+            suffix_title = "超级大奖",--右下角现实
+	    },
+
+
+	    start_time = "2016-7-4 21:30:00",
+
+	    --显示排序优先级
+	    match_seq = 2,
+
+	    --报名条件
+	    signing_conditions = {
+	    	[1] = {
+	      		id=1,
+	      		num=500,
+	    	},
+	    },
+	    --排名奖励模板
+	    award_template_id = 110,
+	    --循环模板
+	    cycle_template_id = 9,
+	    --涨盲模板
+	    blind_template_id = 4,
+	    --初始筹码
+	    match_init_chips = 6000,
+	    --比赛最大旁观人数
+	    max_wait_num = 500,
+	    action_timeout = 2000,
+	    --比赛开始时单桌最大玩家数
+	    start_max_table_playernum = 6,
+	    --比赛的最大报名人数
+	    match_max_player_num = 2000,
+	    --比赛的最少开赛人数
+	    match_min_player_num = 3,
+	    --用于不同比赛服务器加载不同比赛
+	    match_svrd_id = "",
+
+	    --用于已报名玩家开赛前提醒单位s
+	    match_remind_time = {
+	    	[1] = 60,
+	    },
+		--比赛开始前相对开始时间的报名开始时间单位s
+		match_signup_start_time = 86400,
+	    --比赛开始前相对开始时间的报名结束时间单位s
+	    match_signup_end_time = 10,
+	    conf_version = 12,
+	    
+	    --比赛未报名玩家开赛前提醒
+	    match_remind_all_time = {
+	    	[1] = 600,
+	    	[2] = 300,
+	    	[3] = 240,
+	    },
+
+	    --比赛结束后多长时间后从列表中删除 单位s
+	    matchend_del_time=86400,
+	    --比赛开赛前多长时间可以进入比赛单位s
+	    match_enter_time_before=600,
+
+		--比赛开始前什么时候推送
+		--如果在这个时间之后报名，则在开赛那一刻推送
+		match_push_notice_time=300,
+		
+	    --比赛上线时间
+	    match_show_time="2016-3-27 20:00:00",
+	    --比赛下线时间
+	    match_off_time="2016-12-2 2:00:00",
+	    --改选项用于指定是否打印日志
+	    is_debug = false,
+	   	--是否仅允许过百玩家参加
+		is_onlywhite = false,
+		--比赛截止进入人数
+		stop_enter_playernum = 5,
+		--支持rebuy盲注阶段配置
+		rebuy = {
+			begin_blind_index = 1,
+			end_blind_index = 6,--rebuy盲注级别控制延时报名和延时进入时间，算法 时间=累加盲注表的1到end_blind_index盲注级别的time
+			num = 4,
+		},
+
+		--rebuy条件
+	    rebuy_conditions = {
+	    	[1] = {  --索引是次数
+	      		id=1,
+	      		num=500,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=500,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=500,
+	    	},
+	    	[4] = {		--索引是次数
+	      		id=1,
+	      		num=500,
+	    	},
+	    },
+
+		--支持addbuy盲注阶段配置
+		addbuy = {
+			begin_blind_index = 7,
+			end_blind_index = 7,
+			num = 1,			
+			addbuy_chips = 9000,
+		},
+
+		addbuy_conditions = {
+	    	[1] = {		--索引是次数
+	      		id=1,
+	      		num=500,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=500,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=500,
+	      	}
+	    },
+
+		--筹码为0时踢出倒计时(单位s)
+		kicked_time = 40, 					    
+		--连续超时判定次数
+		continuous_timeout = 2,
+		match_type_flag = {
+		"日常赛",
+	    },
+	   	isopen_floadpool = false,
+	    --服务费比率
+	    service_charge_ratio = 10,
+		signup_fee = 0,
+		--赏金百分比
+		reward_ratio = 0,
+	},
+	[193]	= {  --周末大奖赛
+		id=193,
+	    name = "周末黑金卡大奖赛",
+	    des = "1.每五分钟升盲一次\n2.赛前30分钟允许入场，请提前进场准备\n3.开赛后16分钟内允许报名入场\n4.比赛中途退出视为退赛 \n5.比赛不允许重购\n6.比赛不允许增购\n7.比赛开始后剩余5人则不能进入赛场",
+	    picture_url = "",
+		match_type = 6,
+	    style = {
+	    	bg_name = "2.png",
+	    	title_name = "djs.png",--可以直接配置汉字，如果不使用现有图片的话
+	    	sub_title_bg = "3.png",
+	    	sub_title = "周  末",--左上角显示
+	    	suffix_bg = "3.png",
+            suffix_title = "超级大奖",--右下角现实
+	    },
+
+
+	    start_time = "2016-5-14 20:45:00",
+
+	    --显示排序优先级
+	    match_seq = 2,
+
+	    --报名条件
+	    signing_conditions = {
+	    	[1] = {
+	      		id=43,
+	      		num=1,
+	    	},
+	    	[2] = {
+	      		id=1,
+	      		num=3000,
+	    	},
+	    },
+	    --排名奖励模板
+	    award_template_id = 111,
+	    --循环模板
+	    cycle_template_id = 10,
+	    --涨盲模板
+	    blind_template_id = 3,
+	    --初始筹码
+	    match_init_chips = 10000,
+	    --比赛最大旁观人数
+	    max_wait_num = 500,
+	    action_timeout = 2000,
+	    --比赛开始时单桌最大玩家数
+	    start_max_table_playernum = 6,
+	    --比赛的最大报名人数
+	    match_max_player_num = 2000,
+	    --比赛的最少开赛人数
+	    match_min_player_num = 3,
+	    --用于不同比赛服务器加载不同比赛
+	    match_svrd_id = "",
+
+	    --用于已报名玩家开赛前提醒单位s
+	    match_remind_time = {
+	    	[1] = 60,
+	    },
+		--比赛开始前相对开始时间的报名开始时间单位s
+		match_signup_start_time = 86400,
+	    --比赛开始前相对开始时间的报名结束时间单位s
+	    match_signup_end_time = 10,
+	    conf_version = 15,
+	    
+	    --比赛未报名玩家开赛前提醒
+	    match_remind_all_time = {
+	    	[1] = 600,
+	    	[2] = 300,
+	    	[3] = 240,
+	    },
+
+	    --比赛结束后多长时间后从列表中删除 单位s
+	    matchend_del_time=86400,
+	    --比赛开赛前多长时间可以进入比赛单位s
+	    match_enter_time_before=600,
+
+		--比赛开始前什么时候推送
+		--如果在这个时间之后报名，则在开赛那一刻推送
+		match_push_notice_time=300,
+		
+	    --比赛上线时间
+	    match_show_time="2016-4-8 20:00:00",
+	    --比赛下线时间
+	    match_off_time="2016-12-4 18:00:00",
+	    --改选项用于指定是否打印日志
+	    is_debug = false,
+	   	--是否仅允许过百玩家参加
+		is_onlywhite = false,
+		--比赛截止进入人数
+		stop_enter_playernum = 5,
+		--支持rebuy盲注阶段配置
+		rebuy = {
+			begin_blind_index = 1,
+			end_blind_index = 5,--rebuy盲注级别控制延时报名和延时进入时间，算法 时间=累加盲注表的1到end_blind_index盲注级别的time
+			num = 2,
+		},
+
+		--rebuy条件
+	    rebuy_conditions = {
+	    	[1] = {  --索引是次数
+	      		id=1,
+	      		num=3000,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=3000,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=3000,
+	    	},
+	    },
+
+		--支持addbuy盲注阶段配置
+		addbuy = {
+			begin_blind_index = 6,
+			end_blind_index = 6,
+			num = 1,			
+			addbuy_chips = 16000,
+		},
+
+		addbuy_conditions = {
+	    	[1] = {		--索引是次数
+	      		id=1,
+	      		num=3000,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=3000,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=3000,
+	      	}
+	    },
+		
+		--筹码为0时踢出倒计时(单位s)
+		kicked_time = 40, 					    
+		--连续超时判定次数
+		continuous_timeout = 2,
+		match_type_flag = {
+	    "日常赛","大奖赛",
+	    },
+	   	isopen_floadpool = false,
+	   	--服务费比率
+	    service_charge_ratio = 10,
+		signup_fee = 0,
+		--赏金百分比
+		reward_ratio = 0,
+	},
+	[138]	= {  --周末21点30 1W赏金赛
+		id=138,
+	    name = "10000赏金赛",
+	    des = "1.每两分钟升盲一次\n2.赛前30分钟允许入场，请提前进场准备\n3.开赛后15分钟内允许报名入场\n4.比赛中途退出视为退赛 \n5.比赛不允许重购\n6.比赛不允许增购\n7.比赛开始后剩余3人则不能进入赛场",
+	    picture_url = "",
+		match_type = 6,
+	    style = {
+	    	bg_name = "3.png",
+	    	title_name = "dss.png",--可以直接配置汉字，如果不使用现有图片的话
+	    	sub_title_bg = "",
+	    	sub_title = "",--左上角显示
+	    	suffix_bg = "7.png",
+            suffix_title = "一万奖金",--右下角现实
+	    },
+
+
+	    start_time = "2016-4-9 21:30:00",
+
+	    --显示排序优先级
+	    match_seq = 2,
+
+	    --报名条件
+	    signing_conditions = {
+	    	[1] = {
+	      		id=1,
+	      		num=0,
+	    	},
+	    },
+	    --排名奖励模板
+	    award_template_id = 116,
+	    --循环模板
+	    cycle_template_id = 10,
+	    --涨盲模板
+	    blind_template_id = 6,
+	    --初始筹码
+	    match_init_chips = 5000,
+	    --比赛最大旁观人数
+	    max_wait_num = 500,
+	    action_timeout = 2000,
+	    --比赛开始时单桌最大玩家数
+	    start_max_table_playernum = 6,
+	    --比赛的最大报名人数
+	    match_max_player_num = 2000,
+	    --比赛的最少开赛人数
+	    match_min_player_num = 3,
+	    --用于不同比赛服务器加载不同比赛
+	    match_svrd_id = "",
+
+	    --用于已报名玩家开赛前提醒单位s
+	    match_remind_time = {
+	    	[1] = 60,
+	    },
+		--比赛开始前相对开始时间的报名开始时间单位s
+		match_signup_start_time = 86400,
+	    --比赛开始前相对开始时间的报名结束时间单位s
+	    match_signup_end_time = 10,
+	    conf_version = 12,
+	    
+	    --比赛未报名玩家开赛前提醒
+	    match_remind_all_time = {
+	    	[1] = 600,
+	    	[2] = 300,
+	    	[3] = 240,
+	    },
+
+	    --比赛结束后多长时间后从列表中删除 单位s
+	    matchend_del_time=86400,
+	    --比赛开赛前多长时间可以进入比赛单位s
+	    match_enter_time_before=600,
+
+		--比赛开始前什么时候推送
+		--如果在这个时间之后报名，则在开赛那一刻推送
+		match_push_notice_time=300,
+		
+	    --比赛上线时间
+	    match_show_time="2016-4-8 12:00:00",
+	    --比赛下线时间
+	    match_off_time="2016-12-26 2:00:00",
+	    --改选项用于指定是否打印日志
+	    is_debug = false,
+	   	--是否仅允许过百玩家参加
+		is_onlywhite = false,
+		--比赛截止进入人数
+		stop_enter_playernum = 5,
+		--支持rebuy盲注阶段配置
+		rebuy = {
+			begin_blind_index = 1,
+			end_blind_index = 5,--rebuy盲注级别控制延时报名和延时进入时间，算法 时间=累加盲注表的1到end_blind_index盲注级别的time
+			num = 2,
+		},
+
+		--rebuy条件
+	    rebuy_conditions = {
+	    	[1] = {  --索引是次数
+	      		id=1,
+	      		num=500,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=500,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=500,
+	    	},
+	    },
+
+		--支持addbuy盲注阶段配置
+		addbuy = {
+			begin_blind_index = 6,
+			end_blind_index = 6,
+			num = 0,			
+			addbuy_chips = 5000,
+		},
+
+		addbuy_conditions = {
+	    	[1] = {		--索引是次数
+	      		id=1,
+	      		num=1000,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=1000,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=1000,
+	      	}
+	    },
+
+		--筹码为0时踢出倒计时(单位s)
+		kicked_time = 40, 					    
+		--连续超时判定次数
+		continuous_timeout = 2,
+		match_type_flag = {
+		"日常赛",
+	    },
+	    isopen_floadpool = false,
+	    --服务费比率
+	    service_charge_ratio = 10,
+		signup_fee = 0,
+		--赏金百分比
+		reward_ratio = 0,
+	},
+	[280]	= {  --13:30点浮动奖池
+		id=280,
+	    name = "浮动奖金赛",
+	    des = "1.每两分钟升盲一次\n2.赛前30分钟允许入场，请提前进场准备\n3.开赛后15分钟内允许报名入场\n4.比赛中途退出视为退赛\n5.比赛在1-5盲注级别允许重购1次\n6.比赛在第6盲注级别允许增购1次\n7.比赛开始后剩余3人则不能进入赛场",
+	    picture_url = "",
+		match_type = 6,
+	    style = {
+	    	bg_name = "3.png",
+	    	title_name = "dss.png",--可以直接配置汉字，如果不使用现有图片的话
+	    	sub_title_bg = "",
+	    	sub_title = "",--左上角显示
+	    	suffix_bg = "2.png",
+            suffix_title = "累积奖金",--右下角现实
+	    },
+
+
+	    start_time = "2016-5-4 13:30:00",
+
+	    --显示排序优先级
+	    match_seq = 2,
+
+	    --报名条件
+	    signing_conditions = {
+	    	[1] = {
+	      		id=1,
+	      		num=1000,
+	    	},
+	    },
+	    --排名奖励模板
+	    award_template_id = 126,
+	    --循环模板
+	    cycle_template_id = 2,
+	    --涨盲模板
+	    blind_template_id = 5,
+	    --初始筹码
+	    match_init_chips = 8000,
+	    --比赛最大旁观人数
+	    max_wait_num = 500,
+	    action_timeout = 2000,
+	    --比赛开始时单桌最大玩家数
+	    start_max_table_playernum = 6,
+	    --比赛的最大报名人数
+	    match_max_player_num = 2000,
+	    --比赛的最少开赛人数
+	    match_min_player_num = 3,
+	    --用于不同比赛服务器加载不同比赛
+	    match_svrd_id = "",
+
+	    --用于已报名玩家开赛前提醒单位s
+	    match_remind_time = {
+	    	[1] = 60,
+	    },
+		--比赛开始前相对开始时间的报名开始时间单位s
+		match_signup_start_time = 86400,
+	    --比赛开始前相对开始时间的报名结束时间单位s
+	    match_signup_end_time = 10,
+	    conf_version = 14,
+	    
+	    --比赛未报名玩家开赛前提醒
+	    match_remind_all_time = {
+	    	[1] = 600,
+	    	[2] = 300,
+	    	[3] = 240,
+	    },
+
+	    --比赛结束后多长时间后从列表中删除 单位s
+	    matchend_del_time=86400,
+	    --比赛开赛前多长时间可以进入比赛单位s
+	    match_enter_time_before=600,
+
+		--比赛开始前什么时候推送
+		--如果在这个时间之后报名，则在开赛那一刻推送
+		match_push_notice_time=300,
+		
+	    --比赛上线时间
+	    match_show_time="2016-3-20 4:00:00",
+	    --比赛下线时间
+	    match_off_time="2016-12-26 2:00:00",
+	    --改选项用于指定是否打印日志
+	    is_debug = false,
+	   	--是否仅允许过百玩家参加
+		is_onlywhite = false,
+		--比赛截止进入人数
+		stop_enter_playernum = 5,
+		--支持rebuy盲注阶段配置
+		rebuy = {
+			begin_blind_index = 1,
+			end_blind_index = 6,--rebuy盲注级别控制延时报名和延时进入时间，算法 时间=累加盲注表的1到end_blind_index盲注级别的time
+			num = 3,
+		},
+
+		--rebuy条件
+	    rebuy_conditions = {
+	    	[1] = {  --索引是次数
+	      		id=1,
+	      		num=1000,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=1000,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=1000,
+	    	},
+	    },
+
+		--支持addbuy盲注阶段配置
+		addbuy = {
+			begin_blind_index = 7,
+			end_blind_index = 7,
+			num = 1,			
+			addbuy_chips = 16000,
+		},
+
+		addbuy_conditions = {
+	    	[1] = {		--索引是次数
+	      		id=1,
+	      		num=1000,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=1000,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=1000,
+	      	}
+	    },
+
+		--筹码为0时踢出倒计时(单位s)
+		kicked_time = 40, 					    
+		--连续超时判定次数
+		continuous_timeout = 2,
+		match_type_flag = {
+		"日常赛",
+	    },
+	    isopen_floadpool = true,
+	    --服务费
+	    floatpool_template_id = 2,
+	    signup_fee = 100,
+	    --服务费比率
+	    service_charge_ratio = 10,
+	    --赏金百分比
+		reward_ratio = 0,
+	},
+	[282]	= {  --12:30点浮动奖池
+		id=282,
+	    name = "浮动奖金赛",
+	    des = "1.每两分钟升盲一次\n2.赛前30分钟允许入场，请提前进场准备\n3.开赛后15分钟内允许报名入场\n4.比赛中途退出视为退赛\n5.比赛在1-5盲注级别允许重购1次\n6.比赛在第6盲注级别允许增购1次\n7.比赛开始后剩余3人则不能进入赛场",
+	    picture_url = "",
+		match_type = 6,
+	    style = {
+	    	bg_name = "3.png",
+	    	title_name = "dss.png",--可以直接配置汉字，如果不使用现有图片的话
+	    	sub_title_bg = "",
+	    	sub_title = "",--左上角显示
+	    	suffix_bg = "2.png",
+            suffix_title = "累积奖金",--右下角现实
+	    },
+
+
+	    start_time = "2016-6-7 12:30:00",
+
+	    --显示排序优先级
+	    match_seq = 2,
+
+	    --报名条件
+	    signing_conditions = {
+	    	[1] = {
+	      		id=1,
+	      		num=1000,
+	    	},
+	    },
+	    --排名奖励模板
+	    award_template_id = 126,
+	    --循环模板
+	    cycle_template_id = 2,
+	    --涨盲模板
+	    blind_template_id = 5,
+	    --初始筹码
+	    match_init_chips = 8000,
+	    --比赛最大旁观人数
+	    max_wait_num = 500,
+	    action_timeout = 2000,
+	    --比赛开始时单桌最大玩家数
+	    start_max_table_playernum = 6,
+	    --比赛的最大报名人数
+	    match_max_player_num = 2000,
+	    --比赛的最少开赛人数
+	    match_min_player_num = 3,
+	    --用于不同比赛服务器加载不同比赛
+	    match_svrd_id = "",
+
+	    --用于已报名玩家开赛前提醒单位s
+	    match_remind_time = {
+	    	[1] = 60,
+	    },
+		--比赛开始前相对开始时间的报名开始时间单位s
+		match_signup_start_time = 86400,
+	    --比赛开始前相对开始时间的报名结束时间单位s
+	    match_signup_end_time = 10,
+	    conf_version = 14,
+	    
+	    --比赛未报名玩家开赛前提醒
+	    match_remind_all_time = {
+	    	[1] = 600,
+	    	[2] = 300,
+	    	[3] = 240,
+	    },
+
+	    --比赛结束后多长时间后从列表中删除 单位s
+	    matchend_del_time=86400,
+	    --比赛开赛前多长时间可以进入比赛单位s
+	    match_enter_time_before=600,
+
+		--比赛开始前什么时候推送
+		--如果在这个时间之后报名，则在开赛那一刻推送
+		match_push_notice_time=300,
+		
+	    --比赛上线时间
+	    match_show_time="2016-3-20 4:00:00",
+	    --比赛下线时间
+	    match_off_time="2016-12-26 2:00:00",
+	    --改选项用于指定是否打印日志
+	    is_debug = false,
+	   	--是否仅允许过百玩家参加
+		is_onlywhite = false,
+		--比赛截止进入人数
+		stop_enter_playernum = 5,
+		--支持rebuy盲注阶段配置
+		rebuy = {
+			begin_blind_index = 1,
+			end_blind_index = 6,--rebuy盲注级别控制延时报名和延时进入时间，算法 时间=累加盲注表的1到end_blind_index盲注级别的time
+			num = 3,
+		},
+
+		--rebuy条件
+	    rebuy_conditions = {
+	    	[1] = {  --索引是次数
+	      		id=1,
+	      		num=1000,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=1000,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=1000,
+	    	},
+	    },
+
+		--支持addbuy盲注阶段配置
+		addbuy = {
+			begin_blind_index = 7,
+			end_blind_index = 7,
+			num = 1,			
+			addbuy_chips = 16000,
+		},
+
+		addbuy_conditions = {
+	    	[1] = {		--索引是次数
+	      		id=1,
+	      		num=1000,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=1000,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=1000,
+	      	}
+	    },
+
+		--筹码为0时踢出倒计时(单位s)
+		kicked_time = 40, 					    
+		--连续超时判定次数
+		continuous_timeout = 2,
+		match_type_flag = {
+		"日常赛",
+	    },
+	    isopen_floadpool = true,
+	    --服务费
+	    floatpool_template_id = 2,
+	    signup_fee = 100,
+	    --赏金百分比
+		reward_ratio = 0,
+	},
+	[211]	= {  --17点浮动奖池
+		id=211,
+	    name = "浮动奖金赛",
+	    des = "1.每两分钟升盲一次\n2.赛前30分钟允许入场，请提前进场准备\n3.开赛后15分钟内允许报名入场\n4.比赛中途退出视为退赛\n5.比赛在1-5盲注级别允许重购1次\n6.比赛在第6盲注级别允许增购1次\n7.比赛开始后剩余3人则不能进入赛场",
+	    picture_url = "",
+		match_type = 6,
+	    style = {
+	    	bg_name = "3.png",
+	    	title_name = "dss.png",--可以直接配置汉字，如果不使用现有图片的话
+	    	sub_title_bg = "",
+	    	sub_title = "",--左上角显示
+	    	suffix_bg = "2.png",
+            suffix_title = "累积奖金",--右下角现实
+	    },
+
+
+	    start_time = "2016-5-4 17:00:00",
+
+	    --显示排序优先级
+	    match_seq = 2,
+
+	    --报名条件
+	    signing_conditions = {
+	    	[1] = {
+	      		id=1,
+	      		num=1000,
+	    	},
+	    },
+	    --排名奖励模板
+	    award_template_id = 126,
+	    --循环模板
+	    cycle_template_id = 2,
+	    --涨盲模板
+	    blind_template_id = 5,
+	    --初始筹码
+	    match_init_chips = 8000,
+	    --比赛最大旁观人数
+	    max_wait_num = 500,
+	    action_timeout = 2000,
+	    --比赛开始时单桌最大玩家数
+	    start_max_table_playernum = 6,
+	    --比赛的最大报名人数
+	    match_max_player_num = 2000,
+	    --比赛的最少开赛人数
+	    match_min_player_num = 3,
+	    --用于不同比赛服务器加载不同比赛
+	    match_svrd_id = "",
+
+	    --用于已报名玩家开赛前提醒单位s
+	    match_remind_time = {
+	    	[1] = 60,
+	    },
+		--比赛开始前相对开始时间的报名开始时间单位s
+		match_signup_start_time = 86400,
+	    --比赛开始前相对开始时间的报名结束时间单位s
+	    match_signup_end_time = 10,
+	    conf_version = 15,
+	    
+	    --比赛未报名玩家开赛前提醒
+	    match_remind_all_time = {
+	    	[1] = 600,
+	    	[2] = 300,
+	    	[3] = 240,
+	    },
+
+	    --比赛结束后多长时间后从列表中删除 单位s
+	    matchend_del_time=86400,
+	    --比赛开赛前多长时间可以进入比赛单位s
+	    match_enter_time_before=600,
+
+		--比赛开始前什么时候推送
+		--如果在这个时间之后报名，则在开赛那一刻推送
+		match_push_notice_time=300,
+		
+	    --比赛上线时间
+	    match_show_time="2016-3-20 4:00:00",
+	    --比赛下线时间
+	    match_off_time="2016-12-26 2:00:00",
+	    --改选项用于指定是否打印日志
+	    is_debug = false,
+	   	--是否仅允许过百玩家参加
+		is_onlywhite = false,
+		--比赛截止进入人数
+		stop_enter_playernum = 5,
+		--支持rebuy盲注阶段配置
+		rebuy = {
+			begin_blind_index = 1,
+			end_blind_index = 6,--rebuy盲注级别控制延时报名和延时进入时间，算法 时间=累加盲注表的1到end_blind_index盲注级别的time
+			num = 3,
+		},
+
+		--rebuy条件
+	    rebuy_conditions = {
+	    	[1] = {  --索引是次数
+	      		id=1,
+	      		num=1000,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=1000,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=1000,
+	    	},
+	    },
+
+		--支持addbuy盲注阶段配置
+		addbuy = {
+			begin_blind_index = 7,
+			end_blind_index = 7,
+			num = 1,			
+			addbuy_chips = 16000,
+		},
+
+		addbuy_conditions = {
+	    	[1] = {		--索引是次数
+	      		id=1,
+	      		num=1000,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=1000,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=1000,
+	      	}
+	    },
+
+		--筹码为0时踢出倒计时(单位s)
+		kicked_time = 40, 					    
+		--连续超时判定次数
+		continuous_timeout = 2,
+		match_type_flag = {
+		"日常赛",
+	    },
+	    isopen_floadpool = true,
+	    floatpool_template_id = 2,
+	    --服务费
+	    signup_fee = 100,
+	    --服务费比率
+	    service_charge_ratio = 10,
+	    --赏金百分比
+		reward_ratio = 0,
+	},
+	[283]	= {  --23点浮动奖池
+		id=283,
+	    name = "浮动奖金赛",
+	    des = "1.每两分钟升盲一次\n2.赛前30分钟允许入场，请提前进场准备\n3.开赛后15分钟内允许报名入场\n4.比赛中途退出视为退赛\n5.比赛在1-5盲注级别允许重购1次\n6.比赛在第6盲注级别允许增购1次\n7.比赛开始后剩余3人则不能进入赛场",
+	    picture_url = "",
+		match_type = 6,
+	    style = {
+	    	bg_name = "3.png",
+	    	title_name = "dss.png",--可以直接配置汉字，如果不使用现有图片的话
+	    	sub_title_bg = "",
+	    	sub_title = "",--左上角显示
+	    	suffix_bg = "2.png",
+            suffix_title = "累积奖金",--右下角现实
+	    },
+
+
+	    start_time = "2016-5-4 23:00:00",
+
+	    --显示排序优先级
+	    match_seq = 2,
+
+	    --报名条件
+	    signing_conditions = {
+	    	[1] = {
+	      		id=1,
+	      		num=2000,
+	    	},
+	    },
+	    --排名奖励模板
+	    award_template_id = 126,
+	    --循环模板
+	    cycle_template_id = 2,
+	    --涨盲模板
+	    blind_template_id = 5,
+	    --初始筹码
+	    match_init_chips = 8000,
+	    --比赛最大旁观人数
+	    max_wait_num = 500,
+	    action_timeout = 2000,
+	    --比赛开始时单桌最大玩家数
+	    start_max_table_playernum = 6,
+	    --比赛的最大报名人数
+	    match_max_player_num = 2000,
+	    --比赛的最少开赛人数
+	    match_min_player_num = 3,
+	    --用于不同比赛服务器加载不同比赛
+	    match_svrd_id = "",
+
+	    --用于已报名玩家开赛前提醒单位s
+	    match_remind_time = {
+	    	[1] = 60,
+	    },
+		--比赛开始前相对开始时间的报名开始时间单位s
+		match_signup_start_time = 86400,
+	    --比赛开始前相对开始时间的报名结束时间单位s
+	    match_signup_end_time = 10,
+	    conf_version = 16,
+	    
+	    --比赛未报名玩家开赛前提醒
+	    match_remind_all_time = {
+	    	[1] = 600,
+	    	[2] = 300,
+	    	[3] = 240,
+	    },
+
+	    --比赛结束后多长时间后从列表中删除 单位s
+	    matchend_del_time=86400,
+	    --比赛开赛前多长时间可以进入比赛单位s
+	    match_enter_time_before=600,
+
+		--比赛开始前什么时候推送
+		--如果在这个时间之后报名，则在开赛那一刻推送
+		match_push_notice_time=300,
+		
+	    --比赛上线时间
+	    match_show_time="2016-3-20 4:00:00",
+	    --比赛下线时间
+	    match_off_time="2016-12-26 2:00:00",
+	    --改选项用于指定是否打印日志
+	    is_debug = false,
+	   	--是否仅允许过百玩家参加
+		is_onlywhite = false,
+		--比赛截止进入人数
+		stop_enter_playernum = 5,
+		--支持rebuy盲注阶段配置
+		rebuy = {
+			begin_blind_index = 1,
+			end_blind_index = 6,--rebuy盲注级别控制延时报名和延时进入时间，算法 时间=累加盲注表的1到end_blind_index盲注级别的time
+			num = 3,
+		},
+
+		--rebuy条件
+	    rebuy_conditions = {
+	    	[1] = {  --索引是次数
+	      		id=1,
+	      		num=2000,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=2000,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=2000,
+	    	},
+	    },
+
+		--支持addbuy盲注阶段配置
+		addbuy = {
+			begin_blind_index = 7,
+			end_blind_index = 7,
+			num = 1,			
+			addbuy_chips = 16000,
+		},
+
+		addbuy_conditions = {
+	    	[1] = {		--索引是次数
+	      		id=1,
+	      		num=2000,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=2000,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=2000,
+	      	}
+	    },
+
+		--筹码为0时踢出倒计时(单位s)
+		kicked_time = 40, 					    
+		--连续超时判定次数
+		continuous_timeout = 2,
+		match_type_flag = {
+		"日常赛",
+	    },
+	    isopen_floadpool = true,
+	    floatpool_template_id = 2,
+	    --服务费
+	    signup_fee = 200,
+	    --服务费比率
+	    service_charge_ratio = 10,
+	    --赏金百分比
+		reward_ratio = 0,
+	},
+	[290]	= {  --SPT初级赛1
+		id=290,
+	    name = "SPT初级赛",
+	    des = "1.每三分钟升盲一次\n2.赛前30分钟允许入场，请提前进场准备\n3.开赛后15分钟内允许报名入场\n4.比赛中途退出视为退赛 \n5.比赛不允许重购\n6.比赛不允许增购\n7.比赛开始后剩余3人则不能进入赛场",
+	    picture_url = "",
+		match_type = 6,
+	    style = {
+	    	bg_name = "7.png",
+	    	title_name = " ",--可以直接配置汉字，如果不使用现有图片的话
+	    	sub_title_bg = "",
+	    	sub_title = "",--左上角显示
+	    	suffix_bg = "",
+            suffix_title = "",--右下角现实
+	    },
+
+	    start_time = "2016-6-7 14:30:00",
+
+	    --显示排序优先级
+	    match_seq = 2,
+
+	    --报名条件
+	    signing_conditions = {
+	    	[1] = {
+	      		id=1,
+	      		num=100,
+	    	},
+	    },
+	    --排名奖励模板
+	    award_template_id = 128,
+	    --循环模板
+	    cycle_template_id = 2,
+	    --涨盲模板
+	    blind_template_id = 4,
+	    --初始筹码
+	    match_init_chips = 5000,
+	    --比赛最大旁观人数
+	    max_wait_num = 500,
+	    action_timeout = 2000,
+	    --比赛开始时单桌最大玩家数
+	    start_max_table_playernum = 6,
+	    --比赛的最大报名人数
+	    match_max_player_num = 2000,
+	    --比赛的最少开赛人数
+	    match_min_player_num = 3,
+	    --用于不同比赛服务器加载不同比赛
+	    match_svrd_id = "",
+
+	    --用于已报名玩家开赛前提醒单位s
+	    match_remind_time = {
+	    	[1] = 60,
+	    },
+		--比赛开始前相对开始时间的报名开始时间单位s
+		match_signup_start_time = 86400,
+	    --比赛开始前相对开始时间的报名结束时间单位s
+	    match_signup_end_time = 10,
+	    conf_version = 17,
+	    
+	    --比赛未报名玩家开赛前提醒
+	    match_remind_all_time = {
+	    	[1] = 600,
+	    	[2] = 300,
+	    	[3] = 240,
+	    },
+
+	    --比赛结束后多长时间后从列表中删除 单位s
+	    matchend_del_time=86400,
+	    --比赛开赛前多长时间可以进入比赛单位s
+	    match_enter_time_before=600,
+
+		--比赛开始前什么时候推送
+		--如果在这个时间之后报名，则在开赛那一刻推送
+		match_push_notice_time=300,
+		
+	    --比赛上线时间
+	    match_show_time="2016-5-20 4:00:00",
+	    --比赛下线时间
+	    match_off_time="2016-9-1 2:00:00",
+	    --改选项用于指定是否打印日志
+	    is_debug = false,
+	   	--是否仅允许过百玩家参加
+		is_onlywhite = false,
+		--比赛截止进入人数
+		stop_enter_playernum = 5,
+		--支持rebuy盲注阶段配置
+		rebuy = {
+			begin_blind_index = 1,
+			end_blind_index = 6,--rebuy盲注级别控制延时报名和延时进入时间，算法 时间=累加盲注表的1到end_blind_index盲注级别的time
+			num = 4,
+		},
+
+		--rebuy条件
+	    rebuy_conditions = {
+	    	[1] = {  --索引是次数
+	      		id=1,
+	      		num=100,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=100,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=100,
+	    	},
+	    	[4] = {		--索引是次数
+	      		id=1,
+	      		num=100,
+	    	},
+	    },
+
+		--支持addbuy盲注阶段配置
+		addbuy = {
+			begin_blind_index = 7,
+			end_blind_index = 7,
+			num = 1,			
+			addbuy_chips = 10000,
+		},
+
+		addbuy_conditions = {
+	    	[1] = {		--索引是次数
+	      		id=1,
+	      		num=100,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=100,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=100,
+	      	}
+	    },
+		
+		--筹码为0时踢出倒计时(单位s)
+		kicked_time = 40, 					    
+		--连续超时判定次数
+		continuous_timeout = 2,
+		match_type_flag = {
+	    	"日常赛","大奖赛",
+	    },
+	    isopen_floadpool = false,
+	    --服务费比率
+	    service_charge_ratio = 10,
+		signup_fee = 0,
+		--赏金百分比
+		reward_ratio = 0,
+	},
+	[291]	= {  --SPT初级赛1
+		id=291,
+	    name = "SPT初级赛",
+	    des = "1.每三分钟升盲一次\n2.赛前30分钟允许入场，请提前进场准备\n3.开赛后15分钟内允许报名入场\n4.比赛中途退出视为退赛 \n5.比赛不允许重购\n6.比赛不允许增购\n7.比赛开始后剩余3人则不能进入赛场",
+	    picture_url = "",
+		match_type = 6,
+	    style = {
+	    	bg_name = "7.png",
+	    	title_name = " ",--可以直接配置汉字，如果不使用现有图片的话
+	    	sub_title_bg = "",
+	    	sub_title = "",--左上角显示
+	    	suffix_bg = "",
+            suffix_title = "",--右下角现实
+	    },
+
+	    start_time = "2016-6-7 16:30:00",
+
+	    --显示排序优先级
+	    match_seq = 2,
+
+	    --报名条件
+	    signing_conditions = {
+	    	[1] = {
+	      		id=1,
+	      		num=100,
+	    	},
+	    },
+	    --排名奖励模板
+	    award_template_id = 128,
+	    --循环模板
+	    cycle_template_id = 2,
+	    --涨盲模板
+	    blind_template_id = 4,
+	    --初始筹码
+	    match_init_chips = 5000,
+	    --比赛最大旁观人数
+	    max_wait_num = 500,
+	    action_timeout = 2000,
+	    --比赛开始时单桌最大玩家数
+	    start_max_table_playernum = 6,
+	    --比赛的最大报名人数
+	    match_max_player_num = 2000,
+	    --比赛的最少开赛人数
+	    match_min_player_num = 3,
+	    --用于不同比赛服务器加载不同比赛
+	    match_svrd_id = "",
+
+	    --用于已报名玩家开赛前提醒单位s
+	    match_remind_time = {
+	    	[1] = 60,
+	    },
+		--比赛开始前相对开始时间的报名开始时间单位s
+		match_signup_start_time = 86400,
+	    --比赛开始前相对开始时间的报名结束时间单位s
+	    match_signup_end_time = 10,
+	    conf_version = 17,
+	    
+	    --比赛未报名玩家开赛前提醒
+	    match_remind_all_time = {
+	    	[1] = 600,
+	    	[2] = 300,
+	    	[3] = 240,
+	    },
+
+	    --比赛结束后多长时间后从列表中删除 单位s
+	    matchend_del_time=86400,
+	    --比赛开赛前多长时间可以进入比赛单位s
+	    match_enter_time_before=600,
+
+		--比赛开始前什么时候推送
+		--如果在这个时间之后报名，则在开赛那一刻推送
+		match_push_notice_time=300,
+		
+	    --比赛上线时间
+	    match_show_time="2016-5-20 4:00:00",
+	    --比赛下线时间
+	    match_off_time="2016-9-1 2:00:00",
+	    --改选项用于指定是否打印日志
+	    is_debug = false,
+	   	--是否仅允许过百玩家参加
+		is_onlywhite = false,
+		--比赛截止进入人数
+		stop_enter_playernum = 5,
+		--支持rebuy盲注阶段配置
+		rebuy = {
+			begin_blind_index = 1,
+			end_blind_index = 6,--rebuy盲注级别控制延时报名和延时进入时间，算法 时间=累加盲注表的1到end_blind_index盲注级别的time
+			num = 4,
+		},
+
+		--rebuy条件
+	    rebuy_conditions = {
+	    	[1] = {  --索引是次数
+	      		id=1,
+	      		num=100,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=100,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=100,
+	    	},
+	    	[4] = {		--索引是次数
+	      		id=1,
+	      		num=100,
+	    	},
+	    },
+
+		--支持addbuy盲注阶段配置
+		addbuy = {
+			begin_blind_index = 7,
+			end_blind_index = 7,
+			num = 1,			
+			addbuy_chips = 10000,
+		},
+
+		addbuy_conditions = {
+	    	[1] = {		--索引是次数
+	      		id=1,
+	      		num=100,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=100,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=100,
+	      	}
+	    },
+		
+		--筹码为0时踢出倒计时(单位s)
+		kicked_time = 40, 					    
+		--连续超时判定次数
+		continuous_timeout = 2,
+		match_type_flag = {
+	    	"日常赛","大奖赛",
+	    },
+	    isopen_floadpool = false,
+	    --服务费比率
+	    service_charge_ratio = 10,
+		signup_fee = 0,
+		--赏金百分比
+		reward_ratio = 0,
+	},
+	[292]	= {  --SPT初级赛1
+		id=292,
+	    name = "SPT初级赛",
+	    des = "1.每三分钟升盲一次\n2.赛前30分钟允许入场，请提前进场准备\n3.开赛后15分钟内允许报名入场\n4.比赛中途退出视为退赛 \n5.比赛不允许重购\n6.比赛不允许增购\n7.比赛开始后剩余3人则不能进入赛场",
+	    picture_url = "",
+		match_type = 6,
+	    style = {
+	    	bg_name = "7.png",
+	    	title_name = " ",--可以直接配置汉字，如果不使用现有图片的话
+	    	sub_title_bg = "",
+	    	sub_title = "",--左上角显示
+	    	suffix_bg = "",
+            suffix_title = "",--右下角现实
+	    },
+
+	    start_time = "2016-6-7 20:00:00",
+
+	    --显示排序优先级
+	    match_seq = 2,
+
+	    --报名条件
+	    signing_conditions = {
+	    	[1] = {
+	      		id=1,
+	      		num=100,
+	    	},
+	    },
+	    --排名奖励模板
+	    award_template_id = 128,
+	    --循环模板
+	    cycle_template_id = 2,
+	    --涨盲模板
+	    blind_template_id = 4,
+	    --初始筹码
+	    match_init_chips = 5000,
+	    --比赛最大旁观人数
+	    max_wait_num = 500,
+	    action_timeout = 2000,
+	    --比赛开始时单桌最大玩家数
+	    start_max_table_playernum = 6,
+	    --比赛的最大报名人数
+	    match_max_player_num = 2000,
+	    --比赛的最少开赛人数
+	    match_min_player_num = 3,
+	    --用于不同比赛服务器加载不同比赛
+	    match_svrd_id = "",
+
+	    --用于已报名玩家开赛前提醒单位s
+	    match_remind_time = {
+	    	[1] = 60,
+	    },
+		--比赛开始前相对开始时间的报名开始时间单位s
+		match_signup_start_time = 86400,
+	    --比赛开始前相对开始时间的报名结束时间单位s
+	    match_signup_end_time = 10,
+	    conf_version = 17,
+	    
+	    --比赛未报名玩家开赛前提醒
+	    match_remind_all_time = {
+	    	[1] = 600,
+	    	[2] = 300,
+	    	[3] = 240,
+	    },
+
+	    --比赛结束后多长时间后从列表中删除 单位s
+	    matchend_del_time=86400,
+	    --比赛开赛前多长时间可以进入比赛单位s
+	    match_enter_time_before=600,
+
+		--比赛开始前什么时候推送
+		--如果在这个时间之后报名，则在开赛那一刻推送
+		match_push_notice_time=300,
+		
+	    --比赛上线时间
+	    match_show_time="2016-5-20 4:00:00",
+	    --比赛下线时间
+	    match_off_time="2016-9-1 2:00:00",
+	    --改选项用于指定是否打印日志
+	    is_debug = false,
+	   	--是否仅允许过百玩家参加
+		is_onlywhite = false,
+		--比赛截止进入人数
+		stop_enter_playernum = 5,
+		--支持rebuy盲注阶段配置
+		rebuy = {
+			begin_blind_index = 1,
+			end_blind_index = 6,--rebuy盲注级别控制延时报名和延时进入时间，算法 时间=累加盲注表的1到end_blind_index盲注级别的time
+			num = 4,
+		},
+
+		--rebuy条件
+	    rebuy_conditions = {
+	    	[1] = {  --索引是次数
+	      		id=1,
+	      		num=100,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=100,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=100,
+	    	},
+	    	[4] = {		--索引是次数
+	      		id=1,
+	      		num=100,
+	    	},
+	    },
+
+		--支持addbuy盲注阶段配置
+		addbuy = {
+			begin_blind_index = 7,
+			end_blind_index = 7,
+			num = 1,			
+			addbuy_chips = 10000,
+		},
+
+		addbuy_conditions = {
+	    	[1] = {		--索引是次数
+	      		id=1,
+	      		num=100,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=100,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=100,
+	      	}
+	    },
+		
+		--筹码为0时踢出倒计时(单位s)
+		kicked_time = 40, 					    
+		--连续超时判定次数
+		continuous_timeout = 2,
+		match_type_flag = {
+	    	"日常赛","大奖赛",
+	    },
+	    isopen_floadpool = false,
+	    --服务费比率
+	    service_charge_ratio = 10,
+		signup_fee = 0,
+		--赏金百分比
+		reward_ratio = 0,
+	},
+	[293]	= {  --SPT中级赛1
+		id=293,
+	    name = "SPT中级赛",
+	    des = "1.每三分钟升盲一次\n2.赛前30分钟允许入场，请提前进场准备\n3.开赛后15分钟内允许报名入场\n4.比赛中途退出视为退赛 \n5.比赛不允许重购\n6.比赛不允许增购\n7.比赛开始后剩余3人则不能进入赛场",
+	    picture_url = "",
+		match_type = 6,
+	    style = {
+	    	bg_name = "8.png",
+	    	title_name = " ",--可以直接配置汉字，如果不使用现有图片的话
+	    	sub_title_bg = "",
+	    	sub_title = "",--左上角显示
+	    	suffix_bg = "",
+            suffix_title = "",--右下角现实
+	    },
+
+	    start_time = "2016-6-7 15:30:00",
+
+	    --显示排序优先级
+	    match_seq = 2,
+
+	    --报名条件
+	    signing_conditions = {
+	    	[1] = {
+	      		id=2105,
+	      		num=1,
+	    	},
+	    	[2] = {
+	      		id=1,
+	      		num=20000,
+	    	},
+	    },
+	    --排名奖励模板
+	    award_template_id = 129,
+	    --循环模板
+	    cycle_template_id = 2,
+	    --涨盲模板
+	    blind_template_id = 7,
+	    --初始筹码
+	    match_init_chips = 8000,
+	    --比赛最大旁观人数
+	    max_wait_num = 500,
+	    action_timeout = 2000,
+	    --比赛开始时单桌最大玩家数
+	    start_max_table_playernum = 6,
+	    --比赛的最大报名人数
+	    match_max_player_num = 2000,
+	    --比赛的最少开赛人数
+	    match_min_player_num = 3,
+	    --用于不同比赛服务器加载不同比赛
+	    match_svrd_id = "",
+
+	    --用于已报名玩家开赛前提醒单位s
+	    match_remind_time = {
+	    	[1] = 60,
+	    },
+		--比赛开始前相对开始时间的报名开始时间单位s
+		match_signup_start_time = 86400,
+	    --比赛开始前相对开始时间的报名结束时间单位s
+	    match_signup_end_time = 10,
+	    conf_version = 20,
+	    
+	    --比赛未报名玩家开赛前提醒
+	    match_remind_all_time = {
+	    	[1] = 600,
+	    	[2] = 300,
+	    	[3] = 240,
+	    },
+
+	    --比赛结束后多长时间后从列表中删除 单位s
+	    matchend_del_time=86400,
+	    --比赛开赛前多长时间可以进入比赛单位s
+	    match_enter_time_before=600,
+
+		--比赛开始前什么时候推送
+		--如果在这个时间之后报名，则在开赛那一刻推送
+		match_push_notice_time=300,
+		
+	    --比赛上线时间
+	    match_show_time="2016-5-20 4:00:00",
+	    --比赛下线时间
+	    match_off_time="2016-9-1 2:00:00",
+	    --改选项用于指定是否打印日志
+	    is_debug = false,
+	   	--是否仅允许过百玩家参加
+		is_onlywhite = false,
+		--比赛截止进入人数
+		stop_enter_playernum = 5,
+		--支持rebuy盲注阶段配置
+		rebuy = {
+			begin_blind_index = 1,
+			end_blind_index = 6,--rebuy盲注级别控制延时报名和延时进入时间，算法 时间=累加盲注表的1到end_blind_index盲注级别的time
+			num = 4,
+		},
+
+		--rebuy条件
+	    rebuy_conditions = {
+	    	[1] = {  --索引是次数
+	      		id=1,
+	      		num=20000,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=20000,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=20000,
+	    	},
+	    	[4] = {		--索引是次数
+	      		id=1,
+	      		num=20000,
+	    	},
+	    },
+
+		--支持addbuy盲注阶段配置
+		addbuy = {
+			begin_blind_index = 7,
+			end_blind_index = 7,
+			num = 1,			
+			addbuy_chips = 16000,
+		},
+
+		addbuy_conditions = {
+	    	[1] = {		--索引是次数
+	      		id=1,
+	      		num=20000,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=20000,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=20000,
+	      	}
+	    },
+		
+		--筹码为0时踢出倒计时(单位s)
+		kicked_time = 40, 					    
+		--连续超时判定次数
+		continuous_timeout = 2,
+		match_type_flag = {
+	    	"日常赛","大奖赛",
+	    },
+	    isopen_floadpool = false,
+	    --服务费比率
+	    service_charge_ratio = 10,
+		signup_fee = 0,
+		--赏金百分比
+		reward_ratio = 0,
+	},
+	[294]	= {  --SPT中级赛1
+		id=294,
+	    name = "SPT中级赛",
+	    des = "1.每三分钟升盲一次\n2.赛前30分钟允许入场，请提前进场准备\n3.开赛后15分钟内允许报名入场\n4.比赛中途退出视为退赛 \n5.比赛不允许重购\n6.比赛不允许增购\n7.比赛开始后剩余3人则不能进入赛场",
+	    picture_url = "",
+		match_type = 6,
+	    style = {
+	    	bg_name = "8.png",
+	    	title_name = " ",--可以直接配置汉字，如果不使用现有图片的话
+	    	sub_title_bg = "",
+	    	sub_title = "",--左上角显示
+	    	suffix_bg = "",
+            suffix_title = "",--右下角现实
+	    },
+
+	    start_time = "2016-6-7 19:30:00",
+
+	    --显示排序优先级
+	    match_seq = 2,
+
+	    --报名条件
+	    signing_conditions = {
+	    	[1] = {
+	      		id=2105,
+	      		num=1,
+	    	},
+	    	[2] = {
+	      		id=1,
+	      		num=20000,
+	    	},
+	    },
+	    --排名奖励模板
+	    award_template_id = 129,
+	    --循环模板
+	    cycle_template_id = 2,
+	    --涨盲模板
+	    blind_template_id = 7,
+	    --初始筹码
+	    match_init_chips = 8000,
+	    --比赛最大旁观人数
+	    max_wait_num = 500,
+	    action_timeout = 2000,
+	    --比赛开始时单桌最大玩家数
+	    start_max_table_playernum = 6,
+	    --比赛的最大报名人数
+	    match_max_player_num = 2000,
+	    --比赛的最少开赛人数
+	    match_min_player_num = 3,
+	    --用于不同比赛服务器加载不同比赛
+	    match_svrd_id = "",
+
+	    --用于已报名玩家开赛前提醒单位s
+	    match_remind_time = {
+	    	[1] = 60,
+	    },
+		--比赛开始前相对开始时间的报名开始时间单位s
+		match_signup_start_time = 86400,
+	    --比赛开始前相对开始时间的报名结束时间单位s
+	    match_signup_end_time = 10,
+	    conf_version = 20,
+	    
+	    --比赛未报名玩家开赛前提醒
+	    match_remind_all_time = {
+	    	[1] = 600,
+	    	[2] = 300,
+	    	[3] = 240,
+	    },
+
+	    --比赛结束后多长时间后从列表中删除 单位s
+	    matchend_del_time=86400,
+	    --比赛开赛前多长时间可以进入比赛单位s
+	    match_enter_time_before=600,
+
+		--比赛开始前什么时候推送
+		--如果在这个时间之后报名，则在开赛那一刻推送
+		match_push_notice_time=300,
+		
+	    --比赛上线时间
+	    match_show_time="2016-5-20 4:00:00",
+	    --比赛下线时间
+	    match_off_time="2016-9-1 2:00:00",
+	    --改选项用于指定是否打印日志
+	    is_debug = false,
+	   	--是否仅允许过百玩家参加
+		is_onlywhite = false,
+		--比赛截止进入人数
+		stop_enter_playernum = 5,
+		--支持rebuy盲注阶段配置
+		rebuy = {
+			begin_blind_index = 1,
+			end_blind_index = 6,--rebuy盲注级别控制延时报名和延时进入时间，算法 时间=累加盲注表的1到end_blind_index盲注级别的time
+			num = 4,
+		},
+
+		--rebuy条件
+	    rebuy_conditions = {
+	    	[1] = {  --索引是次数
+	      		id=1,
+	      		num=20000,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=20000,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=20000,
+	    	},
+	    	[4] = {		--索引是次数
+	      		id=1,
+	      		num=20000,
+	    	},
+	    },
+
+		--支持addbuy盲注阶段配置
+		addbuy = {
+			begin_blind_index = 7,
+			end_blind_index = 7,
+			num = 1,			
+			addbuy_chips = 16000,
+		},
+
+		addbuy_conditions = {
+	    	[1] = {		--索引是次数
+	      		id=1,
+	      		num=20000,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=20000,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=20000,
+	      	}
+	    },
+		
+		--筹码为0时踢出倒计时(单位s)
+		kicked_time = 40, 					    
+		--连续超时判定次数
+		continuous_timeout = 2,
+		match_type_flag = {
+	    	"日常赛","大奖赛",
+	    },
+	    isopen_floadpool = false,
+	    --服务费比率
+	    service_charge_ratio = 10,
+		signup_fee = 0,
+		--赏金百分比
+		reward_ratio = 0,
+	},
+	[322]	= {  --SPT高级赛
+		id=322,
+	    name = "SPT高级赛",
+	    des = "1.每三分钟升盲一次\n2.赛前30分钟允许入场，请提前进场准备\n3.开赛后15分钟内允许报名入场\n4.比赛中途退出视为退赛 \n5.比赛不允许重购\n6.比赛不允许增购\n7.比赛开始后剩余3人则不能进入赛场",
+	    picture_url = "",
+		match_type = 6,
+	    style = {
+	    	bg_name = "9.png",
+	    	title_name = " ",--可以直接配置汉字，如果不使用现有图片的话
+	    	sub_title_bg = "",
+	    	sub_title = "",--左上角显示
+	    	suffix_bg = "",
+            suffix_title = "",--右下角现实
+	    },
+
+	    start_time = "2016-7-7 21:30:00",
+
+	    --显示排序优先级
+	    match_seq = 2,
+
+	    --报名条件
+	    signing_conditions = {
+	    	[1] = {
+	      		id=2106,
+	      		num=1,
+	    	},
+	    	[2] = {
+	      		id=1,
+	      		num=110000,
+	    	},
+	    },
+	    --排名奖励模板
+	    award_template_id = 130,
+	    --循环模板
+	    cycle_template_id = 14,
+	    --涨盲模板
+	    blind_template_id = 9,
+	    --初始筹码
+	    match_init_chips = 10000,
+	    --比赛最大旁观人数
+	    max_wait_num = 500,
+	    action_timeout = 2000,
+	    --比赛开始时单桌最大玩家数
+	    start_max_table_playernum = 6,
+	    --比赛的最大报名人数
+	    match_max_player_num = 2000,
+	    --比赛的最少开赛人数
+	    match_min_player_num = 20,
+	    --用于不同比赛服务器加载不同比赛
+	    match_svrd_id = "",
+
+	    --用于已报名玩家开赛前提醒单位s
+	    match_remind_time = {
+	    	[1] = 60,
+	    },
+		--比赛开始前相对开始时间的报名开始时间单位s
+		match_signup_start_time = 86400,
+	    --比赛开始前相对开始时间的报名结束时间单位s
+	    match_signup_end_time = 10,
+	    conf_version = 22,
+	    
+	    --比赛未报名玩家开赛前提醒
+	    match_remind_all_time = {
+	    	[1] = 600,
+	    	[2] = 300,
+	    	[3] = 240,
+	    },
+
+	    --比赛结束后多长时间后从列表中删除 单位s
+	    matchend_del_time=86400,
+	    --比赛开赛前多长时间可以进入比赛单位s
+	    match_enter_time_before=600,
+
+		--比赛开始前什么时候推送
+		--如果在这个时间之后报名，则在开赛那一刻推送
+		match_push_notice_time=300,
+		
+	    --比赛上线时间
+	    match_show_time="2016-5-20 4:00:00",
+	    --比赛下线时间
+	    match_off_time="2016-9-1 2:00:00",
+	    --改选项用于指定是否打印日志
+	    is_debug = false,
+	   	--是否仅允许过百玩家参加
+		is_onlywhite = false,
+		--比赛截止进入人数
+		stop_enter_playernum = 5,
+		--支持rebuy盲注阶段配置
+		rebuy = {
+			begin_blind_index = 1,
+			end_blind_index = 6,--rebuy盲注级别控制延时报名和延时进入时间，算法 时间=累加盲注表的1到end_blind_index盲注级别的time
+			num = 1,
+		},
+
+		--rebuy条件
+	    rebuy_conditions = {
+	    	[1] = {  --索引是次数
+	      		id=1,
+	      		num=110000,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=110000,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=110000,
+	    	},
+	    },
+
+		--支持addbuy盲注阶段配置
+		addbuy = {
+			begin_blind_index = 7,
+			end_blind_index = 7,
+			num = 0,			
+			addbuy_chips = 20000,
+		},
+
+		addbuy_conditions = {
+	    	[1] = {		--索引是次数
+	      		id=1,
+	      		num=110000,
+	    	},
+	    	[2] = {		--索引是次数
+	      		id=1,
+	      		num=110000,
+	    	},
+	    	[3] = {		--索引是次数
+	      		id=1,
+	      		num=110000,
+	      	}
+	    },
+		
+		--筹码为0时踢出倒计时(单位s)
+		kicked_time = 40, 					    
+		--连续超时判定次数
+		continuous_timeout = 2,
+		match_type_flag = {
+	    	"日常赛","大奖赛",
+	    },
+	    isopen_floadpool = false,
+	    service_charge_ratio = 0,
+		signup_fee = 0,
+		--赏金百分比
+		reward_ratio = 0,
+	},
+}

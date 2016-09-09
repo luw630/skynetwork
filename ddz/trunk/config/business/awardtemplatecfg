@@ -1,0 +1,1075 @@
+version=57
+awardtemplatecfg = {
+    [1] = {
+        [1]={
+            begin_rank=1,
+            end_rank=3,
+            des="100筹码",
+            pool_ratio = 0, --浮动奖池比率50表示50%
+            awards={
+            	[1]={
+		            id=1,   --物品id 1表示筹码
+            		num=100,
+            	},
+            },
+        },
+    },
+    [11] = {   --SNG奖励模板
+        [1]={
+            begin_rank=1,
+            end_rank=1,
+            des="400聚众币",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=400,
+                },
+            },
+        },
+        [2]={
+            begin_rank=2,
+            end_rank=2,
+            des="200聚众币",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=200,
+                },
+            },
+        },
+    },
+    [12] = {   
+        [1]={
+            begin_rank=1,
+            end_rank=1,
+            des="4000聚众币",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=4000,
+                },
+            },
+        },
+        [2]={
+            begin_rank=2,
+            end_rank=2,
+            des="2000聚众币",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=2000,
+                },
+            },
+        },
+    },
+    [13] = {   
+        [1]={
+            begin_rank=1,
+            end_rank=1,
+            des="40000聚众币",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=40000,
+                },
+            },
+        },
+        [2]={
+            begin_rank=2,
+            end_rank=2,
+            des="20000聚众币",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=20000,
+                },
+            },
+        },
+    },
+    [109] = {  --100元京东赛
+        [1]={
+            begin_rank=1,
+            end_rank=1,
+            des="100元京东卡",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1003,   --物品id 1表示筹码
+                    num=1,
+                },
+            },
+        },
+        [2]={
+            begin_rank=2,
+            end_rank=2,
+            des="5000聚众币",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=5000,
+                },
+            },
+        },
+        [3]={
+            begin_rank=3,
+            end_rank=3,
+            des="3000聚众币",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=3000,
+                },
+            },
+        },
+        [4]={
+            begin_rank=4,
+            end_rank=4,
+            des="2000聚众币",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=2000,
+                },
+            },
+        },
+        [5]={
+            begin_rank=5,
+            end_rank=5,
+            des="1000聚众币",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=1000,
+                },
+            },
+        },
+    },
+    [110] = {  --周六资格赛
+        [1]={
+            begin_rank=1,
+            end_rank=1,
+            des="大奖赛门票+5000聚众币",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=5000,
+                },
+                [2]={
+                    id=43,   --物品id 1表示筹码
+                    num=1,
+                },
+            },
+        },
+        [2]={
+            begin_rank=2,
+            end_rank=2,
+            des="3000聚众币",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=3000,
+                },
+            },
+        },
+        [3]={
+            begin_rank=3,
+            end_rank=3,
+            des="2000聚众币",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=2000,
+                },
+            },
+        },
+        [4]={
+            begin_rank=4,
+            end_rank=4,
+            des="1000聚众币",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=1000,
+                },
+            },
+        },
+        [5]={
+            begin_rank=5,
+            end_rank=5,
+            des="600聚众币",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=600,
+                },
+            },
+        },
+    },
+    [111] = {  --300元京东大奖赛
+        [1]={
+            begin_rank=1,
+            end_rank=1,
+            des="200元京东卡",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1002,   --物品id 1表示筹码
+                    num=1,
+                },
+            },
+        },
+        [2]={
+            begin_rank=2,
+            end_rank=2,
+            des="100元京东卡",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1003,   --物品id 1表示筹码
+                    num=1,
+                },
+            },
+        },
+        [3]={
+            begin_rank=3,
+            end_rank=3,
+            des="10000聚众币",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=10000,
+                },
+            },
+        },
+        [4]={
+            begin_rank=4,
+            end_rank=4,
+            des="6000聚众币",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=6000,
+                },
+            },
+        },
+        [5]={
+            begin_rank=5,
+            end_rank=5,
+            des="4000聚众币",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=4000,
+                },
+            },
+        },
+    },
+    [115] = {  --10元话费
+        [1]={
+            begin_rank=1,
+            end_rank=1,
+            des="10元话费卡",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1101,   --物品id 1表示筹码
+                    num=1,
+                },
+            },
+        },
+        [2]={
+            begin_rank=2,
+            end_rank=2,
+            des="1000聚众币",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=3000,
+                },
+            },
+        },
+        [3]={
+            begin_rank=3,
+            end_rank=3,
+            des="600聚众币",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=2000,
+                },
+            },
+        },
+    },
+    [116] = {  --10000聚众币赛
+        [1]={
+            begin_rank=1,
+            end_rank=1,
+            des="5000聚众币",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=5000,
+                },
+            },
+        },
+        [2]={
+            begin_rank=2,
+            end_rank=2,
+            des="3000聚众币",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=3000,
+                },
+            },
+        },
+        [3]={
+            begin_rank=3,
+            end_rank=3,
+            des="2000聚众币",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=2000,
+                },
+            },
+        },
+    }, 
+    [122] = {  --海文杯新手赛
+        [1]={
+            begin_rank=1,
+            end_rank=1,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1103,   --物品id 1表示筹码
+                    num=1,
+                },
+            },
+        },
+        [2]={
+            begin_rank=2,
+            end_rank=2,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1102,   --物品id 1表示筹码
+                    num=1,
+                },
+            },
+        },
+        [3]={
+            begin_rank=3,
+            end_rank=3,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1101,   --物品id 1表示筹码
+                    num=1,
+                },
+            },
+        },
+        [4]={
+            begin_rank=4,
+            end_rank=4,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=3000,
+                },
+            },
+        },
+        [5]={
+            begin_rank=5,
+            end_rank=5,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=3000,
+                },
+            },
+        },
+    }, 
+    [123] = {  --海文杯赏金赛
+        [1]={
+            begin_rank=1,
+            end_rank=1,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1401,   --物品id 1表示筹码
+                    num=1,
+                },
+            },
+        },
+        [2]={
+            begin_rank=2,
+            end_rank=2,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=8000,
+                },
+            },
+        },
+        [3]={
+            begin_rank=3,
+            end_rank=3,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=6000,
+                },
+            },
+        },
+        [4]={
+            begin_rank=4,
+            end_rank=4,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=5500,
+                },
+            },
+        },
+        [5]={
+            begin_rank=5,
+            end_rank=5,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=5500,
+                },
+            },
+        },
+    }, 
+    [124] = {  --海文杯大奖赛
+        [1]={
+            begin_rank=1,
+            end_rank=1,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1403,   --物品id 1表示筹码
+                    num=1,
+                },
+            },
+        },
+        [2]={
+            begin_rank=2,
+            end_rank=2,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1402,   --物品id 1表示筹码
+                    num=1,
+                },
+            },
+        },
+        [3]={
+            begin_rank=3,
+            end_rank=3,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1401,   --物品id 1表示筹码
+                    num=1,
+                },
+            },
+        },
+    }, 
+    [125] = {  --君子杯
+        [1]={
+            begin_rank=1,
+            end_rank=1,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1208,   --物品id 1表示筹码
+                    num=1,
+                },
+                [2]={
+                    id=1,   --物品id 1表示筹码
+                    num=88888,
+                },
+            },
+        },
+        [2]={
+            begin_rank=2,
+            end_rank=2,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1203,   --物品id 1表示筹码
+                    num=1,
+                },
+                [2]={
+                    id=1,   --物品id 1表示筹码
+                    num=66666,
+                },
+            },
+        },
+        [3]={
+            begin_rank=3,
+            end_rank=3,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1207,   --物品id 1表示筹码
+                    num=1,
+                },
+                [2]={
+                    id=1,   --物品id 1表示筹码
+                    num=10000,
+                },
+            },
+        },
+        [4]={
+            begin_rank=4,
+            end_rank=4,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1207,   --物品id 1表示筹码
+                    num=1,
+                },
+                [2]={
+                    id=1,   --物品id 1表示筹码
+                    num=10000,
+                },
+            },
+        },
+        [5]={
+            begin_rank=5,
+            end_rank=5,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1207,   --物品id 1表示筹码
+                    num=1,
+                },
+                [2]={
+                    id=1,   --物品id 1表示筹码
+                    num=10000,
+                },
+            },
+        },
+        [6]={
+            begin_rank=6,
+            end_rank=6,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1209,   --物品id 1表示筹码
+                    num=1,
+                },
+                [2]={
+                    id=1,   --物品id 1表示筹码
+                    num=8888,
+                },
+            },
+        },
+        [7]={
+            begin_rank=7,
+            end_rank=7,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1209,   --物品id 1表示筹码
+                    num=1,
+                },
+                [2]={
+                    id=1,   --物品id 1表示筹码
+                    num=8888,
+                },
+            },
+        },
+        [8]={
+            begin_rank=8,
+            end_rank=8,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1209,   --物品id 1表示筹码
+                    num=1,
+                },
+                [2]={
+                    id=1,   --物品id 1表示筹码
+                    num=8888,
+                },
+            },
+        },
+        [9]={
+            begin_rank=9,
+            end_rank=9,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1209,   --物品id 1表示筹码
+                    num=1,
+                },
+                [2]={
+                    id=1,   --物品id 1表示筹码
+                    num=8888,
+                },
+            },
+        },
+        [10]={
+            begin_rank=10,
+            end_rank=10,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1210,   --物品id 1表示筹码
+                    num=1,
+                },
+                [2]={
+                    id=1,   --物品id 1表示筹码
+                    num=6666,
+                },
+            },
+        },        
+        [11]={
+            begin_rank=11,
+            end_rank=11,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1210,   --物品id 1表示筹码
+                    num=1,
+                },
+                [2]={
+                    id=1,   --物品id 1表示筹码
+                    num=6666,
+                },
+            },
+        },
+        [12]={
+            begin_rank=12,
+            end_rank=12,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1210,   --物品id 1表示筹码
+                    num=1,
+                },
+                [2]={
+                    id=1,   --物品id 1表示筹码
+                    num=6666,
+                },
+            },
+        },
+        [13]={
+            begin_rank=13,
+            end_rank=13,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1210,   --物品id 1表示筹码
+                    num=1,
+                },
+                [2]={
+                    id=1,   --物品id 1表示筹码
+                    num=6666,
+                },
+            },
+        },
+        [14]={
+            begin_rank=14,
+            end_rank=14,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1210,   --物品id 1表示筹码
+                    num=1,
+                },
+                [2]={
+                    id=1,   --物品id 1表示筹码
+                    num=6666,
+                },
+            },
+        },        
+        [15]={
+            begin_rank=15,
+            end_rank=15,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1210,   --物品id 1表示筹码
+                    num=1,
+                },
+                [2]={
+                    id=1,   --物品id 1表示筹码
+                    num=6666,
+                },
+            },
+        },
+        [16]={
+            begin_rank=16,
+            end_rank=16,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1210,   --物品id 1表示筹码
+                    num=1,
+                },
+                [2]={
+                    id=1,   --物品id 1表示筹码
+                    num=6666,
+                },
+            },
+        },
+        [17]={
+            begin_rank=17,
+            end_rank=17,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1210,   --物品id 1表示筹码
+                    num=1,
+                },
+                [2]={
+                    id=1,   --物品id 1表示筹码
+                    num=6666,
+                },
+            },
+        },
+        [18]={
+            begin_rank=18,
+            end_rank=18,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1210,   --物品id 1表示筹码
+                    num=1,
+                },
+                [2]={
+                    id=1,   --物品id 1表示筹码
+                    num=6666,
+                },
+            },
+        },
+    },
+    [126] = {  --无奖金
+        [1]={
+            begin_rank=1,
+            end_rank=1,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=0,
+                },
+            },
+        },
+    },
+    [127] = {  --ChinaJoy门票
+        [1]={
+            begin_rank=1,
+            end_rank=1,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1302,   --物品id 1表示筹码
+                    num=1,
+                },
+            },
+        },
+        [2]={
+            begin_rank=2,
+            end_rank=2,
+            des="5000聚众币",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=5000,
+                },
+            },
+        },
+        [3]={
+            begin_rank=3,
+            end_rank=3,
+            des="3000聚众币",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=3000,
+                },
+            },
+        },
+        [4]={
+            begin_rank=4,
+            end_rank=4,
+            des="2000聚众币",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=2000,
+                },
+            },
+        },
+        [5]={
+            begin_rank=5,
+            end_rank=5,
+            des="1500聚众币",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=1500,
+                },
+            },
+        },
+    }, 
+    [128] = {  --SPT初级赛
+        [1]={
+            begin_rank=1,
+            end_rank=1,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=2105,   --物品id 1表示筹码
+                    num=1,
+                },
+                [2]={
+                    id=1104,   --物品id 1表示筹码
+                    num=1,
+                },
+            },
+        },
+        [2]={
+            begin_rank=2,
+            end_rank=2,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=2105,   --物品id 1表示筹码
+                    num=1,
+                },
+                [2]={
+                    id=1,   --物品id 1表示筹码
+                    num=2000,
+                },
+            },
+        },
+        [3]={
+            begin_rank=3,
+            end_rank=3,
+            des="",
+            pool_ratio = 0,
+            awards={
+               [1]={
+                    id=2105,   --物品id 1表示筹码
+                    num=1,
+                },
+                [2]={
+                    id=1,   --物品id 1表示筹码
+                    num=1000,
+                },
+            },
+        },
+        [4]={
+            begin_rank=4,
+            end_rank=4,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=600,
+                },
+            },
+        },
+        [5]={
+            begin_rank=5,
+            end_rank=5,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=600,
+                },
+            },
+        },
+        [6]={
+            begin_rank=6,
+            end_rank=6,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=600,
+                },
+            },
+        },
+    }, 
+    [129] = {  --SPT中级赛
+        [1]={
+            begin_rank=1,
+            end_rank=1,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=2106,   --物品id 1表示筹码
+                    num=1,
+                },
+                [2]={
+                    id=1,   --物品id 1表示筹码
+                    num=10000,
+                },
+            },
+        },
+        [2]={
+            begin_rank=2,
+            end_rank=2,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=55000,
+                },
+            },
+        },
+        [3]={
+            begin_rank=3,
+            end_rank=3,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=30000,
+                },
+            },
+        },
+    }, 
+    [130] = {  --SPT高级赛
+        [1]={
+            begin_rank=1,
+            end_rank=1,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1303,   --物品id 1表示筹码
+                    num=1,
+                },
+            },
+        },
+        [2]={
+            begin_rank=2,
+            end_rank=2,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1304,   --物品id 1表示筹码
+                    num=1,
+                },
+                [2]={
+                    id=1,   --物品id 1表示筹码
+                    num=100000,
+                },
+            },
+        },
+        [3]={
+            begin_rank=3,
+            end_rank=3,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1304,   --物品id 1表示筹码
+                    num=1,
+                },
+                [2]={
+                    id=1,   --物品id 1表示筹码
+                    num=80000,
+                },
+            },
+        },
+        [4]={
+            begin_rank=4,
+            end_rank=4,
+            des="",
+            pool_ratio = 0,
+            awards={
+                [1]={
+                    id=1,   --物品id 1表示筹码
+                    num=150000,
+                },
+            },
+        },
+    }, 
+ }

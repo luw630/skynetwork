@@ -1,0 +1,102 @@
+expcfg={
+	[1] = {
+		name="",
+		level=1,
+		value=100,
+	},
+	[2] = {
+		name="",
+		level=2,
+		value=200,
+	},
+	[3] = {
+		name="",
+		level=3,
+		value=300,
+	},
+	[4] = {
+		name="",
+		level=4,
+		value=400,
+	},
+	[5] = {
+		name="",
+		level=5,
+		value=500,
+	},
+	[6] = {
+		name="",
+		level=6,
+		value=600,
+	},
+	[7] = {
+		name="",
+		level=7,
+		value=700,
+	},
+	[8] = {
+		name="",
+		level=8,
+		value=800,
+	},
+	[9] = {
+		name="",
+		level=9,
+		value=900,
+	},
+	[10] = {
+		name="",
+		level=10,
+		value=1000,
+	},
+	[11] = {
+		name="",
+		level=11,
+		value=1100,
+	},
+	[12] = {
+		name="",
+		level=12,
+		value=1200,
+	},
+	[13] = {
+		name="",
+		level=13,
+		value=1300,
+	},
+	[14] = {
+		name="",
+		level=14,
+		value=1400,
+	},
+	[15] = {
+		name="",
+		level=15,
+		value=1500,
+	},
+	[16] = {
+		name="",
+		level=16,
+		value=1600,
+	},
+	[17] = {
+		name="",
+		level=17,
+		value=1700,
+	},
+	[18] = {
+		name="",
+		level=18,
+		value=1800,
+	},
+	[19] = {
+		name="",
+
+		level=19,
+		value=1900,
+	},
+	[20] = {
+		level=20,
+		value=2000,
+	}
+}

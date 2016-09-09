@@ -1,0 +1,179 @@
+mongologs={
+	[".mongolog"]={
+		rs={
+			{
+				host="127.0.0.1", 
+				port=27017,
+				--username=,
+				--password=,
+			},	
+		},
+		dbname="texas",
+	}
+}
+
+proxys = {
+	[".proxy"] = {
+	}
+}
+---------------------------------------------
+gatesvrs={
+	gate_1={
+		svr_ip = "192.168.6.216",
+		svr_port = 8888,
+		debug_console_port = 8000,
+		---配置定时器池子大小
+		timersize = 1000,
+		agentsize = 500,
+		agentincr = 200,
+		svr_gate_type = "wsgate",
+		svr_netpack = "websocketnetpack",
+		svr_tcpmng = "long_tcp_mng",
+		maxclient = 100000,
+	},	
+}
+
+loginsvrs={
+	login_1={
+		svr_ip = "0.0.0.0",
+		svr_port = 8889,
+		debug_console_port = 8001,
+		agentsize = 1000,
+		agentincr = 300,
+		svr_gate_type = "wsgate",
+		svr_netpack = "websocketnetpack",
+		svr_tcpmng = "short_tcp_mng",
+		maxclient = 10000,
+	}, 
+}
+
+
+rechargesvrs={
+	rechargesvr={
+		debug_console_port = 8002,       	
+	}
+}
+
+httpsvrs={
+	httpsvr_1={
+		debug_console_port = 8003,
+		svr_ip = "0.0.0.0",
+		svr_port = 8080,
+		agentsize = 100,
+		agentincr = 50,
+		--dns_server = "",
+		--dns_port = 0,
+	}
+}
+
+gmsvrs={
+	gm_1={
+		debug_console_port = 8004,
+		gmsvr_ip = "127.0.0.1",
+		gmsvr_port = 8890,
+		gmhttpsvr_ip = "0.0.0.0",
+		gmhttpsvr_port = 8081,
+		--dns_server = "",
+		--dns_port = 0,
+		agentsize = 100,
+		agentincr = 50,		
+	}
+}
+
+robotsvrs={
+	robotsvr_1 = {
+		robotsize=300,
+		timersize = 600,
+		debug_console_port = 8005,
+	}
+}
+
+ranklistsvrs={
+	ranklistsvr_1 = {
+		debug_console_port = 8006,
+		mqsvr_id = "rankmq_1",
+		ranklistdb = {
+			svr_id = ".ranklistdb_1",
+			host="127.0.0.1",
+			port=6379,
+			db=12,
+			--auth = "foobared"		
+		},
+	}
+}
+
+recordsvrs={
+	recordsvr_1={
+		debug_console_port = 8007,
+		--七牛上传参数
+	},
+}
+
+datadbsvrs = {
+	datadbsvr_1={
+		debug_console_port = 8008,
+		redisnum=3, 
+		redisconn={
+			host="127.0.0.1",
+			port=6379,
+			db=0,
+			--auth = "foobared",	
+		},
+		mysqlnum=3,
+		mysqlconn={
+			host="127.0.0.1",
+			port=3306,
+			database="gogame_1",
+			user="root",
+			password="",
+			max_packet_size = 1024 * 1024,	
+		},
+	}
+}
+
+--[[说明多个logindbsvr部署时注意:
+	1.redisconn 和 mysqlconn配置成一样。
+	2.后期需要db扩容分库时，需要调整下core/dao/playerlogindao.lua中
+	get_newplayer_rid  接口实现从多个数据库中查找数据
+]]
+logindbsvrs = {
+	logindbsvr_1={
+		debug_console_port = 8009,
+		redisnum=2, 
+		redisconn={
+			host="127.0.0.1",
+			port=6379,
+			db=1,
+			--auth = "foobared",	
+		},
+		mysqlnum=2,
+		mysqlconn={
+			host="127.0.0.1",
+			port=3306,
+			database="gogame_1",
+			user="root",
+			password="",
+			max_packet_size = 1024 * 1024,	
+		},
+	}
+}
+
+tablestatesvrs={
+	tablestatesvr_1={
+		debug_console_port = 8010,
+		--七牛上传参数
+	},
+}
+
+roomsvrs={
+	roomsvr_1={
+		tablesize=1000,
+		tableinrc=200,
+		timersize = 1000,
+		debug_console_port = 8011,
+	},
+}
+
+
+
+

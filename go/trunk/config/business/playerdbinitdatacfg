@@ -1,0 +1,38 @@
+info = {
+	rid = 0,
+	rolename = "_guest",
+	logo = "1",
+	country = "",
+	province ="",
+	phone = "",
+	--true 男, false 女
+	sex = 0,
+}
+
+playchess = {
+	rid = 0,
+	level = 0,   --级位
+    dan = 0,     --段位
+    winnum = 0,  --胜局 
+    losenum = 0, --败局
+    drawnum = 0, --和局
+}
+
+money = {
+    rid = 0,
+	chips = 1000,
+	maxchips = 1000,	
+}
+
+online = {
+    rid = 0,
+	activetime = 0, 
+	onlinetime = 0, --上线时间
+	roomsvr_id = "",
+	roomsvr_table_id = 0,
+	roomsvr_table_address = -1,
+	gatesvr_ip = "",
+	gatesvr_port = 0,
+	gatesvr_id = "",
+	gatesvr_service_address = -1,
+}

@@ -1,0 +1,11 @@
+ranklistcfg = {
+    [1] = {
+        rank_key = 1,
+        rank_type = 1,
+        cut_size = 10000, --排行榜最大量
+        is_allow_robot = true,
+        backlist={
+        	
+        },
+    } 
+ }

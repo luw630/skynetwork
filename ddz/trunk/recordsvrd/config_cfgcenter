@@ -1,0 +1,7 @@
+bucket="share"
+accesskey="1l8HrAh5m2bE1L5sf37zHJqpXaWrKsjAIBu9CkQt"
+secretkey="YdNgjrirAF7d-XMnu3HZvjGzc_U11ODdCIL480Q2"
+python_path="../../../upload/bin/python"
+upload_script="../../../tools/upload/upload.py"
+proxy_ip="127.0.0.1"
+proxy_port=20000

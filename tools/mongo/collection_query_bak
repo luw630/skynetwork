@@ -1,0 +1,7 @@
+device_reg		time_stamp,uid,device_id,brand,model,channel_id			1	time
+user_login		time_stamp,uid,money,level,device_id,login_count,nick_name,imei,mac_addr,channel_id,ip			1	time
+user_logout		time_stamp,uid,online_time,reason,device_id					1	time
+table_log_player	time_stamp,uid,game_id,room_type,chips_change,cur_chips					1	time
+money_log		time_stamp,uid,act_type,act_num,act_reason,total_money,is_robot			1	time
+shop_core_data		time_stamp,uid,order_id,is_first_pay,payment_amount,channel_id				1	time
+shop_order_state        time_stamp,uid,order_id,state,payment_amount,good_id,good_num,awards,channel_id,pay_channel_id            1       time

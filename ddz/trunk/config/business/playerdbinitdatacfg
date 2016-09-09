@@ -1,0 +1,167 @@
+info = {
+	name = "info",
+	rid = 0,
+	channelid = 0,
+	rolename = "_guest",
+	logo = "1",
+	country = "",
+	province ="",
+	phone = "",
+	--true 男, false 女
+	sex = 0,
+	isblock =  false, 	 
+}
+
+playcards = {
+	name = "playcards",
+	rid = 0,
+	totalwin = 0,
+	totallose = 0,
+	maxformcards = {},
+	maxcardform = 0,
+	maxwinchip = 0,
+	exp_value=0,
+	exp_level=0,	 	
+}
+
+money = {
+	name = "money",
+	rid = 0,
+	chips = 1000,
+	maxchips = 1000,	
+}
+
+online = {
+	name = "online",
+	activetime = 0,
+	onlinetime = 0,
+	last_entertable_time = 0,
+	roomsvr_id = "",
+	table_id = 0,
+	table_address = -1,
+	gatesvr_ip = "",
+	gatesvr_port = 0,
+	gatesvr_id = "",
+	gatesvr_service_address = -1,
+	matchsvr_id = "",
+	match_instance_id = "",
+	match_instance_address = -1,
+}
+
+total_career={
+	hands=0,  --手数
+	winhands=0, --获胜手数
+	bet=0, --下注总数
+	raise=0, --加注总数
+	callnum=0, --跟注总数
+	threebet=0, --再加注总数
+	winbb=0,  --每局赢的大盲注数
+    maxwinchip=0,  --最大赢取
+    maxcardform=0, --最大牌型值
+    maxformcards = {},
+    winchip=0, --总赢取量
+    vp=0,    --入局总数
+    round=0, --总轮数
+    steal=0, --偷盲数
+    winsteal=0,   --偷盲成功数
+    othersteal=0, --有人偷盲次数
+    flodtosteal=0, --面对偷盲弃牌 
+    flodtocontinebet=0, --面对他人持续加注数
+    flop=0, --翻牌圈次数
+    turn=0, --转牌圈次数
+    river=0, --河牌圈次数
+    preflopraise=0,   --摊牌前加注数
+    wenttoshowdown=0, --摊牌数
+    winwenttoshowdown=0, --摊牌胜利数
+    matchnum = 0, --比赛场次
+    maxmatchrank = 0, --比赛最佳名次
+	mtt_hands = 0, --mtt手数
+	sng_hands = 0, --sng手数
+	score_hands = 0,  --积分赛手数
+	friend_hands = 0, --朋友桌手数
+	continuebet=0, --持续加注
+	othercontinuebet=0, --他人持续加注数
+}
+
+career={
+	hands=0,  --手数
+	winhands=0, --获胜手数
+	bet=0, --下注总数
+	raise=0, --加注总数
+	callnum=0, --跟注总数
+	threebet=0, --再加注总数
+	winbb=0,  --每局赢的大盲注数
+    maxwinchip=0,  --最大赢取
+    maxcardform=0, --最大牌型值
+    maxformcards = {},
+    winchip=0, --总赢取量
+    vp=0,    --入局总数
+    round=0, --总轮数
+    steal=0, --偷盲数
+    winsteal=0,   --偷盲成功数
+    othersteal=0, --有人偷盲次数
+    flodtosteal=0, --面对偷盲弃牌 
+    flodtocontinebet=0, --面对他人持续加注数
+    flop=0, --翻牌圈次数
+    turn=0, --转牌圈次数
+    river=0, --河牌圈次数
+    preflopraise=0,   --摊牌前加注数
+    wenttoshowdown=0, --摊牌数
+    winwenttoshowdown=0, --摊牌胜利数
+    matchnum = 0, --比赛场次
+    maxmatchrank = 0, --比赛最佳名次
+	mtt_hands = 0, --mtt手数
+	sng_hands = 0, --sng手数
+	score_hands = 0,  --积分赛手数
+	friend_hands = 0, --朋友桌手数
+	continuebet=0, --持续加注
+	othercontinuebet=0, --他人持续加注数
+	flashtime = {}, --闪光时刻
+	--[[
+		月份={
+			日期={
+				hands=  手数
+				winhands = 获胜手数
+				bet = 下注总数
+				raise = 加注总数
+				callnum = 跟注总数
+				threebet=再加注总数
+				winbb=每局赢的大盲注数
+			    maxwinchip=最大赢取
+			    maxcardform = 最大牌型值
+			    maxformcards = {}
+			    totalwinchip=总赢取量
+			    vp=入局总数
+			    round=总轮数
+			    steal=偷盲数
+			    winsteal=偷盲成功数
+			    othersteal=有人偷盲次数
+			    flodtosteal=面对偷盲弃牌
+			    continuebet=持续加注
+			    othercontinuebet=他人持续加注数
+			    flodtocontinebet=面对他人持续加注数
+			    flop=翻牌圈次数
+			    turn=转牌圈次数
+			    river=河牌圈次数
+			    preflopraise=摊牌前加注数
+			    wenttoshowdown=摊牌数
+			    winwenttoshowdown=摊牌胜利数
+			    matchnum = 比赛场次
+    			maxmatchrank = 比赛最佳名次
+    			flashtime = {} 闪光时刻
+    			mtt_hands =  mtt手数
+    			sng_hands = sng手数
+    			score_hands = 积分赛手数
+    			friend_hands = 朋友桌手数
+			}
+		}
+	]]
+}
+
+--记录累计数据
+cumulative = {
+	sng_firstrank_num = 0, --积分赛获得第一名累计次数
+	mtt_firstrank_num = 0, --mtt赛获得第一名累计次数
+	create_table_num = 0,  --创建朋友桌数
+}
+ 

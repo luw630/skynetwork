@@ -1,0 +1,32 @@
+// See README.txt for information and build instructions.
+
+package clientmsg;
+
+enum EMsgType {
+    EMSGTYPE_UNKNOWN = 0;
+    EMSGTYPE_REQUEST = 1;
+    EMSGTYPE_RESPONSE = 2;
+    EMSGTYPE_NOTICE = 3;
+}
+
+
+message LoginReq {
+    
+}
+
+message LoginRes {
+
+}
+
+
+
+// Our address book file is just one of these.
+message ClientMsg {
+  optional  EMsgType msgtype = 1 [default EMSGTYPE_UNKNOWN];
+  optional  string   msgname = 2;
+
+
+
+  optional LoginReq loginreq = 8;
+  optional LoginRes loginres = 9;
+}

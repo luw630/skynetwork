@@ -1,0 +1,21 @@
+black : 8 
+white : -30 
+0 x x x x x x x x x x x x x x x x x x 
+1 x x x x x x x x x x x x x x x x x x 
+x x x x x x x x x x x x x x x x x x x 
+x x x x x x x x x x x x x x x x x x x 
+x x x x x x x x x x x x x x x x x x x 
+x x x x x x x x x x x x x x x x x x x 
+x x x x x x x x x x x x x x x x x x x 
+x x x x x x x x x x x x x x x x x x x 
+x x x x x x x x x x x x x x x x x x x 
+x x x x x x x x x x x x x x x x x x x 
+x x x x x x x x x x x x x x x x x x x 
+x x x x x x x x x x x x x x x x x x x 
+x x x x x x x x x x x x x x x x x x x 
+x x x x x x x x x x x x x x x x x x x 
+x x x x x x x x x x x x x x x x x x x 
+x x x x x x x x x x x x x x x x x x x 
+x x x x x x x x x x x x x x x x x x x 
+x x x x x x x x x x x x x x x x x x x 
+x x x x x x x x x x x x x x x x x x x 

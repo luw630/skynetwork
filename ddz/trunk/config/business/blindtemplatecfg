@@ -1,0 +1,2400 @@
+version=19
+blindtemplatecfg = {
+    [1] = {
+        [1]={
+            small_blind=50,
+            time=0,   --单位s
+            ante = 0,  
+        },
+        [2]={
+            small_blind=100,
+            time=120,
+            ante = 10,  
+        },       
+        [3]={
+            small_blind=200,
+            time=120,
+            ante = 20,  
+        },
+        [4]={
+            small_blind=300,
+            time=120,
+            ante = 30,  
+        },       
+        [5]={
+            small_blind=400,
+            time=120,
+            ante = 40,  
+        },       
+        [6]={
+            small_blind=600,
+            time=120,
+            ante = 0,  
+        },       
+        [7]={
+            small_blind=800,
+            time=120,
+            ante = 0,  
+        },              
+        [8]={
+            small_blind=1000,
+            time=120,
+            ante = 0,  
+        },              
+        [9]={
+            small_blind=1200,
+            time=120,
+            ante = 0,  
+        },              
+        [10]={
+            small_blind=1500,
+            time=120,
+            ante = 0,
+        },              
+        [11]={
+            small_blind=2000,
+            time=120,
+            ante = 0,
+        },              
+        [12]={
+            small_blind=2500,
+            time=120,
+            ante = 0,
+        },              
+    },
+    [2] = {
+        [1]={
+            small_blind=50,
+            time=0,   --单位s
+            ante = 0,  
+        },
+        [2]={
+            small_blind=75,
+            time=240,
+            ante = 0,  
+        },       
+        [3]={
+            small_blind=100,
+            time=240,
+            ante = 25,  
+        },
+        [4]={
+            small_blind=150,
+            time=240,
+            ante = 25,  
+        },       
+        [5]={
+            small_blind=200,
+            time=240,
+            ante = 50,  
+        },       
+        [6]={
+            small_blind=300,
+            time=240,
+            ante = 75,  
+        },       
+        [7]={
+            small_blind=400,
+            time=240,
+            ante = 100,  
+        },              
+        [8]={
+            small_blind=500,
+            time=240,
+            ante = 100,  
+        },              
+        [9]={
+            small_blind=600,
+            time=240,
+            ante = 200,  
+        },              
+        [10]={
+            small_blind=800,
+            time=240,
+            ante = 200,
+        },              
+        [11]={
+            small_blind=1000,
+            time=240,
+            ante = 300,
+        },              
+        [12]={
+            small_blind=1200,
+            time=240,
+            ante = 300,
+        }, 
+        [13]={
+            small_blind=1500,
+            time=240,   
+            ante = 300,  
+        },
+        [14]={
+            small_blind=2500,
+            time=240,
+            ante = 500,  
+        },       
+        [15]={
+            small_blind=3000,
+            time=240,
+            ante = 1000,  
+        },
+        [16]={
+            small_blind=4000,
+            time=240,
+            ante = 1000,  
+        },       
+        [17]={
+            small_blind=5000,
+            time=240,
+            ante = 1000,  
+        },       
+        [18]={
+            small_blind=6000,
+            time=240,
+            ante = 2000,  
+        },       
+        [19]={
+            small_blind=8000,
+            time=240,
+            ante = 2000,  
+        },              
+        [20]={
+            small_blind=10000,
+            time=240,
+            ante = 3000,  
+        },              
+        [21]={
+            small_blind=12000,
+            time=240,
+            ante = 3000,  
+        },              
+        [22]={
+            small_blind=15000,
+            time=240,
+            ante = 3000,
+        },              
+        [23]={
+            small_blind=20000,
+            time=240,
+            ante = 5000,
+        },              
+        [24]={
+            small_blind=25000,
+            time=240,
+            ante = 5000,
+        }, 
+        [25]={
+            small_blind=30000,
+            time=240,  
+            ante = 10000,  
+        },
+        [26]={
+            small_blind=40000,
+            time=240,
+            ante = 10000,  
+        },       
+        [27]={
+            small_blind=50000,
+            time=240,
+            ante = 10000,  
+        },
+        [28]={
+            small_blind=60000,
+            time=240,
+            ante = 20000,  
+        },       
+        [29]={
+            small_blind=80000,
+            time=240,
+            ante = 20000,  
+        },       
+        [30]={
+            small_blind=100000,
+            time=240,
+            ante = 30000,  
+        },       
+        [31]={
+            small_blind=120000,
+            time=240,
+            ante = 30000,  
+        },              
+        [32]={
+            small_blind=150000,
+            time=240,
+            ante = 30000,  
+        },              
+        [33]={
+            small_blind=200000,
+            time=240,
+            ante = 50000,  
+        },              
+        [34]={
+            small_blind=250000,
+            time=240,
+            ante = 50000,
+        },              
+        [35]={
+            small_blind=300000,
+            time=240,
+            ante = 100000,
+        },              
+        [36]={
+            small_blind=400000,
+            time=240,
+            ante = 100000,
+        }, 
+        [37]={
+            small_blind=500000,
+            time=240,   
+            ante = 100000,  
+        },
+        [38]={
+            small_blind=600000,
+            time=240,
+            ante = 200000,  
+        },       
+        [39]={
+            small_blind=800000,
+            time=240,
+            ante = 200000,  
+        },
+        [40]={
+            small_blind=1000000,
+            time=240,
+            ante = 300000,  
+        },       
+        [41]={
+            small_blind=1200000,
+            time=240,
+            ante = 300000,  
+        },       
+        [42]={
+            small_blind=1500000,
+            time=240,
+            ante = 300000,  
+        },       
+        [43]={
+            small_blind=2000000,
+            time=240,
+            ante = 500000,  
+        },              
+        [44]={
+            small_blind=2500000,
+            time=240,
+            ante = 500000,  
+        },              
+        [45]={
+            small_blind=3000000,
+            time=240,
+            ante = 1000000,  
+        },              
+        [46]={
+            small_blind=4000000,
+            time=240,
+            ante = 1000000,
+        },              
+        [47]={
+            small_blind=5000000,
+            time=240,
+            ante = 1000000,
+        },              
+        [48]={
+            small_blind=6000000,
+            time=240,
+            ante = 2000000,
+        },  
+        [49]={
+            small_blind=8000000,
+            time=240,
+            ante = 2000000,  
+        },       
+        [50]={
+            small_blind=10000000,
+            time=240,
+            ante = 3000000,  
+        },              
+        [51]={
+            small_blind=12000000,
+            time=240,
+            ante = 3000000,  
+        },              
+        [52]={
+            small_blind=15000000,
+            time=240,
+            ante = 3000000,  
+        },              
+        [53]={
+            small_blind=20000000,
+            time=240,
+            ante = 5000000,
+        },              
+        [54]={
+            small_blind=25000000,
+            time=240,
+            ante = 5000000,
+        },              
+        [55]={
+            small_blind=30000000,
+            time=240,
+            ante = 10000000,
+        },  
+        [56]={
+            small_blind=40000000,
+            time=240,
+            ante = 10000000,
+        },              
+        [57]={
+            small_blind=50000000,
+            time=240,
+            ante = 10000000,
+        },           
+    },
+    [3] = {  --5分钟升盲
+        [1]={
+            small_blind=25,
+            time=0,   --单位s
+            ante = 0,  
+        },
+        [2]={
+            small_blind=50,
+            time=300,
+            ante = 0,  
+        },       
+        [3]={
+            small_blind=75,
+            time=300,
+            ante = 0,  
+        },
+        [4]={
+            small_blind=75,
+            time=300,
+            ante = 25,  
+        },       
+        [5]={
+            small_blind=100,
+            time=300,
+            ante = 25,  
+        },       
+        [6]={
+            small_blind=150,
+            time=300,
+            ante = 50,  
+        },       
+        [7]={
+            small_blind=200,
+            time=300,
+            ante = 50,  
+        },              
+        [8]={
+            small_blind=250,
+            time=300,
+            ante = 75,  
+        },              
+        [9]={
+            small_blind=300,
+            time=300,
+            ante = 75,  
+        },              
+        [10]={
+            small_blind=400,
+            time=300,
+            ante = 100,
+        },              
+        [11]={
+            small_blind=500,
+            time=300,
+            ante = 100,
+        },              
+        [12]={
+            small_blind=600,
+            time=300,
+            ante = 200,
+        }, 
+        [13]={
+            small_blind=800,
+            time=300,   
+            ante = 200,  
+        },
+        [14]={
+            small_blind=1000,
+            time=300,
+            ante = 300,  
+        },       
+        [15]={
+            small_blind=1200,
+            time=300,
+            ante = 400,  
+        },
+        [16]={
+            small_blind=1500,
+            time=300,
+            ante = 500,  
+        },       
+        [17]={
+            small_blind=2000,
+            time=300,
+            ante = 500,  
+        },       
+        [18]={
+            small_blind=2500,
+            time=300,
+            ante = 500,  
+        },       
+        [19]={
+            small_blind=3000,
+            time=300,
+            ante = 1000,  
+        },              
+        [20]={
+            small_blind=4000,
+            time=300,
+            ante = 1000,  
+        },              
+        [21]={
+            small_blind=5000,
+            time=300,
+            ante = 1000,  
+        },              
+        [22]={
+            small_blind=6000,
+            time=300,
+            ante = 2000,
+        },              
+        [23]={
+            small_blind=8000,
+            time=300,
+            ante = 2000,
+        },              
+        [24]={
+            small_blind=10000,
+            time=300,
+            ante = 3000,
+        }, 
+        [25]={
+            small_blind=12000,
+            time=300,  
+            ante = 4000,  
+        },
+        [26]={
+            small_blind=15000,
+            time=300,
+            ante = 5000,  
+        },       
+        [27]={
+            small_blind=20000,
+            time=300,
+            ante = 5000,  
+        },
+        [28]={
+            small_blind=25000,
+            time=300,
+            ante = 5000,  
+        },       
+        [29]={
+            small_blind=30000,
+            time=300,
+            ante = 10000,  
+        },       
+        [30]={
+            small_blind=40000,
+            time=300,
+            ante = 10000,  
+        },       
+        [31]={
+            small_blind=50000,
+            time=300,
+            ante = 15000,  
+        },              
+        [32]={
+            small_blind=60000,
+            time=300,
+            ante = 20000,  
+        },              
+        [33]={
+            small_blind=75000,
+            time=300,
+            ante = 25000,  
+        },              
+        [34]={
+            small_blind=100000,
+            time=300,
+            ante = 25000,
+        },              
+        [35]={
+            small_blind=125000,
+            time=300,
+            ante = 25000,
+        },              
+        [36]={
+            small_blind=150000,
+            time=300,
+            ante = 50000,
+        }, 
+        [37]={
+            small_blind=200000,
+            time=300,   
+            ante = 50000,  
+        },
+        [38]={
+            small_blind=250000,
+            time=300,
+            ante = 75000,  
+        },       
+        [39]={
+            small_blind=300000,
+            time=300,
+            ante = 75000,  
+        },          
+    },
+    [4] = {  --3分钟升盲
+        [1]={
+            small_blind=25,
+            time=0,   --单位s
+            ante = 0,  
+        },
+        [2]={
+            small_blind=50,
+            time=180,
+            ante = 0,  
+        },       
+        [3]={
+            small_blind=75,
+            time=180,
+            ante = 0,  
+        },
+        [4]={
+            small_blind=75,
+            time=180,
+            ante = 25,  
+        },       
+        [5]={
+            small_blind=100,
+            time=180,
+            ante = 25,  
+        },       
+        [6]={
+            small_blind=150,
+            time=180,
+            ante = 50,  
+        },       
+        [7]={
+            small_blind=200,
+            time=180,
+            ante = 50,  
+        },              
+        [8]={
+            small_blind=250,
+            time=180,
+            ante = 75,  
+        },              
+        [9]={
+            small_blind=300,
+            time=180,
+            ante = 75,  
+        },              
+        [10]={
+            small_blind=400,
+            time=180,
+            ante = 100,
+        },              
+        [11]={
+            small_blind=500,
+            time=180,
+            ante = 100,
+        },              
+        [12]={
+            small_blind=600,
+            time=180,
+            ante = 200,
+        }, 
+        [13]={
+            small_blind=800,
+            time=180,   
+            ante = 200,  
+        },
+        [14]={
+            small_blind=1000,
+            time=180,
+            ante = 300,  
+        },       
+        [15]={
+            small_blind=1200,
+            time=180,
+            ante = 400,  
+        },
+        [16]={
+            small_blind=1500,
+            time=180,
+            ante = 500,  
+        },       
+        [17]={
+            small_blind=2000,
+            time=180,
+            ante = 500,  
+        },       
+        [18]={
+            small_blind=2500,
+            time=180,
+            ante = 500,  
+        },       
+        [19]={
+            small_blind=3000,
+            time=180,
+            ante = 1000,  
+        },              
+        [20]={
+            small_blind=4000,
+            time=180,
+            ante = 1000,  
+        },              
+        [21]={
+            small_blind=5000,
+            time=180,
+            ante = 1000,  
+        },              
+        [22]={
+            small_blind=6000,
+            time=180,
+            ante = 2000,
+        },              
+        [23]={
+            small_blind=8000,
+            time=180,
+            ante = 2000,
+        },              
+        [24]={
+            small_blind=10000,
+            time=180,
+            ante = 3000,
+        }, 
+        [25]={
+            small_blind=12000,
+            time=180,  
+            ante = 4000,  
+        },
+        [26]={
+            small_blind=15000,
+            time=180,
+            ante = 5000,  
+        },       
+        [27]={
+            small_blind=20000,
+            time=180,
+            ante = 5000,  
+        },
+        [28]={
+            small_blind=25000,
+            time=180,
+            ante = 5000,  
+        },       
+        [29]={
+            small_blind=30000,
+            time=180,
+            ante = 10000,  
+        },       
+        [30]={
+            small_blind=40000,
+            time=180,
+            ante = 10000,  
+        },       
+        [31]={
+            small_blind=50000,
+            time=180,
+            ante = 15000,  
+        },              
+        [32]={
+            small_blind=60000,
+            time=180,
+            ante = 20000,  
+        },              
+        [33]={
+            small_blind=75000,
+            time=180,
+            ante = 25000,  
+        },              
+        [34]={
+            small_blind=100000,
+            time=180,
+            ante = 25000,
+        },              
+        [35]={
+            small_blind=125000,
+            time=180,
+            ante = 25000,
+        },              
+        [36]={
+            small_blind=150000,
+            time=180,
+            ante = 50000,
+        }, 
+        [37]={
+            small_blind=200000,
+            time=180,   
+            ante = 50000,  
+        },
+        [38]={
+            small_blind=250000,
+            time=180,
+            ante = 75000,  
+        },       
+        [39]={
+            small_blind=300000,
+            time=180,
+            ante = 75000,  
+        },          
+    }, 
+    [5] = {  --4分钟升盲
+        [1]={
+            small_blind=25,
+            time=0,   --单位s
+            ante = 0,  
+        },
+        [2]={
+            small_blind=50,
+            time=240,
+            ante = 0,  
+        },       
+        [3]={
+            small_blind=75,
+            time=240,
+            ante = 0,  
+        },
+        [4]={
+            small_blind=75,
+            time=240,
+            ante = 25,  
+        },       
+        [5]={
+            small_blind=100,
+            time=240,
+            ante = 25,  
+        },       
+        [6]={
+            small_blind=150,
+            time=240,
+            ante = 50,  
+        },       
+        [7]={
+            small_blind=200,
+            time=240,
+            ante = 50,  
+        },              
+        [8]={
+            small_blind=250,
+            time=240,
+            ante = 75,  
+        },              
+        [9]={
+            small_blind=300,
+            time=240,
+            ante = 75,  
+        },              
+        [10]={
+            small_blind=400,
+            time=240,
+            ante = 100,
+        },              
+        [11]={
+            small_blind=500,
+            time=240,
+            ante = 100,
+        },              
+        [12]={
+            small_blind=600,
+            time=240,
+            ante = 200,
+        }, 
+        [13]={
+            small_blind=800,
+            time=240,   
+            ante = 200,  
+        },
+        [14]={
+            small_blind=1000,
+            time=240,
+            ante = 300,  
+        },       
+        [15]={
+            small_blind=1200,
+            time=240,
+            ante = 400,  
+        },
+        [16]={
+            small_blind=1500,
+            time=240,
+            ante = 500,  
+        },       
+        [17]={
+            small_blind=2000,
+            time=240,
+            ante = 500,  
+        },       
+        [18]={
+            small_blind=2500,
+            time=240,
+            ante = 500,  
+        },       
+        [19]={
+            small_blind=3000,
+            time=240,
+            ante = 1000,  
+        },              
+        [20]={
+            small_blind=4000,
+            time=240,
+            ante = 1000,  
+        },              
+        [21]={
+            small_blind=5000,
+            time=240,
+            ante = 1000,  
+        },              
+        [22]={
+            small_blind=6000,
+            time=240,
+            ante = 2000,
+        },              
+        [23]={
+            small_blind=8000,
+            time=240,
+            ante = 2000,
+        },              
+        [24]={
+            small_blind=10000,
+            time=240,
+            ante = 3000,
+        }, 
+        [25]={
+            small_blind=12000,
+            time=240,  
+            ante = 4000,  
+        },
+        [26]={
+            small_blind=15000,
+            time=240,
+            ante = 5000,  
+        },       
+        [27]={
+            small_blind=20000,
+            time=240,
+            ante = 5000,  
+        },
+        [28]={
+            small_blind=25000,
+            time=240,
+            ante = 5000,  
+        },       
+        [29]={
+            small_blind=30000,
+            time=240,
+            ante = 10000,  
+        },       
+        [30]={
+            small_blind=40000,
+            time=240,
+            ante = 10000,  
+        },       
+        [31]={
+            small_blind=50000,
+            time=240,
+            ante = 15000,  
+        },              
+        [32]={
+            small_blind=60000,
+            time=240,
+            ante = 20000,  
+        },              
+        [33]={
+            small_blind=75000,
+            time=240,
+            ante = 25000,  
+        },              
+        [34]={
+            small_blind=100000,
+            time=240,
+            ante = 25000,
+        },              
+        [35]={
+            small_blind=125000,
+            time=240,
+            ante = 25000,
+        },              
+        [36]={
+            small_blind=150000,
+            time=240,
+            ante = 50000,
+        }, 
+        [37]={
+            small_blind=200000,
+            time=240,   
+            ante = 50000,  
+        },
+        [38]={
+            small_blind=250000,
+            time=240,
+            ante = 75000,  
+        },       
+        [39]={
+            small_blind=300000,
+            time=240,
+            ante = 75000,  
+        },          
+    },  
+    [6] = {  --2分钟升盲
+        [1]={
+            small_blind=25,
+            time=0,   --单位s
+            ante = 0,  
+        },
+        [2]={
+            small_blind=50,
+            time=120,
+            ante = 0,  
+        },       
+        [3]={
+            small_blind=75,
+            time=120,
+            ante = 0,  
+        },
+        [4]={
+            small_blind=75,
+            time=120,
+            ante = 25,  
+        },       
+        [5]={
+            small_blind=100,
+            time=120,
+            ante = 25,  
+        },       
+        [6]={
+            small_blind=150,
+            time=120,
+            ante = 50,  
+        },       
+        [7]={
+            small_blind=200,
+            time=120,
+            ante = 50,  
+        },              
+        [8]={
+            small_blind=250,
+            time=120,
+            ante = 75,  
+        },              
+        [9]={
+            small_blind=300,
+            time=120,
+            ante = 75,  
+        },              
+        [10]={
+            small_blind=400,
+            time=120,
+            ante = 100,
+        },              
+        [11]={
+            small_blind=500,
+            time=120,
+            ante = 100,
+        },              
+        [12]={
+            small_blind=600,
+            time=120,
+            ante = 200,
+        }, 
+        [13]={
+            small_blind=800,
+            time=120,   
+            ante = 200,  
+        },
+        [14]={
+            small_blind=1000,
+            time=120,
+            ante = 300,  
+        },       
+        [15]={
+            small_blind=1200,
+            time=120,
+            ante = 400,  
+        },
+        [16]={
+            small_blind=1500,
+            time=120,
+            ante = 500,  
+        },       
+        [17]={
+            small_blind=2000,
+            time=120,
+            ante = 500,  
+        },       
+        [18]={
+            small_blind=2500,
+            time=120,
+            ante = 500,  
+        },       
+        [19]={
+            small_blind=3000,
+            time=120,
+            ante = 1000,  
+        },              
+        [20]={
+            small_blind=4000,
+            time=120,
+            ante = 1000,  
+        },              
+        [21]={
+            small_blind=5000,
+            time=120,
+            ante = 1000,  
+        },              
+        [22]={
+            small_blind=6000,
+            time=120,
+            ante = 2000,
+        },              
+        [23]={
+            small_blind=8000,
+            time=120,
+            ante = 2000,
+        },              
+        [24]={
+            small_blind=10000,
+            time=120,
+            ante = 3000,
+        }, 
+        [25]={
+            small_blind=12000,
+            time=120,  
+            ante = 4000,  
+        },
+        [26]={
+            small_blind=15000,
+            time=120,
+            ante = 5000,  
+        },       
+        [27]={
+            small_blind=20000,
+            time=120,
+            ante = 5000,  
+        },
+        [28]={
+            small_blind=25000,
+            time=120,
+            ante = 5000,  
+        },       
+        [29]={
+            small_blind=30000,
+            time=120,
+            ante = 10000,  
+        },       
+        [30]={
+            small_blind=40000,
+            time=120,
+            ante = 10000,  
+        },       
+        [31]={
+            small_blind=50000,
+            time=120,
+            ante = 15000,  
+        },              
+        [32]={
+            small_blind=60000,
+            time=120,
+            ante = 20000,  
+        },              
+        [33]={
+            small_blind=75000,
+            time=120,
+            ante = 25000,  
+        },              
+        [34]={
+            small_blind=100000,
+            time=120,
+            ante = 25000,
+        },              
+        [35]={
+            small_blind=125000,
+            time=120,
+            ante = 25000,
+        },              
+        [36]={
+            small_blind=150000,
+            time=120,
+            ante = 50000,
+        }, 
+        [37]={
+            small_blind=200000,
+            time=120,   
+            ante = 50000,  
+        },
+        [38]={
+            small_blind=250000,
+            time=120,
+            ante = 75000,  
+        },       
+        [39]={
+            small_blind=300000,
+            time=120,
+            ante = 75000,  
+        },          
+    }, 
+    [7] = {  --6分钟升盲
+        [1]={
+            small_blind=25,
+            time=0,   --单位s
+            ante = 0,  
+        },
+        [2]={
+            small_blind=50,
+            time=360,
+            ante = 0,  
+        },       
+        [3]={
+            small_blind=75,
+            time=360,
+            ante = 0,  
+        },
+        [4]={
+            small_blind=75,
+            time=360,
+            ante = 25,  
+        },       
+        [5]={
+            small_blind=100,
+            time=360,
+            ante = 25,  
+        },       
+        [6]={
+            small_blind=150,
+            time=360,
+            ante = 50,  
+        },       
+        [7]={
+            small_blind=200,
+            time=360,
+            ante = 50,  
+        },              
+        [8]={
+            small_blind=250,
+            time=360,
+            ante = 75,  
+        },              
+        [9]={
+            small_blind=300,
+            time=360,
+            ante = 75,  
+        },              
+        [10]={
+            small_blind=400,
+            time=360,
+            ante = 100,
+        },              
+        [11]={
+            small_blind=500,
+            time=360,
+            ante = 100,
+        },              
+        [12]={
+            small_blind=600,
+            time=360,
+            ante = 200,
+        }, 
+        [13]={
+            small_blind=800,
+            time=360,   
+            ante = 200,  
+        },
+        [14]={
+            small_blind=1000,
+            time=360,
+            ante = 300,  
+        },       
+        [15]={
+            small_blind=1200,
+            time=360,
+            ante = 400,  
+        },
+        [16]={
+            small_blind=1500,
+            time=360,
+            ante = 500,  
+        },       
+        [17]={
+            small_blind=2000,
+            time=360,
+            ante = 500,  
+        },       
+        [18]={
+            small_blind=2500,
+            time=360,
+            ante = 500,  
+        },       
+        [19]={
+            small_blind=3000,
+            time=360,
+            ante = 1000,  
+        },              
+        [20]={
+            small_blind=4000,
+            time=360,
+            ante = 1000,  
+        },              
+        [21]={
+            small_blind=5000,
+            time=360,
+            ante = 1000,  
+        },              
+        [22]={
+            small_blind=6000,
+            time=360,
+            ante = 2000,
+        },              
+        [23]={
+            small_blind=8000,
+            time=360,
+            ante = 2000,
+        },              
+        [24]={
+            small_blind=10000,
+            time=360,
+            ante = 3000,
+        }, 
+        [25]={
+            small_blind=12000,
+            time=360,  
+            ante = 4000,  
+        },
+        [26]={
+            small_blind=15000,
+            time=360,
+            ante = 5000,  
+        },       
+        [27]={
+            small_blind=20000,
+            time=360,
+            ante = 5000,  
+        },
+        [28]={
+            small_blind=25000,
+            time=360,
+            ante = 5000,  
+        },       
+        [29]={
+            small_blind=30000,
+            time=360,
+            ante = 10000,  
+        },       
+        [30]={
+            small_blind=40000,
+            time=360,
+            ante = 10000,  
+        },       
+        [31]={
+            small_blind=50000,
+            time=360,
+            ante = 15000,  
+        },              
+        [32]={
+            small_blind=60000,
+            time=360,
+            ante = 20000,  
+        },              
+        [33]={
+            small_blind=75000,
+            time=360,
+            ante = 25000,  
+        },              
+        [34]={
+            small_blind=100000,
+            time=360,
+            ante = 25000,
+        },              
+        [35]={
+            small_blind=125000,
+            time=360,
+            ante = 25000,
+        },              
+        [36]={
+            small_blind=150000,
+            time=360,
+            ante = 50000,
+        }, 
+        [37]={
+            small_blind=200000,
+            time=360,   
+            ante = 50000,  
+        },
+        [38]={
+            small_blind=250000,
+            time=360,
+            ante = 75000,  
+        },       
+        [39]={
+            small_blind=300000,
+            time=360,
+            ante = 75000,  
+        },          
+    }, 
+    [9] = {  --8分钟升盲
+        [1]={
+            small_blind=25,
+            time=0,   --单位s
+            ante = 0,  
+        },
+        [2]={
+            small_blind=50,
+            time=480,
+            ante = 0,  
+        },       
+        [3]={
+            small_blind=75,
+            time=480,
+            ante = 0,  
+        },
+        [4]={
+            small_blind=75,
+            time=480,
+            ante = 25,  
+        },       
+        [5]={
+            small_blind=100,
+            time=480,
+            ante = 25,  
+        },       
+        [6]={
+            small_blind=150,
+            time=480,
+            ante = 50,  
+        },       
+        [7]={
+            small_blind=200,
+            time=480,
+            ante = 50,  
+        },              
+        [8]={
+            small_blind=250,
+            time=480,
+            ante = 75,  
+        },              
+        [9]={
+            small_blind=300,
+            time=480,
+            ante = 75,  
+        },              
+        [10]={
+            small_blind=400,
+            time=480,
+            ante = 100,
+        },              
+        [11]={
+            small_blind=500,
+            time=480,
+            ante = 100,
+        },              
+        [12]={
+            small_blind=600,
+            time=480,
+            ante = 200,
+        }, 
+        [13]={
+            small_blind=800,
+            time=480,   
+            ante = 200,  
+        },
+        [14]={
+            small_blind=1000,
+            time=480,
+            ante = 300,  
+        },       
+        [15]={
+            small_blind=1200,
+            time=480,
+            ante = 400,  
+        },
+        [16]={
+            small_blind=1500,
+            time=480,
+            ante = 500,  
+        },       
+        [17]={
+            small_blind=2000,
+            time=480,
+            ante = 500,  
+        },       
+        [18]={
+            small_blind=2500,
+            time=480,
+            ante = 500,  
+        },       
+        [19]={
+            small_blind=3000,
+            time=480,
+            ante = 1000,  
+        },              
+        [20]={
+            small_blind=4000,
+            time=480,
+            ante = 1000,  
+        },              
+        [21]={
+            small_blind=5000,
+            time=480,
+            ante = 1000,  
+        },              
+        [22]={
+            small_blind=6000,
+            time=480,
+            ante = 2000,
+        },              
+        [23]={
+            small_blind=8000,
+            time=480,
+            ante = 2000,
+        },              
+        [24]={
+            small_blind=10000,
+            time=480,
+            ante = 3000,
+        }, 
+        [25]={
+            small_blind=12000,
+            time=480,  
+            ante = 4000,  
+        },
+        [26]={
+            small_blind=15000,
+            time=480,
+            ante = 5000,  
+        },       
+        [27]={
+            small_blind=20000,
+            time=480,
+            ante = 5000,  
+        },
+        [28]={
+            small_blind=25000,
+            time=480,
+            ante = 5000,  
+        },       
+        [29]={
+            small_blind=30000,
+            time=480,
+            ante = 10000,  
+        },       
+        [30]={
+            small_blind=40000,
+            time=480,
+            ante = 10000,  
+        },       
+        [31]={
+            small_blind=50000,
+            time=480,
+            ante = 15000,  
+        },              
+        [32]={
+            small_blind=60000,
+            time=480,
+            ante = 20000,  
+        },              
+        [33]={
+            small_blind=75000,
+            time=480,
+            ante = 25000,  
+        },              
+        [34]={
+            small_blind=100000,
+            time=480,
+            ante = 25000,
+        },              
+        [35]={
+            small_blind=125000,
+            time=480,
+            ante = 25000,
+        },              
+        [36]={
+            small_blind=150000,
+            time=480,
+            ante = 50000,
+        }, 
+        [37]={
+            small_blind=200000,
+            time=480,   
+            ante = 50000,  
+        },
+        [38]={
+            small_blind=250000,
+            time=480,
+            ante = 75000,  
+        },       
+        [39]={
+            small_blind=300000,
+            time=480,
+            ante = 75000,  
+        },          
+    }, 
+    [10] = {  --10分钟升盲
+        [1]={
+            small_blind=25,
+            time=0,   --单位s
+            ante = 0,  
+        },
+        [2]={
+            small_blind=50,
+            time=600,
+            ante = 0,  
+        },       
+        [3]={
+            small_blind=75,
+            time=600,
+            ante = 0,  
+        },
+        [4]={
+            small_blind=75,
+            time=360,
+            ante = 25,  
+        },       
+        [5]={
+            small_blind=100,
+            time=600,
+            ante = 25,  
+        },       
+        [6]={
+            small_blind=150,
+            time=600,
+            ante = 50,  
+        },       
+        [7]={
+            small_blind=200,
+            time=600,
+            ante = 50,  
+        },              
+        [8]={
+            small_blind=250,
+            time=600,
+            ante = 75,  
+        },              
+        [9]={
+            small_blind=300,
+            time=600,
+            ante = 75,  
+        },              
+        [10]={
+            small_blind=400,
+            time=600,
+            ante = 100,
+        },              
+        [11]={
+            small_blind=500,
+            time=600,
+            ante = 100,
+        },              
+        [12]={
+            small_blind=600,
+            time=600,
+            ante = 200,
+        }, 
+        [13]={
+            small_blind=800,
+            time=600,   
+            ante = 200,  
+        },
+        [14]={
+            small_blind=1000,
+            time=600,
+            ante = 300,  
+        },       
+        [15]={
+            small_blind=1200,
+            time=600,
+            ante = 400,  
+        },
+        [16]={
+            small_blind=1500,
+            time=600,
+            ante = 500,  
+        },       
+        [17]={
+            small_blind=2000,
+            time=600,
+            ante = 500,  
+        },       
+        [18]={
+            small_blind=2500,
+            time=600,
+            ante = 500,  
+        },       
+        [19]={
+            small_blind=3000,
+            time=600,
+            ante = 1000,  
+        },              
+        [20]={
+            small_blind=4000,
+            time=600,
+            ante = 1000,  
+        },              
+        [21]={
+            small_blind=5000,
+            time=600,
+            ante = 1000,  
+        },              
+        [22]={
+            small_blind=6000,
+            time=600,
+            ante = 2000,
+        },              
+        [23]={
+            small_blind=8000,
+            time=600,
+            ante = 2000,
+        },              
+        [24]={
+            small_blind=10000,
+            time=600,
+            ante = 3000,
+        }, 
+        [25]={
+            small_blind=12000,
+            time=600,  
+            ante = 4000,  
+        },
+        [26]={
+            small_blind=15000,
+            time=600,
+            ante = 5000,  
+        },       
+        [27]={
+            small_blind=20000,
+            time=600,
+            ante = 5000,  
+        },
+        [28]={
+            small_blind=25000,
+            time=600,
+            ante = 5000,  
+        },       
+        [29]={
+            small_blind=30000,
+            time=600,
+            ante = 10000,  
+        },       
+        [30]={
+            small_blind=40000,
+            time=600,
+            ante = 10000,  
+        },       
+        [31]={
+            small_blind=50000,
+            time=600,
+            ante = 15000,  
+        },              
+        [32]={
+            small_blind=60000,
+            time=600,
+            ante = 20000,  
+        },              
+        [33]={
+            small_blind=75000,
+            time=600,
+            ante = 25000,  
+        },              
+        [34]={
+            small_blind=100000,
+            time=600,
+            ante = 25000,
+        },              
+        [35]={
+            small_blind=125000,
+            time=600,
+            ante = 25000,
+        },              
+        [36]={
+            small_blind=150000,
+            time=600,
+            ante = 50000,
+        }, 
+        [37]={
+            small_blind=200000,
+            time=600,   
+            ante = 50000,  
+        },
+        [38]={
+            small_blind=250000,
+            time=600,
+            ante = 75000,  
+        },       
+        [39]={
+            small_blind=300000,
+            time=600,
+            ante = 75000,  
+        },          
+    }, 
+    [11] = {  --9分钟升盲
+        [1]={
+            small_blind=25,
+            time=0,   --单位s
+            ante = 0,  
+        },
+        [2]={
+            small_blind=50,
+            time=540,
+            ante = 0,  
+        },       
+        [3]={
+            small_blind=75,
+            time=540,
+            ante = 0,  
+        },
+        [4]={
+            small_blind=75,
+            time=540,
+            ante = 25,  
+        },       
+        [5]={
+            small_blind=100,
+            time=540,
+            ante = 25,  
+        },       
+        [6]={
+            small_blind=150,
+            time=540,
+            ante = 50,  
+        },       
+        [7]={
+            small_blind=200,
+            time=540,
+            ante = 50,  
+        },              
+        [8]={
+            small_blind=250,
+            time=540,
+            ante = 75,  
+        },              
+        [9]={
+            small_blind=300,
+            time=540,
+            ante = 75,  
+        },              
+        [10]={
+            small_blind=400,
+            time=540,
+            ante = 100,
+        },              
+        [11]={
+            small_blind=500,
+            time=540,
+            ante = 100,
+        },              
+        [12]={
+            small_blind=600,
+            time=540,
+            ante = 200,
+        }, 
+        [13]={
+            small_blind=800,
+            time=540,   
+            ante = 200,  
+        },
+        [14]={
+            small_blind=1000,
+            time=540,
+            ante = 300,  
+        },       
+        [15]={
+            small_blind=1200,
+            time=540,
+            ante = 400,  
+        },
+        [16]={
+            small_blind=1500,
+            time=540,
+            ante = 500,  
+        },       
+        [17]={
+            small_blind=2000,
+            time=540,
+            ante = 500,  
+        },       
+        [18]={
+            small_blind=2500,
+            time=540,
+            ante = 500,  
+        },       
+        [19]={
+            small_blind=3000,
+            time=540,
+            ante = 1000,  
+        },              
+        [20]={
+            small_blind=4000,
+            time=540,
+            ante = 1000,  
+        },              
+        [21]={
+            small_blind=5000,
+            time=540,
+            ante = 1000,  
+        },              
+        [22]={
+            small_blind=6000,
+            time=540,
+            ante = 2000,
+        },              
+        [23]={
+            small_blind=8000,
+            time=540,
+            ante = 2000,
+        },              
+        [24]={
+            small_blind=10000,
+            time=540,
+            ante = 3000,
+        }, 
+        [25]={
+            small_blind=12000,
+            time=540,  
+            ante = 4000,  
+        },
+        [26]={
+            small_blind=15000,
+            time=540,
+            ante = 5000,  
+        },       
+        [27]={
+            small_blind=20000,
+            time=540,
+            ante = 5000,  
+        },
+        [28]={
+            small_blind=25000,
+            time=540,
+            ante = 5000,  
+        },       
+        [29]={
+            small_blind=30000,
+            time=540,
+            ante = 10000,  
+        },       
+        [30]={
+            small_blind=40000,
+            time=540,
+            ante = 10000,  
+        },       
+        [31]={
+            small_blind=50000,
+            time=540,
+            ante = 15000,  
+        },              
+        [32]={
+            small_blind=60000,
+            time=540,
+            ante = 20000,  
+        },              
+        [33]={
+            small_blind=75000,
+            time=540,
+            ante = 25000,  
+        },              
+        [34]={
+            small_blind=100000,
+            time=540,
+            ante = 25000,
+        },              
+        [35]={
+            small_blind=125000,
+            time=540,
+            ante = 25000,
+        },              
+        [36]={
+            small_blind=150000,
+            time=540,
+            ante = 50000,
+        }, 
+        [37]={
+            small_blind=200000,
+            time=540,   
+            ante = 50000,  
+        },
+        [38]={
+            small_blind=250000,
+            time=540,
+            ante = 75000,  
+        },       
+        [39]={
+            small_blind=300000,
+            time=540,
+            ante = 75000,  
+        },          
+    },
+    [12] = {  --7分钟升盲
+        [1]={
+            small_blind=25,
+            time=0,   --单位s
+            ante = 0,  
+        },
+        [2]={
+            small_blind=50,
+            time=420,
+            ante = 0,  
+        },       
+        [3]={
+            small_blind=75,
+            time=420,
+            ante = 0,  
+        },
+        [4]={
+            small_blind=75,
+            time=420,
+            ante = 25,  
+        },       
+        [5]={
+            small_blind=100,
+            time=420,
+            ante = 25,  
+        },       
+        [6]={
+            small_blind=150,
+            time=420,
+            ante = 50,  
+        },       
+        [7]={
+            small_blind=200,
+            time=420,
+            ante = 50,  
+        },              
+        [8]={
+            small_blind=250,
+            time=420,
+            ante = 75,  
+        },              
+        [9]={
+            small_blind=300,
+            time=420,
+            ante = 75,  
+        },              
+        [10]={
+            small_blind=400,
+            time=420,
+            ante = 100,
+        },              
+        [11]={
+            small_blind=500,
+            time=420,
+            ante = 100,
+        },              
+        [12]={
+            small_blind=600,
+            time=420,
+            ante = 200,
+        }, 
+        [13]={
+            small_blind=800,
+            time=420,   
+            ante = 200,  
+        },
+        [14]={
+            small_blind=1000,
+            time=420,
+            ante = 300,  
+        },       
+        [15]={
+            small_blind=1200,
+            time=420,
+            ante = 400,  
+        },
+        [16]={
+            small_blind=1500,
+            time=420,
+            ante = 500,  
+        },       
+        [17]={
+            small_blind=2000,
+            time=420,
+            ante = 500,  
+        },       
+        [18]={
+            small_blind=2500,
+            time=420,
+            ante = 500,  
+        },       
+        [19]={
+            small_blind=3000,
+            time=420,
+            ante = 1000,  
+        },              
+        [20]={
+            small_blind=4000,
+            time=420,
+            ante = 1000,  
+        },              
+        [21]={
+            small_blind=5000,
+            time=420,
+            ante = 1000,  
+        },              
+        [22]={
+            small_blind=6000,
+            time=420,
+            ante = 2000,
+        },              
+        [23]={
+            small_blind=8000,
+            time=420,
+            ante = 2000,
+        },              
+        [24]={
+            small_blind=10000,
+            time=420,
+            ante = 3000,
+        }, 
+        [25]={
+            small_blind=12000,
+            time=420,  
+            ante = 4000,  
+        },
+        [26]={
+            small_blind=15000,
+            time=420,
+            ante = 5000,  
+        },       
+        [27]={
+            small_blind=20000,
+            time=420,
+            ante = 5000,  
+        },
+        [28]={
+            small_blind=25000,
+            time=420,
+            ante = 5000,  
+        },       
+        [29]={
+            small_blind=30000,
+            time=420,
+            ante = 10000,  
+        },       
+        [30]={
+            small_blind=40000,
+            time=420,
+            ante = 10000,  
+        },       
+        [31]={
+            small_blind=50000,
+            time=420,
+            ante = 15000,  
+        },              
+        [32]={
+            small_blind=60000,
+            time=420,
+            ante = 20000,  
+        },              
+        [33]={
+            small_blind=75000,
+            time=420,
+            ante = 25000,  
+        },              
+        [34]={
+            small_blind=100000,
+            time=420,
+            ante = 25000,
+        },              
+        [35]={
+            small_blind=125000,
+            time=420,
+            ante = 25000,
+        },              
+        [36]={
+            small_blind=150000,
+            time=420,
+            ante = 50000,
+        }, 
+        [37]={
+            small_blind=200000,
+            time=420,   
+            ante = 50000,  
+        },
+        [38]={
+            small_blind=250000,
+            time=420,
+            ante = 75000,  
+        },       
+        [39]={
+            small_blind=300000,
+            time=420,
+            ante = 75000,  
+        },          
+    },   
+    [100] = {  --WPT盲注表
+        [1]={
+            small_blind=25,
+            time=0,   --单位s
+            ante = 0,  
+        },
+        [2]={
+            small_blind=50,
+            time=420,
+            ante = 0,  
+        },       
+        [3]={
+            small_blind=75,
+            time=420,
+            ante = 0,  
+        },
+        [4]={
+            small_blind=75,
+            time=420,
+            ante = 25,  
+        },       
+        [5]={
+            small_blind=100,
+            time=420,
+            ante = 25,  
+        },       
+        [6]={
+            small_blind=150,
+            time=420,
+            ante = 50,  
+        },       
+        [7]={
+            small_blind=200,
+            time=420,
+            ante = 50,  
+        },              
+        [8]={
+            small_blind=250,
+            time=420,
+            ante = 75,  
+        },              
+        [9]={
+            small_blind=300,
+            time=420,
+            ante = 75,  
+        },              
+        [10]={
+            small_blind=400,
+            time=420,
+            ante = 100,
+        },              
+        [11]={
+            small_blind=500,
+            time=420,
+            ante = 100,
+        },              
+        [12]={
+            small_blind=600,
+            time=420,
+            ante = 200,
+        }, 
+        [13]={
+            small_blind=800,
+            time=420,   
+            ante = 200,  
+        },
+        [14]={
+            small_blind=1000,
+            time=420,
+            ante = 300,  
+        },       
+        [15]={
+            small_blind=1200,
+            time=420,
+            ante = 400,  
+        },
+        [16]={
+            small_blind=1500,
+            time=420,
+            ante = 500,  
+        },       
+        [17]={
+            small_blind=2000,
+            time=420,
+            ante = 500,  
+        },       
+        [18]={
+            small_blind=2500,
+            time=420,
+            ante = 500,  
+        },       
+        [19]={
+            small_blind=3000,
+            time=420,
+            ante = 1000,  
+        },              
+        [20]={
+            small_blind=4000,
+            time=420,
+            ante = 1000,  
+        },              
+        [21]={
+            small_blind=5000,
+            time=420,
+            ante = 1000,  
+        },              
+        [22]={
+            small_blind=6000,
+            time=420,
+            ante = 2000,
+        },              
+        [23]={
+            small_blind=8000,
+            time=420,
+            ante = 2000,
+        },              
+        [24]={
+            small_blind=10000,
+            time=420,
+            ante = 3000,
+        }, 
+        [25]={
+            small_blind=12000,
+            time=420,  
+            ante = 4000,  
+        },
+        [26]={
+            small_blind=15000,
+            time=420,
+            ante = 5000,  
+        },       
+        [27]={
+            small_blind=20000,
+            time=420,
+            ante = 5000,  
+        },
+        [28]={
+            small_blind=25000,
+            time=420,
+            ante = 5000,  
+        },       
+        [29]={
+            small_blind=30000,
+            time=420,
+            ante = 10000,  
+        },       
+        [30]={
+            small_blind=40000,
+            time=420,
+            ante = 10000,  
+        },       
+        [31]={
+            small_blind=50000,
+            time=420,
+            ante = 15000,  
+        },              
+        [32]={
+            small_blind=60000,
+            time=420,
+            ante = 20000,  
+        },              
+        [33]={
+            small_blind=75000,
+            time=420,
+            ante = 25000,  
+        },              
+        [34]={
+            small_blind=100000,
+            time=420,
+            ante = 25000,
+        },              
+        [35]={
+            small_blind=125000,
+            time=420,
+            ante = 25000,
+        },              
+        [36]={
+            small_blind=150000,
+            time=420,
+            ante = 50000,
+        }, 
+        [37]={
+            small_blind=200000,
+            time=420,   
+            ante = 50000,  
+        },
+        [38]={
+            small_blind=250000,
+            time=420,
+            ante = 75000,  
+        },       
+        [39]={
+            small_blind=300000,
+            time=420,
+            ante = 75000,  
+        },          
+    }, 
+[101] ={
+[1] = {small_blind=10,time=10,ante =0,},
+[2] = {small_blind=15,time=10,ante =0,},
+[3] = {small_blind=20,time=10,ante =0,},
+[4] = {small_blind=25,time=10,ante =5,},
+[5] = {small_blind=30,time=10,ante =6,},
+[6] = {small_blind=40,time=10,ante =8,},
+[7] = {small_blind=50,time=10,ante =10,},
+[8] = {small_blind=60,time=10,ante =12,},
+[9] = {small_blind=80,time=10,ante =16,},
+[10] = {small_blind=100,time=10,ante =20,},
+[11] = {small_blind=125,time=10,ante =25,},
+[12] = {small_blind=150,time=10,ante =30,},
+[13] = {small_blind=175,time=10,ante =35,},
+[14] = {small_blind=200,time=10,ante =40,},
+[15] = {small_blind=250,time=10,ante =50,},
+[16] = {small_blind=300,time=10,ante =60,},
+[17] = {small_blind=400,time=10,ante =80,},
+[18] = {small_blind=500,time=10,ante =100,},
+[19] = {small_blind=600,time=10,ante =120,},
+[20] = {small_blind=800,time=10,ante =160,},
+[21] = {small_blind=1000,time=10,ante =200,},
+[22] = {small_blind=1250,time=10,ante =250,},
+[23] = {small_blind=1500,time=10,ante =300,},
+[24] = {small_blind=1750,time=10,ante =350,},
+[25] = {small_blind=2000,time=10,ante =400,},
+[26] = {small_blind=2500,time=10,ante =500,},
+[27] = {small_blind=3000,time=10,ante =600,},
+[28] = {small_blind=4000,time=10,ante =800,},
+[29] = {small_blind=5000,time=10,ante =1000,},
+[30] = {small_blind=6000,time=10,ante =1200,},
+[31] = {small_blind=8000,time=10,ante =1600,},
+[32] = {small_blind=10000,time=10,ante =2000,},
+[33] = {small_blind=12500,time=10,ante =2500,},
+[34] = {small_blind=15000,time=10,ante =3000,},
+[35] = {small_blind=17500,time=10,ante =3500,},
+[36] = {small_blind=20000,time=10,ante =4000,},
+[37] = {small_blind=25000,time=10,ante =5000,},
+[38] = {small_blind=30000,time=10,ante =6000,},
+[39] = {small_blind=40000,time=10,ante =8000,},
+[40] = {small_blind=50000,time=10,ante =10000,},
+[41] = {small_blind=60000,time=10,ante =12000,},
+[42] = {small_blind=80000,time=10,ante =16000,},
+[43] = {small_blind=100000,time=10,ante =20000,},
+[44] = {small_blind=125000,time=10,ante =25000,},
+[45] = {small_blind=150000,time=10,ante =30000,},
+[46] = {small_blind=175000,time=10,ante =35000,},
+[47] = {small_blind=200000,time=10,ante =40000,},
+[48] = {small_blind=250000,time=10,ante =50000,},
+[49] = {small_blind=300000,time=10,ante =60000,},
+[50] = {small_blind=400000,time=10,ante =80000,},
+[51] = {small_blind=500000,time=10,ante =100000,},
+[52] = {small_blind=600000,time=10,ante =120000,},
+[53] = {small_blind=800000,time=10,ante =160000,},
+[54] = {small_blind=1000000,time=10,ante =200000,},
+[55] = {small_blind=1250000,time=10,ante =250000,},
+[56] = {small_blind=1500000,time=10,ante =300000,},
+[57] = {small_blind=1750000,time=10,ante =350000,},
+[58] = {small_blind=2000000,time=10,ante =400000,},
+[59] = {small_blind=2500000,time=10,ante =500000,},
+[60] = {small_blind=3000000,time=10,ante =600000,},
+[61] = {small_blind=4000000,time=10,ante =800000,},
+[62] = {small_blind=5000000,time=10,ante =1000000,},
+[63] = {small_blind=6000000,time=10,ante =1200000,},
+[64] = {small_blind=8000000,time=10,ante =1600000,},
+[65] = {small_blind=10000000,time=10,ante =2000000,},
+[66] = {small_blind=12500000,time=10,ante =2500000,},
+[67] = {small_blind=15000000,time=10,ante =3000000,},
+[68] = {small_blind=17500000,time=10,ante =3500000,},
+[69] = {small_blind=20000000,time=10,ante =4000000,},
+[70] = {small_blind=25000000,time=10,ante =5000000,},
+[71] = {small_blind=30000000,time=10,ante =6000000,},
+[72] = {small_blind=40000000,time=10,ante =8000000,},
+[73] = {small_blind=50000000,time=10,ante =10000000,},
+[74] = {small_blind=60000000,time=10,ante =12000000,},
+[75] = {small_blind=80000000,time=10,ante =16000000,},
+[76] = {small_blind=100000000,time=10,ante =20000000,},
+},    	    
+}

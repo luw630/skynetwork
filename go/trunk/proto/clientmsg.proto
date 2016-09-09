@@ -1,0 +1,153 @@
+// See README.txt for information and build instructions.
+// syntax = "proto2";
+// 通知消息的后缀用Ntc,请求消息Req,响应消息Res
+enum EMsgType {
+    EMSGTYPE_UNKNOWN = 0;
+    EMSGTYPE_REQUEST = 1;
+    EMSGTYPE_RESPONSE = 2;
+    EMSGTYPE_NOTICE = 3;
+}
+
+message ClientMsgHead {
+  optional int32 msgtype = 1;
+  optional string msgname = 2;    
+  optional string  svr_id = 3;
+  optional int32 service_address = 4; 	
+}
+
+message Version {
+  optional int32  platform = 1; //client 平台id(属于哪家公司发行)
+  optional int32  channel = 2;  //client 渠道id(发行公司的发行渠道)
+  optional string version = 3;  //client 版本号
+  optional int32  authtype = 4; //client 账号类型
+  optional int32  regfrom = 5;  //描述从哪里注册过来的
+}
+
+message GateSvrItem {
+	optional string ip = 1;
+	optional int32 port = 2;
+	optional int32 updatetime = 3;
+	optional int32 onlinenum = 4;
+}
+
+message PlayerBaseinfo {
+	optional int32 rid = 1;
+	optional string rolename = 2; //昵称
+    optional string logo = 3;  //logo
+    optional string phone = 4; //手机号
+    optional int32  level = 5; //级位
+    optional int32  dan = 6;   //段位
+    optional int32  winnum = 7;  //胜局 
+    optional int32  losenum = 8; //败局
+    optional int32  drawnum = 9; //和局
+    optional int32  sex = 10;   //性别
+}
+////////////////////////request/////////////////////////
+//请求登陆loginsvrd
+message LoginReq {
+	optional Version version = 1;
+	optional string deviceinfo = 2; //设备信息
+	optional int32 uid = 3;
+	optional int32 uidtype = 4; //登录账号类型 如: 游客: guest 手机: phone 微信: weixin等
+	optional string thirdtoken = 5; 
+	optional string username = 6;	
+}
+//响应登陆loginsvrd
+message LoginRes {
+	optional int32 errcode = 1; //错误原因 0表示成功
+	optional string errcodedes = 2; //错误描述
+	optional int32 uid = 3;
+	optional int32 rid = 4;
+	optional string logintoken = 5;   //登录服务器返回的登录token
+	optional int32 expiretime = 6;  //过期时间（绝对时间）单位s
+	repeated GateSvrItem gatesvrs = 7;//gate服务器地址列表 
+}
+
+//心跳包请求
+message HeartReq {
+	optional Version version = 1;	
+}
+//心跳包响应
+message HeartRes {
+	optional int32 errcode = 1; //错误原因 0表示成功
+	optional string errcodedes = 2; //错误描述
+}
+
+//请求进入游戏
+message EnterGameReq {
+	optional Version version = 1;
+	optional string device_info = 2; //设备信息
+	optional int32 uid = 3;
+	optional int32 rid = 4;
+	optional int32 expiretime = 5;
+	optional string logintoken = 6; 
+}
+
+//响应进入游戏
+message EnterGameRes {
+	optional int32 errcode = 1; //错误原因 0表示成功
+	optional string errcodedes = 2; //错误描述
+	optional int32 isreauth = 3; //是否需要重新认证，断线重连时根据token是否过期告诉client是否需要重新登录认证, 0表示false、非0表示true
+	optional int32 servertime = 4; //同步服务器时间
+	optional PlayerBaseinfo baseinfo = 5; //下面数据用于判断玩家是否需要牌桌断线重连
+	optional string ip = 6;   //gatesvrd的ip
+	optional int32 port = 7;  //gatesvrd的port
+	optional string roomsvr_id = 8; //房间服务器id
+	optional int32  roomsvr_table_address = 9; //桌子的服务器地址 
+}
+
+//请求玩家基本信息
+message PlayerBaseinfoReq {
+	optional Version version = 1;
+	optional int32 rid = 2;
+}
+
+//响应玩家的基本信息
+message PlayerBaseinfoRes {
+	optional int32 errcode = 1; //错误原因 0表示成功
+	optional string errcodedes = 2; //错误描述
+	optional PlayerBaseinfo baseinfo = 3; //
+}
+
+//请求更新玩家信息
+message UpdateinfoReq {
+	optional Version version = 1;
+	optional string rolename = 2; //昵称
+    optional string logo = 3;  //logo
+    optional string phone = 4; //手机号
+    optional int32  sex = 5;   //性别
+}
+
+//响应更新玩家信息
+message UpdateinfoRes {
+	optional int32 errcode = 1; //错误原因 0表示成功
+	optional string errcodedes = 2; //错误描述
+	optional string rolename = 3; //昵称
+    optional string logo = 4;  //logo
+    optional string phone = 5; //手机号
+    optional int32  sex = 6;   //性别
+}
+
+//请求创建朋友桌
+message CreateFriendTableReq {
+	optional Version version = 1;
+	optional int32 room_type = 2;
+	optional int32 game_type = 3;
+	optional string name = 4;
+	optional int32 game_time = 5;            --游戏限时单位s
+	optional int32 retain_time = 6;          --朋友桌保留时间单位s
+	optional int32 action_timeout = 7;       --玩家操作限时
+	optional int32 action_timeout_count = 8; --玩家可操作超时次数
+}
+
+//响应创建朋友桌
+message CreateFriendTableRes {
+	optional int32 errcode = 1; //错误原因 0表示成功
+	optional string errcodedes = 2; //错误描述
+	optional string create_table_id = 3; //朋友桌索引号
+}
+////////////////////notice/////////////////////
+//通知在其他设备上登陆
+message RepeatNtc {
+	optional int32 rid = 1;
+}
