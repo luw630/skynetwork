@@ -52,6 +52,7 @@ skynet.start(function()
 		nodelay = true,
         agentsize = gatesvr.agentsize,
         agentincr = gatesvr.agentincr,
+        svr_netpack = gatesvr.svr_netpack,
 	})
 	print("gatesvrd start success")
 	skynet.exit()

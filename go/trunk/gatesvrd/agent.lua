@@ -7,6 +7,7 @@ local base = require "base"
 local timetool = require "timetool"
 local serverbase = require "serverbase"
 local eventmng = require "eventmng"
+local msgproxy = require "msgproxy"
 require "enum"
 local params = ...
 
@@ -58,7 +59,16 @@ function  Agent:init()
 	eventmng.add_eventbyname("PlayerBaseinfoReq", "playerbaseinfo")
 	eventmng.add_eventbyname("UpdateinfoReq", "updateinfo")
 	eventmng.add_eventbyname("HeartReq", "heart")
-
+	eventmng.add_eventbyname("CreateFriendTableReq", "createfriendtable")
+	eventmng.add_eventbyname("GetTableStateByCreateIdReq", "gettabestatebycreateid")
+	eventmng.add_eventbyname("GetFriendTableListReq", "getfriendtablelist")
+	eventmng.add_eventbyname("EnterTableReq", "entertable")
+	eventmng.add_eventbyname("SitdownTableReq", "sitdowntable")
+	eventmng.add_eventbyname("StandupTableReq", "standuptable")
+	eventmng.add_eventbyname("LeaveTableReq", "leavetable")
+	eventmng.add_eventbyname("ReenterTableReq", "reentertable")
+	eventmng.add_eventbyname("StartGameReq", "startgame")
+	eventmng.add_eventbyname("DoactionReq", "doaction")
 	Agent.__tostring = agent_to_string						
 end
 
@@ -161,17 +171,30 @@ function Agent:agentexit(is_active)
 		and self.roomsvr_table_address >= 0
 		and self.roomsvr_table_id > 0 then
 		--通知玩家离开桌子
-		--TO ADD
+		local leavetablereqmsg = {
+			version = {
+				platform = self.platform,
+	  			channel = self.channel,
+	  			version = self.version,
+	  			authtype = self.authtype,
+	  			regfrom = self.regfrom,
+			},
+			id = self.roomsvr_table_id,
+			roomsvr_id = self.roomsvr_id,
+			roomsvr_table_address = self.roomsvr_table_address,
+		}
+
+		msgproxy.sendrpc_reqmsgto_roomsvrd(nil, self.roomsvr_id, self.roomsvr_table_address, "leavetable", leavetablereqmsg)
 
 		if self.state ~= EGateAgentState.GATE_AGENTSTATE_LOGOUTING then
 			return
 		end
 
 		--重置游戏在线状态信息
-  		self.roomsvr_id = "",
-		self.roomsvr_table_id = 0,
-		self.roomsvr_table_address = -1,
-		self.roomsvr_seat_index = 0,
+  		self.roomsvr_id = ""
+		self.roomsvr_table_id = 0
+		self.roomsvr_table_address = -1
+		self.roomsvr_seat_index = 0
 	end
 
 	if self.online ~= nil then

@@ -1,7 +1,7 @@
 local skynet = require "skynet"
 local filelog = require "filelog"
 local msghelper = require "agenthelper"
---local msgproxy = require "msgproxy"
+local msgproxy = require "msgproxy"
 --local configdao = require "configdao"
 local base = require "base"
 local timetool = require "timetool"
@@ -26,7 +26,7 @@ end
 function AgentCMD.close(...)
 	local server = msghelper:get_server()
 	--延迟释放agent保证agent能正常处理完
-	skynet.sleep(10)
+	--skynet.sleep(10)
 	server:agentexit(true)
 	server:exit_service()
 end
@@ -42,10 +42,10 @@ function AgentCMD.disconnect(isheart, fd)
    	end
 
 	--如果玩家已经因为心跳超时掉线，则玩家退出
-	--[[if server.isoffline then
+	if server.isoffline then
 		server:agentexit()
 		return
-	end]]
+	end
 
 	if server.roomsvr_id == nil or server.roomsvr_id == "" then
 		server:agentexit()
@@ -63,8 +63,24 @@ function AgentCMD.disconnect(isheart, fd)
 	end
 
 	--请求游戏服务器玩家掉线
-	--TO ADD
-	
+	local requestmsg = {
+		rid = server.rid,
+		roomsvr_id = server.roomsvr_id,
+		id = server.roomsvr_table_id,
+		roomsvr_table_address = server.roomsvr_table_address,
+		gatesvr_id = skynet.getenv("svr_id"),
+		agent_address = skynet.self(),
+	}
+	local result = msgproxy.sendrpc_reqmsgto_roomsvrd(nil, server.roomsvr_id, server.roomsvr_table_address, "disconnect", requestmsg)
+	if fd ~= server.client_fd then
+   		return
+   	end
+
+   	if not result then
+   		server:agentexit()
+		return
+   	end
+ 	
 	--设置玩家掉线
 	server.isoffline = true
 	--更新玩家心跳时间

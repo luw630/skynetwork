@@ -21,7 +21,7 @@ function  GatesvrEnterGame.process(session, source, fd, request)
 	--验证玩家登陆的合法性
 	if  timetool.get_time() >= request.expiretime then
 		--token 过期需要重新验证
-		responsemsg.isreauth = true
+		responsemsg.isreauth = EBOOL.TRUE
 		msghelper:send_resmsgto_client(fd, "EnterGameRes", responsemsg)
 		server.tcpmng.close_socket(fd)
 		return		
@@ -54,7 +54,7 @@ function  GatesvrEnterGame.process(session, source, fd, request)
 	end
 
 	--认证通过创建player agent
-	local result = server.tcpmng.create_session(fd, "EnterGameRes", request)
+	local result = server.tcpmng.create_session(fd, "EnterGameReq", request)
 	if not result then
 		responsemsg.errcode = EErrCode.ERR_NET_EXCEPTION
 		responsemsg.errcodedes = "网络异常，请重试！"

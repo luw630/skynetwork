@@ -32,7 +32,7 @@ function RoomsvrHelper:generate_create_table_id()
 		for i = 1, 4 do
 			code = code..(math.random(0, 9))
 		end
-		if self.create_table_ids[code] == nil then
+		if self.server.create_table_ids[code] == nil then
 			break
 		end
 		code = string.match(skynet.getenv("svr_id"), "%a*_(%d+)")
@@ -68,7 +68,6 @@ function RoomsvrHelper:create_friend_table(conf)
 		conf.create_table_id = create_table_id
 		conf.create_time = timetool.get_time()
 		conf.id = self.server.friend_table_id
-
 		local result = skynet.call(tableinfo.table_service, "lua", "cmd", "start", conf, skynet.getenv("svr_id"))
 		if not result then
 			filelog.sys_error("RoomsvrHelper:create_friend_table(:"..self.server.friend_table_id..") failed")
@@ -78,7 +77,7 @@ function RoomsvrHelper:create_friend_table(conf)
 
 		end
 		self.server.friend_table_id = self.server.friend_table_id + 1
-		self.create_table_ids[create_table_id] = true	
+		self.server.create_table_ids[create_table_id] = true	
 	else
 		filelog.sys_error("RoomsvrHelper:create_friend_table roomsvr's idle_table_mng not enough tableservice!")
 		return false, create_table_id

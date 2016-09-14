@@ -39,21 +39,26 @@ function  CreateFriendTable.process(session, source, fd, request)
 	--检查当前登陆状态
 	if not msghelper:is_login_success() then
 		filelog.sys_warning("CreateFriendTable.process invalid server state", server.state)
-		responsemsg.errcode = EGateAgentState.ERR_INVALID_REQUEST
+		responsemsg.errcode = EErrCode.ERR_INVALID_REQUEST
 		responsemsg.errcodedes = "无效的请求！"
 		msghelper:send_resmsgto_client(fd, "CreateFriendTableRes", responsemsg)		
 		return
 	end
 
 	if processing:is_processing() then
-		responsemsg.errcode = EGateAgentState.ERR_DEADING_LASTREQ
+		responsemsg.errcode = EErrCode.ERR_DEADING_LASTREQ
 		responsemsg.errcodedes = "正在处理上一次请求！"
 		msghelper:send_resmsgto_client(fd, "CreateFriendTableRes", responsemsg)		
 		return
 	end
 
+	request.rid = server.rid
+	request.playerinfo = {
+		rolename = server.info.rolename,
+		logo = server.info.logo,
+	}
 	processing:set_process_state(true)
-	responsemsg = msgproxy.sendrpc_reqmsgto_roomsvrd(server.rid, nil, nil, "CreateFriendTableReq", request)
+	responsemsg = msgproxy.sendrpc_reqmsgto_roomsvrd(server.rid, nil, nil, "createfriendtable", request)
 	processing:set_process_state(false)
 
 	if not msghelper:is_login_success() then
@@ -62,8 +67,8 @@ function  CreateFriendTable.process(session, source, fd, request)
 
 	if responsemsg == nil then
 		responsemsg = {
-			responsemsg.errcode = EGateAgentState.ERR_INVALID_REQUEST
-			responsemsg.errcodedes = "无效的请求!"
+			errcode = EGateAgentState.ERR_INVALID_REQUEST,
+			errcodedes = "无效的请求!"
 		}
 	end
 

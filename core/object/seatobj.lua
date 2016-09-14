@@ -9,7 +9,7 @@ local SeatObj = {
 		logo="",
 		sex=0,
 	}]]
-	is_tuoguan = false, --是否托管
+	is_tuoguan = 0, --是否托管
 	is_robot = false,  --是否机器人
 	is_delete = false, --是否删除桌子
 }
@@ -27,7 +27,7 @@ function SeatObj:new(obj)
 		logo="",
 		sex=0,
 	}
-	obj.is_tuoguan = false
+	obj.is_tuoguan = 0
 	obj.is_robot = false
 	obj.is_delete = false
  	setmetatable(obj, self)

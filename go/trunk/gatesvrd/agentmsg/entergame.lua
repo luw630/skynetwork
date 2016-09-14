@@ -27,7 +27,7 @@ message EnterGameReq {
 message EnterGameRes {
 	optional int32 errcode = 1; //错误原因 0表示成功
 	optional string errcodedes = 2; //错误描述
-	optional int32 isreauth = 3; //是否需要重新认证，断线重连时根据token是否过期告诉client是否需要重新登录认证, 0表示false、非0表示true
+	optional int32 isreauth = 3; //是否需要重新认证，断线重连时根据token是否过期告诉client是否需要重新登录认证, 2表示false、1表示true
 	optional int32 servertime = 4; //同步服务器时间
 	optional PlayerBaseinfo baseinfo = 5; //下面数据用于判断玩家是否需要牌桌断线重连
 	optional string ip = 6;   //gatesvrd的ip
@@ -101,7 +101,7 @@ function  EnterGame.process(session, source, fd, request)
 	if server.state ~= EGateAgentState.GATE_AGENTSTATE_LOGINING then
 		return
 	end
-	responsemsg.isreauth = 0
+	responsemsg.isreauth = EBOOL.FALSE
 	if server.online.gatesvr_id ~= "" and server.online.gatesvr_id ~= skynet.getenv("svr_id") then
 		responsemsg.ip = server.online.gatesvr_ip
 		responsemsg.port = server.online.gatesvr_port
@@ -142,7 +142,7 @@ function  EnterGame.process(session, source, fd, request)
 
 	--保存玩家在线状态
 	local gatesvrs = configdao.get_svrs("gatesvrs")
-	local gatesvr = gatesvrs(skynet.getenv("svr_id"))
+	local gatesvr = gatesvrs[skynet.getenv("svr_id")]
 	server.online.activetime = timetool.get_time() 
 	server.online.gatesvr_ip = gatesvr.svr_ip
 	server.online.gatesvr_port = gatesvr.svr_port

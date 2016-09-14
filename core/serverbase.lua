@@ -5,14 +5,6 @@ local base = require "base"
 local timetool = require "timetool"
 local string = string
 
-local protobuf = require "protobuf"
-local parser = require "parser"
-
-t = parser.register("addressbook.proto","../../../msgproto")
-
-
-
-
 require "skynet.manager"
 
 
@@ -191,18 +183,10 @@ end
 
 ------------------------------------------------------------------
 local function unpack_client_message(...)
-	print("unpack_client_message  "..#{...})
-	local x, y = ...
-	--print(type(x),y)
-	local decode = protobuf.decode("tutorial.Person" , x,y)
-	print(decode.name)
-	print(decode.id)
-
 	return ServerBase:decode_client_message(...)
 end
 
 local function process_client_message(session, source, ...)
-	print("process_client_message")
 	ServerBase:process_client_message(session, source, ...)
 end
 

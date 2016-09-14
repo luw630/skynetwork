@@ -4,6 +4,8 @@ local msghelper = require "roomsvrhelper"
 local msgproxy = require "msgproxy"
 local base = require "base"
 local configdao = require "configdao"
+local timetool = require "timetool"
+require "enum"
 
 local filename = "RoomsvrRequest.lua"
 local RoomsvrRequest = {}
@@ -12,6 +14,7 @@ function RoomsvrRequest.process(session, source, event, ...)
 	local f = RoomsvrRequest[event] 
 	if f == nil then
 		filelog.sys_error(filename.." RoomsvrRequest.process invalid event:"..event)
+		base.skynet_retpack(nil)
 		return
 	end
 	f(session, source, ...)
@@ -39,76 +42,43 @@ message CreateFriendTableRes {
 ]]
 
 function RoomsvrRequest.createfriendtable(session, source, request)
-	local responsemsg = {issucces = true,}
-	if request.carry_chips == nil or request.big_blinds == nil or request.ante == nil or request.retain_time == nil or request.max_sitdown_playernum == nil or request.action_timeout == nil then
-		responsemsg.issucces = false
-		responsemsg.resultdes = "无效请求！"
-		base.skynet_retpack(responsemsg)
-		filelog.sys_error("ROOMSVRD RoomsvrRequest.createfriendtable one invalid request param")
-		return
-	end
+	local responsemsg = {
+		errcode = EErrCode.ERR_SUCCESS,
+	}
 
-	if request.carry_chips == 0 or request.big_blinds == 0 or request.max_sitdown_playernum == 0 or request.retain_time == 0 or request.action_timeout == 0 then
-		responsemsg.issucces = false
-		responsemsg.resultdes = "无效请求！"
+	if request.room_type == nil 
+		or request.game_time == nil 
+		or request.retain_time == nil
+		or request.action_timeout == nil
+		or request.action_timeout_count == nil then
+		responsemsg.errcodedes = "无效请求！"
 		base.skynet_retpack(responsemsg)
-		filelog.sys_error("ROOMSVRD RoomsvrRequest.createfriendtable two invalid request param")
-		return
-	end
-
-	if request.carry_chips <= request.big_blinds or request.action_timeout < 10 or request.retain_time < 240 then
-		responsemsg.issucces = false
-		responsemsg.resultdes = "无效请求！"
-		base.skynet_retpack(responsemsg)
-		filelog.sys_error("ROOMSVRD RoomsvrRequest.createfriendtable three invalid request param")
-		return
+		filelog.sys_error("RoomsvrRequest.createfriendtable two invalid request param")		
 	end 
 
-	conf = {}
-    conf.conf_version = 1
-    conf.table_room_type = commonconst.ROOM_PRIVATE_TYPE     --桌子的房间类型
-    conf.table_game_type = 1
-    conf.small_blinds = math.ceil(request.big_blinds / 2)
-    conf.min_player_num = 2  	 --最少开始游戏人数
-    conf.max_player_num = request.max_sitdown_playernum  --桌子座位数
-    conf.big_blinds = conf.small_blinds * 2
-    if request.min_carrychips == nil then
-    	conf.min_carry = request.carry_chips
-   	else
-    	conf.min_carry = request.min_carrychips
-   	end
+	local conf = {
+		conf_version = 1,
+		room_type = request.room_type,
+		retain_time = request.retain_time,
+		game_time = request.game_time,
+		name = request.name or "",
+		game_type = request.game_type or EGameType.GAME_TYPE_COMMON,
+	    max_player_num = 2,
+	    create_user_rid = request.rid,
+	    create_user_rolename = request.playerinfo.rolename,
+	    create_user_logo = request.playerinfo.logo,
+	    create_time = timetool.get_time(),
+	   	action_timeout = request.action_timeout,       --玩家操作限时
+		action_timeout_count = request.action_timeout_count, --玩家可操作超时次数
+	}
 
-   	if request.max_carrychips == nil then
-   		conf.max_carry = request.carry_chips
-   	else
-    	conf.max_carry = request.max_carrychips
-   	end
-    conf.game_draw_rate = 0      --房费占大盲的百分比
-    conf.prop_price = 0
-    --conf.table_name = request.table_name
-    conf.table_name = "自建朋友桌"
-    conf.calculate_win_expbase = 0
-    conf.calculate_win_expratio = 0
-    conf.calculate_lose_exp = 0
-    conf.everyday_max_exp = 0     				 --每天玩家能获得的最大经验值
-    conf.max_wait_num = 300       				 --最大旁观人数
-    --conf.action_timeout = request.action_timeout*100 --玩家操作超时时间单位10ms
-    conf.action_timeout = 2000 --玩家操作超时时间单位10ms
-    conf.ante = request.ante             	     --前注
-    conf.continuous_timeout = 2                  --连续超时判定次数
-    conf.retain_time = request.retain_time
-    conf.table_create_user = request.rid
-    conf.table_create_user_rolename = request.rolename
-    conf.table_create_user_logo = request.logo
-    conf.is_control = request.is_control
-
-    local result, identify_code = msghelper.create_friend_table(conf)
+    local result, create_table_id = msghelper:create_friend_table(conf)
     if not result then
-    	responsemsg.issucces = false
-    	responsemsg.resultdes = "系统错误，创建朋友桌失败！"
-		filelog.sys_error("ROOMSVRD RoomsvrRequest.createfriendtable create_friend_table failed")
+		responsemsg.errcode = EErrCode.ERR_CREATE_TABLE_FAILED
+    	responsemsg.errcodedes = "系统错误，创建朋友桌失败！"
+		filelog.sys_error("RoomsvrRequest.createfriendtable create_friend_table failed")
     else
-    	responsemsg.identify_code = identify_code
+    	responsemsg.create_table_id = create_table_id
     end
 
     base.skynet_retpack(responsemsg)

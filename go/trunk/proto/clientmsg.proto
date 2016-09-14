@@ -40,7 +40,72 @@ message PlayerBaseinfo {
     optional int32  winnum = 7;  //胜局 
     optional int32  losenum = 8; //败局
     optional int32  drawnum = 9; //和局
-    optional int32  sex = 10;   //性别
+    optional int32  sex = 10;    //性别
+}
+
+message TableStateItem {
+	optional int32 id = 1;    //table id
+	optional int32 state = 2; //table state
+	optional string name = 3; //桌子名字
+	optional int32 room_type = 4; //房间类型
+	optional int32 game_type = 5; //游戏类型
+	optional int32 max_player_num = 6;   //房间支持的最大人数
+	optional int32 cur_player_num = 7;   //状态服务器
+	optional int32 game_time = 8;        //棋局限时	
+	optional int32 retain_to_time = 9;   //桌子保留到的时间(linux时间擢)
+	optional int32 create_user_rid = 10; //创建者rid
+	optional string create_user_rolename = 11; //创建者姓名
+	optional int32 create_time = 12;      //桌子的创建时间
+	optional string create_table_id = 13; //创建桌子的索引id	
+	optional string roomsvr_id = 14;      //房间服务器id
+	optional int32 roomsvr_table_address = 15; //桌子table的地址
+	optional int32 action_timeout = 16;       //玩家操作限时
+	optional int32 action_timeout_count = 17; //玩家可操作超时次数	
+	optional string create_user_logo = 18;
+}
+
+message SeatInfo {
+	optional int32 rid = 1;
+	optional int32 index = 2;
+	optional int32 state = 3;
+	optional int32 is_tuoguan = 4; //1表示是 2表示否
+}
+
+message TablePlayerInfo {
+	optional int32 rid = 1;
+	optional string rolename = 2;
+	optional string logo = 3;
+	optional int32 sex = 4;
+}
+
+message GameInfo {
+	optional int32 id = 1;    //table id
+	optional int32 state = 2; //table state
+	optional string name = 3; //桌子名字
+	optional int32 room_type = 4; //房间类型
+	optional int32 game_type = 5; //游戏类型
+	optional int32 max_player_num = 6;   //房间支持的最大人数
+	optional int32 cur_player_num = 7;   //状态服务器
+	optional int32 game_time = 8;        //棋局限时	
+	optional int32 retain_to_time = 9;   //桌子保留到的时间(linux时间擢)
+	optional int32 create_user_rid = 10; //创建者rid
+	optional string create_user_rolename = 11; //创建者姓名
+	optional int32 create_time = 12;      //桌子的创建时间
+	optional string create_table_id = 13; //创建桌子的索引id	
+	optional string roomsvr_id = 14;      //房间服务器id
+	optional int32 roomsvr_table_address = 15; //桌子table的地址
+	optional int32 action_timeout = 16;       //玩家操作限时
+	optional int32 action_timeout_count = 17; //玩家可操作超时次数	
+	optional string create_user_logo = 18;
+	
+	optional int32 action_seat_index = 19;    //当前操作玩家的座位号
+	optional int32 action_to_time = 20;       //当前操作玩家的到期时间
+
+	repeated int32 checker_board = 21; // 棋盘
+
+	//下面两个结构按数组下标一一对应
+	repeated SeatInfo seats = 22; //座位
+	repeated TablePlayerInfo tableplayerinfos = 23;
 }
 ////////////////////////request/////////////////////////
 //请求登陆loginsvrd
@@ -71,6 +136,7 @@ message HeartReq {
 message HeartRes {
 	optional int32 errcode = 1; //错误原因 0表示成功
 	optional string errcodedes = 2; //错误描述
+	optional int32 servertime = 3;  //服务器时间
 }
 
 //请求进入游戏
@@ -87,7 +153,7 @@ message EnterGameReq {
 message EnterGameRes {
 	optional int32 errcode = 1; //错误原因 0表示成功
 	optional string errcodedes = 2; //错误描述
-	optional int32 isreauth = 3; //是否需要重新认证，断线重连时根据token是否过期告诉client是否需要重新登录认证, 0表示false、非0表示true
+	optional int32 isreauth = 3; //是否需要重新认证，断线重连时根据token是否过期告诉client是否需要重新登录认证, 2表示false、1表示true
 	optional int32 servertime = 4; //同步服务器时间
 	optional PlayerBaseinfo baseinfo = 5; //下面数据用于判断玩家是否需要牌桌断线重连
 	optional string ip = 6;   //gatesvrd的ip
@@ -134,10 +200,10 @@ message CreateFriendTableReq {
 	optional int32 room_type = 2;
 	optional int32 game_type = 3;
 	optional string name = 4;
-	optional int32 game_time = 5;            --游戏限时单位s
-	optional int32 retain_time = 6;          --朋友桌保留时间单位s
-	optional int32 action_timeout = 7;       --玩家操作限时
-	optional int32 action_timeout_count = 8; --玩家可操作超时次数
+	optional int32 game_time = 5;            //游戏限时单位s
+	optional int32 retain_time = 6;          //朋友桌保留时间单位s
+	optional int32 action_timeout = 7;       //玩家操作限时
+	optional int32 action_timeout_count = 8; //玩家可操作超时次数
 }
 
 //响应创建朋友桌
@@ -146,8 +212,173 @@ message CreateFriendTableRes {
 	optional string errcodedes = 2; //错误描述
 	optional string create_table_id = 3; //朋友桌索引号
 }
+
+//根据创建桌子号获取桌子状态请求
+message GetTableStateByCreateIdReq {
+	optional Version version = 1;
+	optional string create_table_id = 2; 
+}
+
+//根据创建桌子号获取桌子状态响应
+message GetTableStateByCreateIdRes {
+	optional int32 errcode = 1; //错误原因 0表示成功
+	optional string errcodedes = 2; //错误描述
+	optional TableStateItem tablestate = 3; //桌子状态
+}
+
+//取得创建桌列表请求
+message GetFriendTableListReq {
+	optional Version version = 1;
+}
+
+//取得创建桌列表响应
+message GetFriendTableListRes {
+	optional int32 errcode = 1; //错误原因 0表示成功
+	optional string errcodedes = 2; //错误描述	
+	repeated TableStateItem tablelist = 3; //桌子状态列表
+}
+
+//请求进入桌子
+message EnterTableReq {
+	optional Version version = 1;
+	optional int32 id = 2;
+	optional string roomsvr_id = 3; //房间服务器id
+	optional int32  roomsvr_table_address = 4; //桌子的服务器地址 
+}
+
+//响应进入桌子
+message EnterTableRes {
+	optional int32 errcode = 1; //错误原因 0表示成功
+	optional string errcodedes = 2; //错误描述	
+	optional GameInfo gameinfo = 3;
+}
+
+//请求坐入桌子
+message SitdownTableReq {
+	optional Version version = 1;
+	optional int32 id = 2;
+	optional string roomsvr_id = 3; //房间服务器id
+	optional int32  roomsvr_table_address = 4; //桌子的服务器地址
+	optional int32  roomsvr_seat_index = 5; //指定桌位号
+}
+
+//响应坐入桌子
+message SitdownTableRes {
+	optional int32 errcode = 1; //错误原因 0表示成功
+	optional string errcodedes = 2; //错误描述	
+}
+
+//请求从桌子站起
+message StandupTableReq {
+	optional Version version = 1;
+	optional int32 id = 2;
+	optional string roomsvr_id = 3; //房间服务器id
+	optional int32  roomsvr_table_address = 4; //桌子的服务器地址
+}
+
+//响应从桌子站起
+message StandupTableRes {
+	optional int32 errcode = 1; //错误原因 0表示成功
+	optional string errcodedes = 2; //错误描述		
+}
+
+//请求离开桌子
+message LeaveTableReq {
+	optional Version version = 1;	
+	optional int32 id = 2;
+	optional string roomsvr_id = 3; //房间服务器id
+	optional int32  roomsvr_table_address = 4; //桌子的服务器地址
+}
+
+//响应离开桌子
+message LeaveTableRes {
+	optional int32 errcode = 1; //错误原因 0表示成功
+	optional string errcodedes = 2; //错误描述			
+}
+
+//请求断线重连进入桌子
+message ReenterTableReq {
+	optional Version version = 1;
+	optional string roomsvr_id = 2; //房间服务器id
+	optional int32  roomsvr_table_address = 3; //桌子的服务器地址 
+}
+
+//响应断线重连进入桌子
+message ReenterTableRes {
+	optional int32 errcode = 1; //错误原因 0表示成功
+	optional string errcodedes = 2; //错误描述	
+	optional GameInfo gameinfo = 3;
+}
+
+//桌主请求开始游戏
+message StartGameReq {
+	optional Version version = 1;	
+	optional int32 id = 2;
+	optional string roomsvr_id = 3; //房间服务器id
+	optional int32  roomsvr_table_address = 4; //桌子的服务器地址	
+}
+
+//响应桌主开始游戏
+message StartGameRes {
+	optional int32 errcode = 1; //错误原因 0表示成功
+	optional string errcodedes = 2; //错误描述		
+}
+
+//玩家请求操作
+message DoactionReq {
+	optional Version version = 1;	
+	optional int32 id = 2;
+	optional string roomsvr_id = 3; //房间服务器id
+	optional int32  roomsvr_table_address = 4; //桌子的服务器地址	
+	optional int32  action_type = 5;
+	optional int32  action_x = 6;
+	optional int32  action_y = 7;	
+}
+
+//响应玩家请求操作
+message DoactionRes {
+	optional int32 errcode = 1; //错误原因 0表示成功
+	optional string errcodedes = 2; //错误描述		
+}
+
 ////////////////////notice/////////////////////
 //通知在其他设备上登陆
 message RepeatNtc {
 	optional int32 rid = 1;
+}
+//通知桌子有玩家坐下
+message SitdownTableNtc {
+	optional int32 rid = 1;
+	optional SeatInfo seatinfo = 2; //座位信息
+	optional TablePlayerInfo tableplayerinfo = 3;
+}
+
+//通知桌子有玩家站起
+message StandupTableNtc {
+	optional int32 rid = 1;
+	optional int32 roomsvr_seat_index = 2;
+	optional int32 state = 3;
+	optional int32 reason = 4;
+}
+
+//通知玩家操作
+message DoactionNtc {
+	optional int32 rid = 1;
+	optional int32 roomsvr_seat_index = 2;
+	optional int32 action_to_time = 3;  //玩家操作到期时间 
+}
+
+//通知玩家开始游戏
+message GameStartNtc {
+	optional GameInfo gameinfo = 1;
+}
+
+//通知玩家操作结果
+message DoactionResultNtc {
+	optional int32 rid = 1;
+	optional int32 roomsvr_seat_index = 2;
+	optional int32 action_type = 3;
+	optional int32 action_x = 4;
+	optional int32 action_y = 5;
+	repeated int32 raisins = 6; //提子的位置集合
 }

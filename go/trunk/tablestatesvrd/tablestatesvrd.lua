@@ -25,7 +25,7 @@ local TableStatesvrd = serverbase:new({
 				create_user_rolename = "",
 				create_time = 0,
 				create_table_id = "",
-				
+				create_user_logo = "",
 				roomsvr_id = "",
 				roomsvr_table_address = -1,
 			}
@@ -52,8 +52,16 @@ local TableStatesvrd = serverbase:new({
 			update_time = 0,
 		},
 	]]
-	}
+	},
 
+	--根据创建者建立桌子的索引状态
+	createusers_table_indexs = {
+		--[[
+			rid={
+				id=true
+			}
+		]]
+	}
 })
 
 function TableStatesvrd:tostring()

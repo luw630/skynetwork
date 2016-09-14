@@ -125,7 +125,7 @@ datadbsvrs = {
 			port=3306,
 			database="gogame_1",
 			user="root",
-			password="",
+			password="1234567",
 			max_packet_size = 1024 * 1024,	
 		},
 	}
@@ -152,7 +152,7 @@ logindbsvrs = {
 			port=3306,
 			database="gogame_1",
 			user="root",
-			password="",
+			password="1234567",
 			max_packet_size = 1024 * 1024,	
 		},
 	}

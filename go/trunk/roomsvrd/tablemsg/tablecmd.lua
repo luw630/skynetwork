@@ -3,7 +3,7 @@ local filelog = require "filelog"
 local msghelper = require "tablehelper"
 local msgproxy = require "msgproxy"
 local base = require "base"
-local roomtablelogic = require "roomtablelogic"
+local logicmng = require "logicmng"
 local filename = "tablecmd.lua"
 require "enum"
 local TableCMD = {}
@@ -25,11 +25,13 @@ conf = {
 	name = ,
 	game_type = 0,
     max_player_num = 0,
-    cur_player_num = 0,
     create_user_rid = ,
     create_user_rolename = ,
+    create_user_logo=,
     create_time = ,
     create_table_id = ,
+   	action_timeout = ,       --玩家操作限时
+	action_timeout_count = , --玩家可操作超时次数
 	....
 }
 ]]
@@ -41,9 +43,10 @@ function TableCMD.start(conf, roomsvr_id)
 	end
 
 	local server = msghelper:get_server()
-	
+	local roomtablelogic = logicmng.get_logicbyname("roomtablelogic")
 	roomtablelogic.init(server.table_data, conf, roomsvr_id, "object.gameobj", "object.seatobj")	
 
+	filelog.sys_info("TableCMD.start", server.table_data)
     --上报状态
     msghelper:report_table_state()
 	
@@ -58,6 +61,8 @@ function TableCMD.delete(...)
 	--上报桌子管理器房间被删除
 	local server = msghelper:get_server()
 	local table_data = server.table_data
+	local roomtablelogic = logicmng.get_logicbyname("roomtablelogic")
+
 	msgproxy.sendrpc_broadcastmsgto_tablesvrd("delete", table_data.svr_id , table_data.id)
 	
 	--检查桌子当前是否能够删除

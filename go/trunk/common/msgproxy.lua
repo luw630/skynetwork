@@ -33,7 +33,7 @@ local function get_datadbsvr_id(rid)
 	if cfgdbhash == nil then
 		cfgdbhash = configdao.get_cfgdbhash()
 		if cfgdbhash ~= nil then
-			cfgdbhash = cfgdbhash.datadbs
+			cfgdbhash = cfgdbhash.datadbsvrs
 		end
 	end 
 	return cfgdbhash[rid % 128 + 1]

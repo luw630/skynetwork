@@ -21,11 +21,13 @@ function GatesvrSocket.open(fd, ip)
 end
 
 function GatesvrSocket.close(fd)
+	filelog.sys_info("GatesvrSocket.close ", fd)
 	local server = msghelper:get_server()
 	server.tcpmng.close_socket(fd)
 end
 
 function GatesvrSocket.error(fd, msg)
+	filelog.sys_info("GatesvrSocket.error", fd, msg)
 	local server = msghelper:get_server()
 	server.tcpmng.close_socket(fd)
 end

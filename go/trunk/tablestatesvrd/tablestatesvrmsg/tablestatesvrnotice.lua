@@ -28,6 +28,7 @@ function TableStatesvrNotice.update(roomsvr_id, tableinfo)
 	local table_pool = server.table_pool
 	local roomsvrs = server.roomsvrs
 	local create_table_indexs = server.create_table_indexs
+	local createusers_table_indexs = server.createusers_table_indexs
 	local pre_table = table_pool[tableinfo.id]
 	--这段代码是否需要待定(防止同一个id改变类型索引重复)
 	--[[if pre_table ~= nil then
@@ -84,6 +85,14 @@ function TableStatesvrNotice.update(roomsvr_id, tableinfo)
 		create_table_indexs[tableinfo.create_table_id] = tableinfo.id
 	end
 
+	if tableinfo.create_user_rid ~= nil then
+		if createusers_table_indexs[tableinfo.create_user_rid] == nil then
+			createusers_table_indexs[tableinfo.create_user_rid] = {}
+		end
+		local table_ids = createusers_table_indexs[tableinfo.create_user_rid]
+		table_ids[tableinfo.id] = true
+	end
+
 	table_pool[tableinfo.id] = tableinfo	
 end
 
@@ -96,6 +105,7 @@ function TableStatesvrNotice.delete(roomsvr_id, id)
 	local table_pool = server.table_pool
 	local roomsvrs = server.roomsvrs
 	local create_table_indexs = server.create_table_indexs
+	local createusers_table_indexs = server.createusers_table_indexs
 
 	local tableinfo = table_pool[id]
 	local roomsvr = roomsvrs[roomsvr_id]
@@ -137,6 +147,16 @@ function TableStatesvrNotice.delete(roomsvr_id, id)
 		if tableinfo.create_table_id ~= nil then
 			create_table_indexs[tableinfo.create_table_id] = nil
 		end
+		--从创建者索引中删除桌子
+		if tableinfo.create_user_rid ~= nil then
+			local table_ids = createusers_table_indexs[tableinfo.create_user_rid]
+			if table_ids ~= nil then
+				table_ids[tableinfo.id] = nil
+				if tabletool.is_emptytable(table_ids) then
+					createusers_table_indexs[tableinfo.create_user_rid] = nil
+				end
+			end
+		end
 		table_pool[id] = nil
 	else
 		for _, roomlist in pairs(roomsvr) do
@@ -160,6 +180,9 @@ function TableStatesvrNotice.heart(roomsvr_id)
 	local server = msghelper:get_server()	
 	local roomsvrs = server.roomsvrs
 	local roomsvr = roomsvrs[roomsvr_id]
+	if roomsvr == nil then
+		return
+	end
 	roomsvr.update_time = timetool.get_time()
 end
 

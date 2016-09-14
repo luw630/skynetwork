@@ -1,6 +1,7 @@
 local skynet = require "skynet"
 local filelog = require "filelog"
 local msghelper = require "tablehelper"
+local logicmng = require "logicmng"
 local timer = require "timer"
 require "enum"
 
@@ -18,7 +19,23 @@ function TableTimer.process(session, source, event, ...)
 end
 
 function TableTimer.doaction(timerid, request)
-  
+	local server = msghelper:get_server()
+	local table_data = server.table_data
+	if table_data.timer_id ~= timerid then
+		return
+	end
+	table_data.timer_id = -1
+
+	if table_data.state ~= ETableState.TABLE_STATE_WAIT_CLIENT_ACTION 
+		or table_data.roomsvr_seat_index ~= request.roomsvr_seat_index
+		or request.rid ~= table_data.seats[table_data.roomsvr_seat_index].rid then
+		return
+	end
+
+	table_data.action_type = EActionType.ACTION_TYPE_TIMEOUT
+	table_data.state = ETableState.TABLE_STATE_CONTINUE
+	local roomgamelogic = logicmng.get_logicbyname("roomgamelogic")
+	roomgamelogic.run(table_data.gamelogic)
 end
 
 function TableTimer.delete_table(timerid, request)

@@ -27,13 +27,14 @@ function  Heart.process(session, source, fd, request)
 	--检查当前登陆状态
 	if not msghelper:is_login_success() then
 		filelog.sys_warning("Heart.process invalid server state", server.state)
-		responsemsg.errcode = EGateAgentState.ERR_INVALID_REQUEST
+		responsemsg.errcode = EErrCode.ERR_INVALID_REQUEST
 		responsemsg.errcodedes = "无效的请求!"
 		msghelper:send_resmsgto_client(fd, "HeartRes", responsemsg)		
 		return
 	end
 
 	server.last_heart_time = timetool.get_time()
+	responsemsg.servertime = timetool.get_time()
 
 	msghelper:send_resmsgto_client(fd, "HeartRes", responsemsg)
 end

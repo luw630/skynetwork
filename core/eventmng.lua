@@ -40,6 +40,11 @@ function  EventMng.add_eventbyname(name, event)
 	add_event(name, event)	
 end
 
+function EventMng.reload()
+	-- TO ADD
+	-- 添加热更新机制
+end
+
 
 function EventMng.init(server)
 	if server == nil or type(server) ~= "table" then

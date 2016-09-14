@@ -17,9 +17,11 @@ local LongTcpMng = {
 local function close_socket(fd)
 	local server = LongTcpMng.server
 	local c = LongTcpMng.connections[fd]
+	filelog.sys_info("tcpmng close_socket", fd)
 	if c ~= nil then
 		LongTcpMng.connections[fd] = nil
 		if c.isclose == nil or not c.isclose then
+			filelog.sys_info("tcpmng close_socket kick", fd)
 			pcall(skynet.call, server.gate_service, "lua", "kick", fd)
 		end
 	end	
@@ -57,6 +59,7 @@ function LongTcpMng.init(server, agentmodule, agentsize, agentincr, netpackmodul
 			for fd, c in pairs(LongTcpMng.connections) do
 				if c.rid == nil then
 					if c.time+120 <= now_time then
+						filelog.sys_info("LongTcpMng.init timeout kick")
 						pcall(skynet.call, server.gate_service, "lua", "kick", fd)
 						c.isclose = true
 						filelog.sys_warning("delete zombie connection", fd, c)
@@ -70,6 +73,7 @@ end
 
 --表示agent已经退出后的处理
 function LongTcpMng.agentexit(fd, rid)
+	filelog.sys_info("LongTcpMng.agentexit", fd, rid)
 	local server = LongTcpMng.server
 	local c = LongTcpMng.connections[fd]
 	if c ~= nil then
@@ -116,6 +120,7 @@ function LongTcpMng.open_socket(fd, ip)
 end
 
 function LongTcpMng.close_socket(fd)
+	filelog.sys_info("LongTcpMng.close_socket", fd)
 	--如果对应的服务存在通知服务玩家掉线
 	local c = LongTcpMng.connections[fd]
 	if c ~= nil and c.rid ~= nil then
@@ -123,6 +128,7 @@ function LongTcpMng.close_socket(fd)
 			local a = LongTcpMng.agents[c.rid].agent
 			if a ~= nil then
 				if c.isclose == nil or not c.isclose then
+					filelog.sys_info("LongTcpMng.close_socket disconnect", fd)
 					skynet.send(a, "lua", "cmd", "disconnect", nil, fd)
 				end
 			else
@@ -146,10 +152,11 @@ function LongTcpMng.create_session(fd, msgname, request)
 	--判断是否断线重连
 	if LongTcpMng.agents[request.rid] ~= nil and LongTcpMng.agents[request.rid].agent ~= nil then
 		local tmp_fd = LongTcpMng.agents[request.rid].fd		
-		--通知agent 更新fd
+		--通知agent 更新fd		
 		status, result = pcall(skynet.call, LongTcpMng.agents[request.rid].agent,
 			 "lua", "cmd", "reconnect",
 			  {ip=LongTcpMng.connections[fd].ip, gate = server.gate_service, client = fd, watchdog = skynet.self(), msg=request})
+		filelog.sys_info("LongTcpMng.create_session reconnect")
 		if not status then
 			filelog.sys_warning("LongTcpMng.create_session agent had exit", result)
 			close_socket(fd)
@@ -176,10 +183,12 @@ function LongTcpMng.create_session(fd, msgname, request)
 		LongTcpMng.connections[fd].isclose = false
 
 		--通知释放之前的socket
+		filelog.sys_info("LongTcpMng.create_session close_socket tmp_fd:", tmp_fd)
 		close_socket(tmp_fd)
 		return true
 	elseif LongTcpMng.agents[request.rid] ~= nil and LongTcpMng.agents[request.rid].agent == nil then 
 		if LongTcpMng.agents[request.rid].fd ~= nil then
+			filelog.sys_info("LongTcpMng.create_session close_socket LongTcpMng.agents[request.rid].fd:", LongTcpMng.agents[request.rid].fd, request.rid)			
 			close_socket(LongTcpMng.agents[request.rid].fd)
 		end
 	end
@@ -236,6 +245,7 @@ end
 function LongTcpMng.heart_timeout(fd)
 	local server = LongTcpMng.server
 	local c = LongTcpMng.connections[fd]
+	filelog.sys_info("LongTcpMng.heart_timeout", fd)
 	if c ~= nil then
 		pcall(skynet.call, server.gate_service, "lua", "kick", fd)
 		LongTcpMng.connections[fd].isclose = true

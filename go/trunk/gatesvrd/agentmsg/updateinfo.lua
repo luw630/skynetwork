@@ -37,7 +37,7 @@ function  Updateinfo.process(session, source, fd, request)
 	--检查当前登陆状态
 	if not msghelper:is_login_success() then
 		filelog.sys_warning("Updateinfo.process invalid server state", server.state)
-		responsemsg.errcode = EGateAgentState.ERR_INVALID_REQUEST
+		responsemsg.errcode = EErrCode.ERR_INVALID_REQUEST
 		responsemsg.errcodedes = "无效的请求!"
 		msghelper:send_resmsgto_client(fd, "UpdateinfoRes", responsemsg)		
 		return

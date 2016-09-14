@@ -1,9 +1,11 @@
 local Goboard = require "chessboard"
-local t = Goboard:new(t)
+
 function test( ... )
-	InitGoBoard()
-	t:PlayerMove(0,2,1)
-	t:CapturesChess()
+
+	local t = Goboard:new(t)
+	t:InitGoBoard(1,2)
+	t:PlayerMove(1,2,1)
+	--t:CapturesChess()
 	t:Print()
 	while true do
 	    local params = io.read()
@@ -18,7 +20,7 @@ function test( ... )
 	       	end
 	       --	print(tonumber(tableparams[1]),tonumber(tableparams[2]),tonumber(tableparams[3]))
 	       	t:PlayerMove(tonumber(tableparams[1]),tonumber(tableparams[2]),tonumber(tableparams[3]))
-	       	t:CapturesChess()
+	       --	t:CapturesChess()
 	       	t:Print()
 	    end
 	end
