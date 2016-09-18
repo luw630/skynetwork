@@ -80,6 +80,15 @@ EGameType = {
 	GAME_TYPE_COMMON = 1, --普通游戏
 }
 
+--点目请求类型
+DianMuType = {
+	REQUEST_TYPE_UNKNOW = 0,
+	REQUEST_QUEST_DIANMU = 1,
+	REQUEST_AGREE_DIANMU = 2,
+	REQUEST_REFUSE_DIANMU = 3,
+}
+
+
 --发行平台
 EPublishPlatform = {
 	PUBLISH_PLATFORM_JUZONG = 1, --聚众
@@ -99,9 +108,15 @@ EStandupReason = {
 }
 
 --棋子类型
-EPAWNTYPE = {
+EPawnType = {
 	PAWN_TYPE_UNKNOW = 0,
 	PAWN_TYPE_BLACK = 1,
 	PAWN_TYPE_WHITE = 2,
+}
+
+EWinResult = {
+	WIN_RESULT_UNKNOW = 0,
+	WIN_RESULT_WIN = 1,
+	WIN_RESULT_LOSE = 2,
 }
 

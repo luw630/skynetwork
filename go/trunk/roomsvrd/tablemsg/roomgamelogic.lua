@@ -58,7 +58,7 @@ end
 
 function RoomGameLogic.onegamestart(gameobj)
 	local tableobj = gameobj.tableobj
-	local pawntype = base.get_random(EPAWNTYPE.PAWN_TYPE_BLACK, EPAWNTYPE.PAWN_TYPE_WHITE)
+	local pawntype = base.get_random(EPawnType.PAWN_TYPE_BLACK, EPawnType.PAWN_TYPE_WHITE)
 
 	--初始化桌子
 	RoomGameLogic.onegamestart_inittable(gameobj)
@@ -71,12 +71,12 @@ function RoomGameLogic.onegamestart(gameobj)
 	local seat = tableobj.seats[1]	
 	seat.pawntype = pawntype
 	seat = tableobj.seats[2]
-	if pawntype == EPAWNTYPE.PAWN_TYPE_BLACK then
-		seat.pawntype = EPAWNTYPE.PAWN_TYPE_WHITE
+	if pawntype == EPawnType.PAWN_TYPE_BLACK then
+		seat.pawntype = EPawnType.PAWN_TYPE_WHITE
 		tableobj.gogame:InitGoBoard(1, 2)
 		action_seat_index = 1
 	else
-		seat.pawntype = EPAWNTYPE.PAWN_TYPE_BLACK
+		seat.pawntype = EPawnType.PAWN_TYPE_BLACK
 		tableobj.gogame:InitGoBoard(2, 1)
 		action_seat_index = 2		
 	end
@@ -95,7 +95,7 @@ function RoomGameLogic.onegamestart(gameobj)
 		roomsvr_seat_index = action_seat_index,
 		action_to_time = tableobj.action_to_time,
 	}
-	msghelper:sendmsg_to_tableplayer(seat, "DoactionNtc", doactionntcmsg)
+	msghelper:sendmsg_to_alltableplayer("DoactionNtc", doactionntcmsg)
 
 	tableobj.timer_id = timer.settimer(tableobj.conf.action_timeout*100, "doaction", doactionntcmsg)
 
@@ -109,47 +109,76 @@ function RoomGameLogic.continue(gameobj)
 		tableobj.timer_id = -1
 	end
 
+	local seat = tableobj.seats[tableobj.action_seat_index]
+
 	--[[
 		EActionType = {
 			ACTION_TYPE_UNKNOW = 0,
 			ACTION_TYPE_STANDUP = 1,
 			ACTION_TYPE_LAOZI = 2,
 			ACTION_TYPE_TIMEOUT = 3,
-			ACTION_TYPE_TIZI = 4,
 		}
 	]]
+
+	local noticemsg = {
+		rid = seat.rid,
+		roomsvr_seat_index = tableobj.action_seat_index,
+		action_type = tableobj.action_type,
+		action_x = tableobj.action_x,
+		action_y = tableobj.action_y,
+		raisins = {}
+	}
 	local is_end_game = false
 	if tableobj.action_type == EActionType.ACTION_TYPE_STANDUP then
-
+		--如果玩家站起，那么游戏结束
+		is_end_game = true
+		RoomGameLogic.set_winorlose(gameobj, nil, tableobj.action_seat_index)
 	elseif tableobj.action_type == EActionType.ACTION_TYPE_LAOZI then
 		local result = tableobj.gogame:PlayerMove(tableobj.action_seat_index ,tableobj.action_x, tableobj.action_y)
 		if result > 0 then
-			local DoactionResultN = {}
-			DoactionResultN.rid = tableobj.seats[tableobj.action_seat_index].rid
-			DoactionResultN.roomsvr_seat_index = tableobj.action_seat_index 
-			DoactionResultN.action_x = tableobj.action_x 
-			DoactionResultN.action_y = tableobj.action_y
-			DoactionResultN.action_type = tableobj.action_type
 			if tableobj.gogame:GetCaptureList() ~= nil and #tableobj.gogame:GetCaptureList() > 0 then
-				DoactionResultN.raisins = tableobj.gogame:GetCaptureList()
+				noticemsg.raisins = tableobj.gogame:GetCaptureList()
 			end
-			msghelper:sendmsg_to_alltableplayer("DoactionResultNtc", DoactionResultN)
 		end
+
+		local loser = tableobj.gogame:CheckWinLose()
+		if loser > 0 then
+			is_end_game = true
+			RoomGameLogic.set_winorlose(gameobj, nil,loser)	
+		end
+
 	elseif tableobj.action_type == EActionType.ACTION_TYPE_TIMEOUT then
-
+		seat.timeout_count = seat.timeout_count + 1
+		if seat.timeout_count >= tableobj.conf.action_timeout_count then
+			is_end_game = true
+			RoomGameLogic.set_winorlose(gameobj, nil, tableobj.action_seat_index)			
+		end 
 	end
-
-	--通知操作处理结果
-
-	--结束处理
+	msghelper:sendmsg_to_alltableplayer("DoactionResultNtc", noticemsg)
+	--判断是否结束游戏
 	if is_end_game then
 		tableobj.state = ETableState.TABLE_STATE_ONE_GAME_END
-	else
-		--通知下一个操作的玩家
+		return
 	end
+	--通知下一个玩家操作
+		--下发当前玩家操作协议	
+	if tableobj.action_seat_index == 1 then
+		tableobj.action_seat_index = 2
+	else
+		tableobj.action_seat_index = 1
+	end
+	tableobj.action_to_time = timetool.get_time() + tableobj.conf.action_timeout
+	
+	local doactionntcmsg = {
+		rid = tableobj.seats[tableobj.action_seat_index].rid,
+		roomsvr_seat_index = tableobj.action_seat_index,
+		action_to_time = tableobj.action_to_time,
+	}
+	msghelper:sendmsg_to_alltableplayer("DoactionNtc", doactionntcmsg)
 
-	--DoactionResultNtc
-	--GoGame:PlayerMove(0,2,1)
+	tableobj.timer_id = timer.settimer(tableobj.conf.action_timeout*100, "doaction", doactionntcmsg)
+
+	tableobj.state = ETableState.TABLE_STATE_WAIT_CLIENT_ACTION
 end
 
 function RoomGameLogic.continue_and_standup(gameobj)
@@ -162,8 +191,11 @@ end
 
 
 function RoomGameLogic.onegameend(gameobj)
-	local tableobj = gameobj.tableobj
-	--tableobj.gogame:Release()
+	local noticemsg = {
+
+	}
+	msghelper:sendmsg_to_tableplayer(seat, "gameresult", noticemsg)
+	msghelper:sendmsg_to_tableplayer(seat, "GameResultNtc", noticemsg)
 end
 
 function RoomGameLogic.onegamerealend(gameobj)
@@ -184,7 +216,10 @@ end
 
 function RoomGameLogic.onegamestart_initseat(gameobj, seat)
 	seat.state = ESeatState.SEAT_STATE_PLAYING
-	seat.pawntype = EPAWNTYPE.PAWN_TYPE_UNKNOW
+	seat.pawntype = 
+	EPawnType.PAWN_TYPE_UNKNOW
+	seat.timeout_count = 0
+	seat.win = EWinResult.WIN_RESULT_UNKNOW
 end
 
 function RoomGameLogic.onegamestart_inittable(gameobj)
@@ -210,6 +245,42 @@ function RoomGameLogic.standup_clear_seat(gameobj, seat)
 	seat.playerinfo.sex=0
 	seat.is_tuoguan = EBOOL.FALSE
 	seat.is_robot = false
+	seat.timeout_count = 0
+	seat.win = EWinResult.WIN_RESULT_UNKNOW
+end
+
+--设置玩家的胜负
+function RoomGameLogic.set_winorlose(gameobj, win_index, lose_index)
+	local tableobj = gameobj.tableobj
+	local seat
+	if win_index ~= nil then
+		seat = tableobj.seats[win_index]		
+		seat.win = EWinResult.WIN_RESULT_WIN
+		if lose_index == nil then
+			if win_index == 1 then
+				lose_index = 2
+			else
+				lose_index = 1
+			end
+			seat = tableobj.seats[lose_index]
+			seat.win = EWinResult.WIN_RESULT_LOSE
+			return			
+		end
+	end	
+
+	if lose_index ~= nil then
+		seat = tableobj.seats[lose_index]
+		seat.win = EWinResult.WIN_RESULT_LOSE
+		if win_index == nil then
+			if lose_index == 1 then
+				win_index = 2
+			else
+				win_index = 1
+			end
+			seat = tableobj.seats[win_index]
+			seat.win = EWinResult.WIN_RESULT_WIN
+		end		
+	end
 end
 
 return RoomGameLogic

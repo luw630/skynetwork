@@ -69,6 +69,8 @@ function  Agent:init()
 	eventmng.add_eventbyname("ReenterTableReq", "reentertable")
 	eventmng.add_eventbyname("StartGameReq", "startgame")
 	eventmng.add_eventbyname("DoactionReq", "doaction")
+	eventmng.add_eventbyname("QiniuUploadReq", "qiniuupload")
+	eventmng.add_eventbyname("DianMuReq", "requestdmu")
 	Agent.__tostring = agent_to_string						
 end
 
@@ -112,11 +114,20 @@ function Agent:reconnect(conf)
 		return false
 	end 
 
-	local result = skynet.call(self.gate_service, "lua", "forward", self.client_fd, self.client_fd)
+	local result = skynet.call(self.gate_service, "lua", "forward", conf.client, conf.client)
 	if not result then
 		filelog.sys_error(self:tostring().." call(conf.gate, 'lua', 'forward', conf.client) failed")
 		return false
 	end
+
+	if self.state == EGateAgentState.GATE_AGENTSTATE_UNKNOW 
+		or self.state == EGateAgentState.GATE_AGENTSTATE_LOGOUTING then
+		filelog.sys_error(self:tostring().." this agent is logouting")
+		pcall(skynet.send, self.watch_dog, "lua", "cmd", "agentexit", self.client_fd, self.rid)
+		return false
+	elseif self.state == EGateAgentState.GATE_AGENTSTATE_LOGOUTED then
+		return false
+	end 
 
 	--通知先前的设备玩家在其他设备上登陆
 	if self.client_fd ~= nil then
@@ -182,6 +193,7 @@ function Agent:agentexit(is_active)
 			id = self.roomsvr_table_id,
 			roomsvr_id = self.roomsvr_id,
 			roomsvr_table_address = self.roomsvr_table_address,
+			rid = self.rid,
 		}
 
 		msgproxy.sendrpc_reqmsgto_roomsvrd(nil, self.roomsvr_id, self.roomsvr_table_address, "leavetable", leavetablereqmsg)

@@ -59,12 +59,6 @@ function  GetTableStateByCreateId.process(session, source, fd, request)
 			errcodedes = "无效的请求!"
 		}
 	end
-
-	print("GetTableStateByCreateId.process")
-	for k,v in pairs(responsemsg.tablestate) do
-		print(k,v)
-	end
-
 	msghelper:send_resmsgto_client(fd, "GetTableStateByCreateIdRes", responsemsg)
 end
 

@@ -10,7 +10,7 @@ local filename = "tabletimer.lua"
 local TableTimer = {}
 
 function TableTimer.process(session, source, event, ...)
-	local f = TableTimerMsg[event] 
+	local f = TableTimer[event] 
 	if f == nil then
 		filelog.sys_error(filename.." TableTimer.process invalid event:"..event)
 		return nil

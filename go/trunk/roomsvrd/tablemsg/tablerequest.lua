@@ -319,6 +319,34 @@ function TableRequest.startgame(request)
 		return		
 	end
 	base.skynet_retpack(responsemsg)
+	local roomtablelogic = logicmng.get_logicbyname("roomtablelogic")
+	roomtablelogic.startgame(table_data, request)
+end
+
+function TableRequest.requestdm(request)
+	local responsemsg = {
+		errcode = EErrCode.ERR_SUCCESS, 
+	}
+	local server = msghelper:get_server()
+	local table_data = server.table_data
+	local roomtablelogic = logicmng.get_logicbyname("roomtablelogic")
+	local seat = roomtablelogic.get_seat_by_rid(table_data, request.rid)
+	if seat == nil then
+		responsemsg.errcode = EErrCode.ERR_HAD_STANDUP
+		responsemsg.errcodedes = "玩家不在座位上！"
+		base.skynet_retpack(responsemsg)
+		return
+	end
+
+	--filelog.sys_info("doaction", table_data.state,table_data.action_seat_index, seat)
+	if roomtablelogic.is_onegameend(table_data) == true then
+		responsemsg.errcode = EErrCode.ERR_INVALID_REQUEST
+		responsemsg.errcodedes = "无效请求！"
+		base.skynet_retpack(responsemsg)
+	end
+
+	base.skynet_retpack(responsemsg)
+	roomtablelogic.requestdm(table_data, request, seat)	
 end
 
 function TableRequest.doaction(request)
@@ -336,8 +364,9 @@ function TableRequest.doaction(request)
 		return
 	end
 
+	--filelog.sys_info("doaction", table_data.state,table_data.action_seat_index, seat)
 	if table_data.state ~= ETableState.TABLE_STATE_WAIT_CLIENT_ACTION
-		or table_data.roomsvr_seat_index ~= seat.index then
+		or table_data.action_seat_index ~= seat.index then
 		responsemsg.errcode = EErrCode.ERR_INVALID_REQUEST
 		responsemsg.errcodedes = "无效请求！"
 		base.skynet_retpack(responsemsg)
@@ -351,7 +380,8 @@ function TableRequest.doaction(request)
 		base.skynet_retpack(responsemsg)
 		return		
 	end
-	
+
+
 	base.skynet_retpack(responsemsg)
 	roomtablelogic.doaction(table_data, request, seat)		
 end

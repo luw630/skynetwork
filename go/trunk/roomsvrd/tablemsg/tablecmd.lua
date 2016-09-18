@@ -45,8 +45,6 @@ function TableCMD.start(conf, roomsvr_id)
 	local server = msghelper:get_server()
 	local roomtablelogic = logicmng.get_logicbyname("roomtablelogic")
 	roomtablelogic.init(server.table_data, conf, roomsvr_id, "object.gameobj", "object.seatobj")	
-
-	filelog.sys_info("TableCMD.start", server.table_data)
     --上报状态
     msghelper:report_table_state()
 	

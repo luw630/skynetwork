@@ -19,11 +19,10 @@ function RoomTableLogic.init(tableobj, conf, roomsvr_id, gametype, seattype)
 	if conf.room_type == ERoomType.ROOM_TYPE_FRIEND_QUICK 
 		or conf.room_type == ERoomType.ROOM_TYPE_FRIEND_SLOW 
 		or conf.room_type == ERoomType.ROOM_TYPE_FRIEND_FREE then
-		tableobj.state = ETableState.TABLE_STATE_WAIT_START_GAME
+		tableobj.state = ETableState.TABLE_STATE_WAIT_GAME_START
 	else
 		tableobj.state = ETableState.TABLE_STATE_WAIT_MIN_PLAYER
 	end
-
 	--初始化座位
 	local seatobj = require(seattype)
 	local seat
@@ -31,7 +30,16 @@ function RoomTableLogic.init(tableobj, conf, roomsvr_id, gametype, seattype)
     while count <= conf.max_player_num do
     	seat = seatobj:new({
     		--Add 座位其他变量
-    		pawntype = EPAWNTYPE.PAWN_TYPE_UNKNOW,
+    		pawntype = EPawnType.PAWN_TYPE_UNKNOW,
+    		timeout_count = 0, --超时次数
+    		--[[
+				EWinResult = {
+					WIN_RESULT_UNKNOW = 0,
+					WIN_RESULT_WIN = 1,
+					WIN_RESULT_LOSE = 2,
+				}
+    		]]
+    		win = 0, --表示玩家胜利还是失败
     	})
     	roomseatlogic.init(seat, count)
     	table.insert(tableobj.seats, seat) 
@@ -68,6 +76,10 @@ function RoomTableLogic.clear(tableobj)
 	if tableobj.delete_table_timer_id > 0 then
 		timer.cleartimer(tableobj.delete_table_timer_id)
 		tableobj.delete_table_timer_id = -1
+	end
+
+	for k,v in pairs(tableobj) do
+		tableobj[k] = nil
 	end
 end
 
@@ -175,7 +187,7 @@ function RoomTableLogic.standuptable(tableobj, request, seat)
 	}
 	msghelper:sendmsg_to_alltableplayer("StandupTableNtc", noticemsg)
 
-	seat.state = ESeatState.SEAT_STATE_PLAYING
+	seat.state = ESeatState.SEAT_STATE_NO_PLAYER
 
 	if tableobj.waits[seat.rid] == nil then
 		local waitinfo = {
@@ -183,17 +195,24 @@ function RoomTableLogic.standuptable(tableobj, request, seat)
 		}
 		tableobj.waits[seat.rid] = waitinfo
 
-		waitinfo.rid = request.rid
-		waitinfo.gatesvr_id = request.gatesvr_id
-		waitinfo.agent_address = request.agent_address
-		waitinfo.playerinfo.rolename=request.playerinfo.rolename
-		waitinfo.playerinfo.logo=request.playerinfo.rolename
-		waitinfo.playerinfo.sex=request.playerinfo.sex
+		waitinfo.rid = seat.rid
+		waitinfo.gatesvr_id = seat.gatesvr_id
+		waitinfo.agent_address = seat.agent_address
+		waitinfo.playerinfo.rolename=seat.playerinfo.rolename
+		waitinfo.playerinfo.logo=seat.playerinfo.rolename
+		waitinfo.playerinfo.sex=seat.playerinfo.sex
 	end
 
 	--初始化座位数据
 	roomgamelogic.standup_clear_seat(tableobj.gamelogic, seat)
 
+	--如果座位上只有一个玩家且还在游戏中则结束游戏
+	if RoomTableLogic.get_sitdown_player_num(tableobj) < 2 
+		and not RoomTableLogic.is_onegameend(tableobj) then
+		local roomgamelogic = logicmng.get_logicbyname("roomgamelogic")
+		tableobj.state = ETableState.TABLE_STATE_ONE_GAME_END
+		roomgamelogic.run(tableobj.gamelogic)
+	end 
 	msghelper:report_table_state()
 end
 
@@ -215,6 +234,32 @@ function RoomTableLogic.doaction(tableobj, request, seat)
 	local roomgamelogic = logicmng.get_logicbyname("roomgamelogic")
 	roomgamelogic.run(tableobj.gamelogic)
 end
+
+function RoomTableLogic.requestdm(tableobj, request, seat)
+	if seat.index == 1 then
+		seat.index = 2 
+	else
+		seat.index = 1
+	end
+	local DianMuNtc = {
+		rid = seat.rid,
+		action_type = request.action_type,
+	}
+	msghelper:sendmsg_to_tableplayer(seat,"DianMuNtc",DianMuNtc)
+
+	if request.action_type == REQUEST_AGREE_DIANMU then 
+		local loser = tableobj.gogame:RequestDM()
+		local roomgamelogic = logicmng.get_logicbyname("roomgamelogic")
+		roomgamelogic.set_winorlose(tableobj.gamelogic, nil,loser)
+
+		--游戏结束处理
+		tableobj.state = ETableState.TABLE_STATE_ONE_GAME_END
+		roomgamelogic.run(tableobj.gamelogic)
+	end
+
+end
+
+
 
 function RoomTableLogic.disconnect(tableobj, request, seat)
 	seat.gatesvr_id = ""
@@ -267,6 +312,32 @@ end
 --判断当前是否能够开始游戏
 function RoomTableLogic.is_canstartgame(tableobj)
 	return RoomTableLogic.is_full(tableobj)
+end
+
+--判断游戏是否结束
+function RoomTableLogic.is_gameend(tableobj)
+	if tableobj.state == ETableState.TABLE_STATE_WAIT_MIN_PLAYER 
+		or tableobj.state == ETableState.TABLE_STATE_WAIT_GAME_START 
+		or tableobj.state == ETableState.TABLE_STATE_GAME_END then
+		return true
+	end
+
+	return false
+end
+
+--判断当前局是否已经结束游戏
+function RoomTableLogic.is_onegameend(tableobj)
+	if tableobj.state == ETableState.TABLE_STATE_ONE_GAME_END 
+		or tableobj.state == ETableState.TABLE_STATE_ONE_GAME_REAL_END then
+		return true
+	end
+
+	if tableobj.state == ETableState.TABLE_STATE_WAIT_GAME_END 
+		or tableobj.state == ETableState.TABLE_STATE_WAIT_ONE_GAME_REAL_END then
+		return true
+	end
+
+	return RoomTableLogic.is_gameend(tableobj)
 end
 
 return RoomTableLogic

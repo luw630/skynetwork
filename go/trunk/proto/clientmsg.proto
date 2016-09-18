@@ -139,6 +139,19 @@ message HeartRes {
 	optional int32 servertime = 3;  //服务器时间
 }
 
+//请求七牛上传token
+message QiniuUploadReq {
+	optional Version version = 1;
+	optional string uploadlogo = 2;	
+}
+
+//响应七牛上传token
+message QiniuUploadRes {
+	optional int32 errcode = 1; //错误原因 0表示成功
+	optional string errcodedes = 2; //错误描述
+	optional string uploadtoken = 3;	
+}
+
 //请求进入游戏
 message EnterGameReq {
 	optional Version version = 1;
@@ -341,6 +354,25 @@ message DoactionRes {
 	optional string errcodedes = 2; //错误描述		
 }
 
+
+//玩家请求点目
+message DianMuReq {
+	optional Version version = 1;	
+	optional int32 id = 2;
+	optional string roomsvr_id = 3; //房间服务器id
+	optional int32  roomsvr_table_address = 4; //桌子的服务器地址	
+	optional int32  action_type = 5;
+}
+
+//响应玩家请求操作
+message DianMuRes {
+	optional int32 errcode = 1; //错误原因 0表示成功
+	optional string errcodedes = 2; //错误描述		
+}
+
+
+
+
 ////////////////////notice/////////////////////
 //通知在其他设备上登陆
 message RepeatNtc {
@@ -381,4 +413,9 @@ message DoactionResultNtc {
 	optional int32 action_x = 4;
 	optional int32 action_y = 5;
 	repeated int32 raisins = 6; //提子的位置集合
+}
+
+message DianMuNtc {
+	optional int32 rid = 1;
+	optional int32 action_type = 2;
 }

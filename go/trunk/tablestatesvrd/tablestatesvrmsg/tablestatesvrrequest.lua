@@ -28,10 +28,6 @@ function TableStatesvrRequest.gettablestatebycreateid(request)
 		base.skynet_retpack(responsemsg)
 		return
 	end
-	print("TableStatesvrRequest:gettablestatebycreateid")
-	for k,v in pairs(tableinfo) do
-		print(k,v)
-	end
 	responsemsg.tablestate = tableinfo
 	base.skynet_retpack(responsemsg)
 end

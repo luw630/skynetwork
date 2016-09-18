@@ -1,5 +1,6 @@
 local filelog = require "filelog"
 local msghelper = require "agenthelper"
+local playerdatadao = require "playerdatadao"
 local base = require "base"
 require "enum"
 
@@ -18,6 +19,13 @@ end
 
 function AgentNotice.other(msgname, noticemsg)
 	msghelper:send_noticemsgto_client(nil, msgname, noticemsg)
+end
+
+function AgentNotice.gameresult(noticemsg)
+	local server = msghelper:get_server()
+	local playchess = server.playchess
+	playchess.winnum = playchess.winnum + 1
+	
 end
 
 return AgentNotice

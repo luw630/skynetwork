@@ -7,6 +7,12 @@ local CHESSCOLOR ={Black = 1,White = 2,}
 
 local ChessBoard = require "godefine"
 
+local debug = 1
+local print = print
+if debug == 0 then
+	print = function(...)end
+end
+
 
 local Goboard = 
 {
@@ -21,12 +27,16 @@ local CaptureList = {}
 local ChessLink = {}
 --local chess = {color=CHESSCOLOR.Black,gas=4,pos={}}
 local BlackPlayer = 1
+local WhitePlayer = 1
 
 local function GetPosValid( PosX,PosY )
 	if (PosX > 0 and PosX <= ChessBoard.MaxWidth) and (PosY > 0 and PosY <= ChessBoard.MaxHeight) then 
 		return 1
 	end
 	return 0
+end
+
+local function rprint(...)
 end
 
 local function RecoveryPos( Pos )
@@ -86,6 +96,7 @@ function Goboard:InitGoBoard(BlackPlayer1, WhitePlayer2)
 	self.HandChess[BlackPlayer1] = ChessBoard.HandChessNum
 	self.HandChess[WhitePlayer2] = ChessBoard.HandChessNum
 	BlackPlayer = BlackPlayer1
+	WhitePlayer = WhitePlayer2
 end
 
 function Goboard:Release(  )
@@ -344,7 +355,7 @@ end
 
 function Goboard:CanMove( Player,PosX,PosY ) --能否落子
 	if GetPosValid(PosX,PosY) == 0 then 
-		print("InValid Pos ")
+		print("InValid Pos "..PosX.."  "..PosY)
 		return 0
 	end
 	
@@ -401,6 +412,8 @@ function Goboard:PlayerMove(Player,PosX,PosY)
 
 	chess.gas = Gasnum
 	chess.link = 0
+
+	print("PlayerMove  "..PosX.."    "..PosY)
 	
 	if PosX > 1 then
 		local other = self:GetChess(PosX-1,PosY)
@@ -532,6 +545,15 @@ function Goboard:GetCaptureList( )
 	return self.CaptureList
 end
 
+function Goboard:CheckWinLose(  )
+	if 	self.HandChess[BlackPlayer] == 0 then
+		return BlackPlayer
+	elseif self.HandChess[WhitePlayer] == 0 then
+		return WhitePlayer
+	end
+	return 0
+end
+
 function Goboard:CapturesChess(  )
 	--print("CapturesChess")
 	local linknum = #ChessLink
@@ -563,7 +585,7 @@ end
 
 function Goboard:CapturesOne( PosX,PosY,color )
 	local chess = self:GetChess(PosX,PosY+1)
-	if chess ~= nil and chess.color ~= color then
+	if chess ~= nil and chess.color ~= color and chess.link == 0 then
 		local gas = self:GetGas(1,PosX,PosY+1)
 		if gas == 0 then
 			self:EatPosChess(PosX,PosY+1)
@@ -572,7 +594,7 @@ function Goboard:CapturesOne( PosX,PosY,color )
 	end
 
 	chess = self:GetChess(PosX,PosY-1)
-	if chess ~= nil and chess.color ~= color then
+	if chess ~= nil and chess.color ~= color and chess.link == 0 then
 		local gas = self:GetGas(1,PosX,PosY-1)
 		if gas == 0 then
 			self:EatPosChess(PosX,PosY-1)
@@ -581,7 +603,7 @@ function Goboard:CapturesOne( PosX,PosY,color )
 	end
 
 	chess = self:GetChess(PosX+1,PosY)
-	if chess ~= nil and chess.color ~= color then
+	if chess ~= nil and chess.color ~= color and chess.link == 0 then
 		local gas = self:GetGas(1,PosX+1,PosY)
 		if gas == 0 then
 			self:EatPosChess(PosX+1,PosY)
@@ -590,15 +612,21 @@ function Goboard:CapturesOne( PosX,PosY,color )
 	end
 
 	chess = self:GetChess(PosX-1,PosY)
-	if chess ~= nil and chess.color ~= color then
+	if chess ~= nil and chess.color ~= color and chess.link == 0 then
 		local gas = self:GetGas(1,PosX-1,PosY)
 		if gas == 0 then
 			self:EatPosChess(PosX-1,PosY)
 			return
 		end
 	end
+end
 
-
+function Goboard:RequestDM(  ) --玩家点目,返回输家
+	local x ,y = self:ChessInfluence()
+	if x - 4 + y > 0 then
+		return WhitePlayer
+	end
+	return BlackPlayer
 end
 
 function Goboard:Print( ... )

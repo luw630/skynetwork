@@ -85,13 +85,13 @@ function PlayerloginDAO.get_newplayer_rid(uid)
 				return nil
 			end
 
-			if requestmsg.data == nil 
-				or requestmsg.data[1] == nil 
-				or requestmsg.data[1].maxrid == nil then
+			if responsemsg.data == nil 
+				or responsemsg.data[1] == nil 
+				or responsemsg.data[1].maxrid == nil then
 				return 1000000
 			end 
 
-			return (requestmsg.data[1].maxrid + 1)
+			return (responsemsg.data[1].maxrid + 1)
 	end
 
 	return tonumber(responsemsg.data)	
