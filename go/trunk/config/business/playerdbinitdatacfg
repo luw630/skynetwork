@@ -9,7 +9,7 @@ info = {
 	sex = 0,
 }
 
-playchess = {
+playgame = {
 	rid = 0,
 	level = 0,   --级位
     dan = 0,     --段位
@@ -20,8 +20,8 @@ playchess = {
 
 money = {
     rid = 0,
-	chips = 1000,
-	maxchips = 1000,	
+	coin = 1000,
+	maxcoin = 1000,	
 }
 
 online = {

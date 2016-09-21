@@ -2,12 +2,13 @@ local logicmng = require "logicmng"
 local tabletool = require "tabletool"
 local timetool = require "timetool"
 local msghelper = require "tablehelper"
+local filelog = require "filelog"
 local timer = require "timer"
 require "enum"
 local RoomTableLogic = {}
 
-function RoomTableLogic.init(tableobj, conf, roomsvr_id, gametype, seattype)
-	if conf == nil or gametype == nil or roomsvr_id == nil then
+function RoomTableLogic.init(tableobj, conf, roomsvr_id)
+	if conf == nil or roomsvr_id == nil then
 		filelog.sys_error("RoomTableLogic.init conf == nil")
 		return false
 	end
@@ -24,7 +25,7 @@ function RoomTableLogic.init(tableobj, conf, roomsvr_id, gametype, seattype)
 		tableobj.state = ETableState.TABLE_STATE_WAIT_MIN_PLAYER
 	end
 	--初始化座位
-	local seatobj = require(seattype)
+	local seatobj = require("object.seatobj")
 	local seat
 	local count = 1
     while count <= conf.max_player_num do
@@ -47,7 +48,7 @@ function RoomTableLogic.init(tableobj, conf, roomsvr_id, gametype, seattype)
     end
 
 	tableobj.conf = tabletool.deepcopy(conf)
-	local game = require(gametype)
+	local game = require("object.gameobj")
 	tableobj.gamelogic = game:new()
 	roomgamelogic.init(tableobj.gamelogic, tableobj)
 
@@ -115,15 +116,15 @@ function RoomTableLogic.reentertable(tableobj, request, seat)
 		--TO ADD 添加托管处理
 	end
 
-	if tableobj.action_seat_index == seat.index then
+	if not RoomTableLogic.is_onegameend(tableobj) then
 		--通知玩家当前该他操作
 		local doactionntcmsg = {
-			rid = seat.rid,
-			roomsvr_seat_index = seat.index,
+			rid = tableobj.seats[tableobj.action_seat_index].rid,
+			roomsvr_seat_index = tableobj.action_seat_index,
 			action_to_time = tableobj.action_to_time,
 		}
 		msghelper:sendmsg_to_tableplayer(seat, "DoactionNtc", doactionntcmsg)
-	end	
+	end
 end
 
 function RoomTableLogic.leavetable(tableobj, request, seat)
@@ -167,14 +168,11 @@ end
 
 function RoomTableLogic.standuptable(tableobj, request, seat)
 	local roomgamelogic = logicmng.get_logicbyname("roomgamelogic")
-	if tableobj.state == ETableState.TABLE_STATE_WAIT_CLIENT_ACTION 
-		and tableobj.action_seat_index == seat.index then
-		tableobj.action_type = EActionType.ACTION_TYPE_STANDUP
-		roomgamelogic.run(tableobj.gamelogic)
-	end
 
-	if roomgamelogic.is_ingame(tableobj.gamelogic, seat) then
-		--TO ADD 通知保存需要保存的数据
+	if not RoomTableLogic.is_onegameend(tableobj) then
+		seat.state = ESeatState.SEAT_STATE_ESCAPE
+		tableobj.state = ETableState.TABLE_STATE_ONE_GAME_END
+		roomgamelogic.run(tableobj.gamelogic)
 	end
 
 	tableobj.sitdown_player_num = tableobj.sitdown_player_num - 1 
@@ -206,13 +204,7 @@ function RoomTableLogic.standuptable(tableobj, request, seat)
 	--初始化座位数据
 	roomgamelogic.standup_clear_seat(tableobj.gamelogic, seat)
 
-	--如果座位上只有一个玩家且还在游戏中则结束游戏
-	if RoomTableLogic.get_sitdown_player_num(tableobj) < 2 
-		and not RoomTableLogic.is_onegameend(tableobj) then
-		local roomgamelogic = logicmng.get_logicbyname("roomgamelogic")
-		tableobj.state = ETableState.TABLE_STATE_ONE_GAME_END
-		roomgamelogic.run(tableobj.gamelogic)
-	end 
+
 	msghelper:report_table_state()
 end
 
@@ -222,7 +214,7 @@ function RoomTableLogic.startgame(tableobj, request)
 		tableobj.state = ETableState.TABLE_STATE_GAME_START
 		roomgamelogic.run(tableobj.gamelogic)
 	else
-		table_data.state = ETableState.TABLE_STATE_WAIT_MIN_PLAYER
+		tableobj.state = ETableState.TABLE_STATE_WAIT_MIN_PLAYER
 	end
 end
 
@@ -235,23 +227,37 @@ function RoomTableLogic.doaction(tableobj, request, seat)
 	roomgamelogic.run(tableobj.gamelogic)
 end
 
-function RoomTableLogic.requestdm(tableobj, request, seat)
-	if seat.index == 1 then
-		seat.index = 2 
-	else
-		seat.index = 1
+function RoomTableLogic.get_nextseat(tableobj,seat)
+	for i=1,tableobj.conf.max_player_num do
+		if seat.index ~= i then
+			return tableobj.seats[i]
+		end
 	end
+	return nil
+end
+
+function RoomTableLogic.requestdm(tableobj, request, seat)
 	local DianMuNtc = {
 		rid = seat.rid,
 		action_type = request.action_type,
 	}
+	seat = RoomTableLogic.get_nextseat(tableobj,seat)
+	assert(seat~=nil,"get_nextseat == nil")
 	msghelper:sendmsg_to_tableplayer(seat,"DianMuNtc",DianMuNtc)
 
-	if request.action_type == REQUEST_AGREE_DIANMU then 
+	if request.action_type == DianMuType.REQUEST_AGREE_DIANMU then 
 		local loser = tableobj.gogame:RequestDM()
 		local roomgamelogic = logicmng.get_logicbyname("roomgamelogic")
 		roomgamelogic.set_winorlose(tableobj.gamelogic, nil,loser)
-
+		--print("RoomTableLogic.requestdm loser "..loser)
+		--游戏结束处理
+		tableobj.state = ETableState.TABLE_STATE_ONE_GAME_END
+		roomgamelogic.run(tableobj.gamelogic)
+	
+	elseif request.action_type == DianMuType.REQUEST_AGREE_DRAW then 
+		local roomgamelogic = logicmng.get_logicbyname("roomgamelogic")
+		roomgamelogic.set_winorlose(tableobj.gamelogic, nil,nil,1)
+		--print("RoomTableLogic.requestdm loser "..loser)
 		--游戏结束处理
 		tableobj.state = ETableState.TABLE_STATE_ONE_GAME_END
 		roomgamelogic.run(tableobj.gamelogic)

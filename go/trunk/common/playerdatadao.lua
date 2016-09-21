@@ -128,11 +128,11 @@ end
 	返回两个值，第一个表示是否是新建账号 true表示是, false表示否
 	第二个值返回查询数据 为nil表示查询失败
 ]]
-function PlayerdataDAO.query_player_playchess(rid)
+function PlayerdataDAO.query_player_playgame(rid)
 	local responsemsg
-	local playchess
+	local playgame
 	if rid == nil then
-		filelog.sys_error("PlayerdataDAO.query_player_playchess invalid rid")
+		filelog.sys_error("PlayerdataDAO.query_player_playgame invalid rid")
 		return nil, nil
 	end
 	local requestmsg = {
@@ -140,9 +140,9 @@ function PlayerdataDAO.query_player_playchess(rid)
 		rediscmd = "hget",
 		rediskey = "roleinfo:"..rid,
 		--都是可选的使用时一定是按顺序添加
-		rediscmdopt1 = "playchess",
+		rediscmdopt1 = "playgame",
 
-		mysqltable = "role_playchess",
+		mysqltable = "role_playgame",
 		mysqlcondition = {
 			rid = rid,
 		},
@@ -151,12 +151,12 @@ function PlayerdataDAO.query_player_playchess(rid)
 
 	responsemsg = dao.query(rid, requestmsg)
 	if responsemsg == nil then
-		filelog.sys_error("PlayerdataDAO.query_player_playchess failed because cannot access datadbsvrd")
+		filelog.sys_error("PlayerdataDAO.query_player_playgame failed because cannot access datadbsvrd")
 		return nil, nil		
 	end
 
 	if not responsemsg.issuccess then
-		filelog.sys_error("PlayerdataDAO.query_player_playchess failed because datadbsvrd exception")		
+		filelog.sys_error("PlayerdataDAO.query_player_playgame failed because datadbsvrd exception")		
 		return nil, nil
 	end
 
@@ -165,25 +165,25 @@ function PlayerdataDAO.query_player_playchess(rid)
 		if playerdbinit == nil then
 			playerdbinit = configdao.get_business_conf(100, 1000, "playerdbinit")
 		end
-		playchess = tabletool.deepcopy(playerdbinit.playchess)
-		playchess.rid = rid
+		playgame = tabletool.deepcopy(playerdbinit.playgame)
+		playgame.rid = rid
 		--保存数据
-		PlayerdataDAO.save_player_playchess("insert", rid, playchess)
-		return true, playchess
+		PlayerdataDAO.save_player_playgame("insert", rid, playgame)
+		return true, playgame
 	elseif responsemsg.isredisormysql then
 		responsemsg.data[1].update_time = nil
-		PlayerdataDAO.save_player_playchess("update", rid, responsemsg.data[1])		
+		PlayerdataDAO.save_player_playgame("update", rid, responsemsg.data[1])		
 		return false, responsemsg.data[1]
 	end
 
-	playchess = json.decode(responsemsg.data)
-	playchess.rid = rid
-	return false, playchess
+	playgame = json.decode(responsemsg.data)
+	playgame.rid = rid
+	return false, playgame
 end
 
-function PlayerdataDAO.save_player_playchess(cmd, rid, playchess)
-	if cmd == nil or rid == nil or playchess == nil then
-		filelog.sys_error("PlayerdataDAO.save_player_playchess invalid params")
+function PlayerdataDAO.save_player_playgame(cmd, rid, playgame)
+	if cmd == nil or rid == nil or playgame == nil then
+		filelog.sys_error("PlayerdataDAO.save_player_playgame invalid params")
 		return
 	end
 
@@ -192,10 +192,10 @@ function PlayerdataDAO.save_player_playchess(cmd, rid, playchess)
 		rediscmd = "hset",
 		rediskey = "roleinfo:"..rid,
 		--都是可选的使用时一定是按顺序添加
-		rediscmdopt1 = "playchess",
-		rediscmdopt2 = json.encode(playchess),
-		mysqltable = "role_playchess",
-		mysqldata = playchess,
+		rediscmdopt1 = "playgame",
+		rediscmdopt2 = json.encode(playgame),
+		mysqltable = "role_playgame",
+		mysqldata = playgame,
 		mysqlcondition = {
 			rid = rid,
 		},
@@ -204,7 +204,7 @@ function PlayerdataDAO.save_player_playchess(cmd, rid, playchess)
 
 	local f = dao[cmd]
 	if f == nil then
-		filelog.sys_error("PlayerdataDAO.save_player_playchess invalid cmd", cmd, playchess)
+		filelog.sys_error("PlayerdataDAO.save_player_playgame invalid cmd", cmd, playgame)
 		return
 	end
 	f(rid, noticemsg)

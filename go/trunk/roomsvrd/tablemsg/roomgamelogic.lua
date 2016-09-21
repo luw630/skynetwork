@@ -128,10 +128,12 @@ function RoomGameLogic.continue(gameobj)
 		action_y = tableobj.action_y,
 		raisins = {}
 	}
+	
 	local is_end_game = false
-	if tableobj.action_type == EActionType.ACTION_TYPE_STANDUP then
+	if tableobj.action_type == EActionType.ACTION_TYPE_LOSE then
 		--如果玩家站起，那么游戏结束
 		is_end_game = true
+		--print("setloser "..tableobj.action_seat_index)
 		RoomGameLogic.set_winorlose(gameobj, nil, tableobj.action_seat_index)
 	elseif tableobj.action_type == EActionType.ACTION_TYPE_LAOZI then
 		local result = tableobj.gogame:PlayerMove(tableobj.action_seat_index ,tableobj.action_x, tableobj.action_y)
@@ -153,6 +155,8 @@ function RoomGameLogic.continue(gameobj)
 			is_end_game = true
 			RoomGameLogic.set_winorlose(gameobj, nil, tableobj.action_seat_index)			
 		end 
+	elseif tableobj.action_type == EActionType.ACTION_TYPE_STOPONCE then
+		
 	end
 	msghelper:sendmsg_to_alltableplayer("DoactionResultNtc", noticemsg)
 	--判断是否结束游戏
@@ -189,13 +193,62 @@ function RoomGameLogic.continue_and_leave(gameobj)
 	
 end
 
+-- playchess = {
+-- 	rid = 0,
+-- 	level = 0,   --级位
+--     dan = 0,     --段位
+--     winnum = 0,  --胜局 
+--     losenum = 0, --败局
+--     drawnum = 0, --和局
+-- }
+
+-- message GameResultNtc{
+-- 	optional int32 rid = 1;
+-- 	optional int32 roomsvr_seat_index = 2;
+-- 	optional int32 win_type = 3;       //输赢类型
+-- 	optional int32 win_num = 4;			//胜利目数
+-- }
 
 function RoomGameLogic.onegameend(gameobj)
-	local noticemsg = {
+	local noticemsg = {}
+	local tableobj = gameobj.tableobj
+	local  seat = nil	
+	print("RoomGameLogic.onegameend")
+	for i=1,tableobj.conf.max_player_num do
+		seat = tableobj.seats[i]
+		if seat.win == EWinResult.WIN_RESULT_UNKNOW then
+			if seat.state == ESeatState.SEAT_STATE_ESCAPE then
+				noticemsg.win_type = EWinResult.WIN_RESULT_LOSE
+				--RoomGameLogic.set_winorlose(gameobj, nil, seat.index)
+			else
+				noticemsg.win_type = EWinResult.WIN_RESULT_WIN
+			end
+		else
+			noticemsg.win_type = seat.win
+		end
 
-	}
-	msghelper:sendmsg_to_tableplayer(seat, "gameresult", noticemsg)
-	msghelper:sendmsg_to_tableplayer(seat, "GameResultNtc", noticemsg)
+		noticemsg.rid = seat.rid 
+		noticemsg.roomsvr_seat_index = i
+		noticemsg.win_num = tableobj.gogame:RequestDMNum()
+		--if seat.win == EWinResult.WIN_RESULT_WIN then
+			
+			--print("RoomGameLogic.onegameend win_num "..noticemsg.win_num)
+			--print("loser "..tableobj.gogame:RequestDM())
+		--end
+		-- print("noticemsg.win_type "..noticemsg.win_type)
+		-- print("noticemsg.rid "..noticemsg.rid)
+		-- print("noticemsg.roomsvr_seat_index "..noticemsg.roomsvr_seat_index)
+		-- print("noticemsg.win_num "..noticemsg.win_num)
+		msghelper:sendmsg_to_tableplayer(seat, "gameresult", noticemsg)
+		msghelper:sendmsg_to_tableplayer(seat, "GameResultNtc", noticemsg)
+		
+		--RoomGameLogic.standup_clear_seat(gameobj,seat)
+		RoomGameLogic.onegamestart_initseat(gameobj,seat)
+	end
+	RoomGameLogic.onegamestart_inittable(gameobj)
+	tableobj.state = ETableState.TABLE_STATE_GAME_END
+	tableobj.gogame:Release()
+
 end
 
 function RoomGameLogic.onegamerealend(gameobj)
@@ -203,7 +256,13 @@ function RoomGameLogic.onegamerealend(gameobj)
 end
 
 function RoomGameLogic.gameend(gameobj)
-	-- body
+	print("RoomGameLogic.gameend")
+	local tableobj = gameobj.tableobj
+	if tableobj.delete_table_timer_id > 0 then
+		timer.cleartimer(tableobj.delete_table_timer_id)
+	end
+	tableobj.delete_table_timer_id = timer.settimer(10*100, "delete_table")
+	gameobj.tableobj.state = ETableState.TABLE_STATE_WAIT_MIN_PLAYER
 end
 
 function RoomGameLogic.onsitdowntable(gameobj, seat)
@@ -250,9 +309,18 @@ function RoomGameLogic.standup_clear_seat(gameobj, seat)
 end
 
 --设置玩家的胜负
-function RoomGameLogic.set_winorlose(gameobj, win_index, lose_index)
+function RoomGameLogic.set_winorlose(gameobj, win_index, lose_index,bisdraw)
 	local tableobj = gameobj.tableobj
 	local seat
+
+	if bisdraw ~= nil then
+		for i=1,tableobj.conf.max_player_num do
+			seat = tableobj.seats[i]		
+			seat.win = EWinResult.WIN_RESULT_DRAW
+		end
+		return
+	end
+
 	if win_index ~= nil then
 		seat = tableobj.seats[win_index]		
 		seat.win = EWinResult.WIN_RESULT_WIN

@@ -419,3 +419,10 @@ message DianMuNtc {
 	optional int32 rid = 1;
 	optional int32 action_type = 2;
 }
+
+message GameResultNtc{
+	optional int32 rid = 1;
+	optional int32 roomsvr_seat_index = 2;
+	optional int32 win_type = 3;       //输赢类型
+	optional int32 win_num = 4;			//胜利目数
+}

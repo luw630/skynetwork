@@ -37,20 +37,20 @@ function  PlayerBaseinfo.process(session, source, fd, request)
 		return
 	end
 
-	local status, info, playchess, money
+	local status, info, playgame, money
 	if request.rid == server.rid then
 		info = server.info
-		playchess = server.playchess
+		playgame = server.playgame
 	else
 		status, info = playerdatadao.query_player_info(request.rid)
-		status, playchess = playerdatadao.query_player_playchess(request.rid)
+		status, playgame = playerdatadao.query_player_playgame(request.rid)
 	end
 
 	if not msghelper:is_login_success() then
 		return
 	end
 	responsemsg.baseinfo = {}
-	msghelper:copy_base_info(responsemsg.baseinfo, info, playchess, money)
+	msghelper:copy_base_info(responsemsg.baseinfo, info, playgame, money)
 	msghelper:send_resmsgto_client(fd, "PlayerBaseinfoRes", responsemsg)
 end
 

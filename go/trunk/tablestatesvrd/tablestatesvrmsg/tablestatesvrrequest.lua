@@ -24,6 +24,7 @@ function TableStatesvrRequest.gettablestatebycreateid(request)
 	local tableinfo = table_pool[id]
 
 	if id == nil or tableinfo == nil then
+		responsemsg.errcode = EErrCode.ERR_INVALID_CREATETABLEID
 		responsemsg.errcodedes = "无效的桌号！"
 		base.skynet_retpack(responsemsg)
 		return

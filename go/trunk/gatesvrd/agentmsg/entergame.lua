@@ -85,10 +85,10 @@ function  EnterGame.process(session, source, fd, request)
    	end
    	local status
    	status, server.info = playerdatadao.query_player_info(request.rid)
-	status, server.playchess = playerdatadao.query_player_playchess(request.rid)
+	status, server.playgame = playerdatadao.query_player_playgame(request.rid)
 	status, server.online = playerdatadao.query_player_online(request.rid)
 
-	if server.info == nil or server.playchess == nil or server.online == nil then
+	if server.info == nil or server.playgame == nil or server.online == nil then
 		responsemsg.errcode = EErrCode.ERR_ACCESSDATA_FAILED
 		responsemsg.errcodedes = "登陆读取数据失败！"
 		msghelper:send_resmsgto_client(fd, "EnterGameRes", responsemsg)		
@@ -138,7 +138,7 @@ function  EnterGame.process(session, source, fd, request)
 	responsemsg.roomsvr_id = server.online.roomsvr_id
 	responsemsg.roomsvr_table_address = server.online.roomsvr_table_address 
 	responsemsg.baseinfo = {}
-	msghelper:copy_base_info(responsemsg.baseinfo, server.info, server.playchess, server.money)
+	msghelper:copy_base_info(responsemsg.baseinfo, server.info, server.playgame, server.money)
 
 	--保存玩家在线状态
 	local gatesvrs = configdao.get_svrs("gatesvrs")

@@ -1,4 +1,4 @@
-
+local filelog = require "filelog"
 
 local InfluenceRange = 3
 local InfluenceBase = 2      --影响力基数
@@ -128,14 +128,19 @@ end
 function Goboard:GetboardTable( )
 	local chesstable = {}
 	assert(self.GoboardTable ~= nil,"GoboardTable nil")
+	local colorchess = 0
 	for i=1,ChessBoard.MaxRange do
-		local other = self:GetPosChess(i)
-		if other ~= nil and other.color ~= nil then
-			chesstable[i] = other.color
-		else
-			chesstable[i] = 0
-		end
+		if self.GoboardTable ~= nil then
+			if self.GoboardTable[i] ~= nil and self.GoboardTable[i].color ~= nil then
+				chesstable[i] = self.GoboardTable[i].color
+				colorchess = colorchess + 1
+			else
+				chesstable[i] = 0
+			end
+		end 
 	end
+	--print("GetboardTable colorchess "..colorchess)
+	--filelog.sys_info(chesstable)
 	return chesstable
 end
 
@@ -267,11 +272,24 @@ end
 
 function Goboard:AddToLink( linkindex,Pos )
 	if ChessLink[linkindex] ~= nil then
+		-- for k,v in pairs(ChessLink[linkindex].linkid) do
+		-- 	if v == Pos then
+		-- 		return 1
+		-- 	end
+		-- end
 		table.insert(ChessLink[linkindex].linkid,Pos)
 		ChessLink[linkindex].linknum = ChessLink[linkindex].linknum + 1
 		return 1
 	end
 	return 0
+end
+
+function Goboard:PopfromLink( linkindex,Pos  )
+	if ChessLink ~= nil and ChessLink[linkindex] ~= nil then
+		if ChessLink[linkindex].linknum > 0 then
+			return
+		end
+	end
 end
 
 function Goboard:UpdateLink( linkindex,Pos,color )
@@ -384,6 +402,54 @@ function Goboard:CanMove( Player,PosX,PosY ) --能否落子
 	return 1
 end
 
+function Goboard:IsCanMove( Player,PosX,PosY ) --能否落子
+	if GetPosValid(PosX,PosY) == 0 then 
+		print("InValid Pos "..PosX.."  "..PosY)
+		return 0
+	end
+	
+	local other = self:GetChess(PosX,PosY)
+	if other ~= nil then
+		print("other chess had "..other.color)
+		return 0
+	end
+
+	if self.HandChess[Player] == nil then
+		return 0
+	end
+
+	if self.HandChess[Player] - 1 <= 0 then
+		return 0
+	end
+
+	local Gasnum = self:GetGas(Player,PosX,PosY)
+	assert(Gasnum>=0,"GetGas Error")
+	if Gasnum > 0 then
+		return 1
+	end
+
+	local bismove = 0
+
+	self:PlayerMove(Player,PosX,PosY)
+	local chess = self:GetChess(PosX,PosY)
+	assert(chess~=nil,"IsCanMove chess==nil")
+	if chess.link > 0 then
+		if self:GetChessLinkGas(chess.link) > 0 then
+			bismove = 1
+		end
+	else
+		if self:GetGas(Player,PosX,PosY) > 0 then
+			bismove = 1
+		end
+	end
+
+	local Pos = CoverPos(PosX,PosY)
+	self:EatChess(Pos)
+	self.HandChess[Player] = self.HandChess[Player] +1
+	return bismove
+
+end
+
 function Goboard:PlayerMove(Player,PosX,PosY) 
 	local chess = {}
 
@@ -403,10 +469,10 @@ function Goboard:PlayerMove(Player,PosX,PosY)
 	local Gasnum = self:GetGas(Player,PosX,PosY)
 
 	assert(Gasnum>=0,"GetGas Error")
-	if Gasnum == 0 then
-		print("Gasnum == 0 ")
-		return 0
-	end
+	-- if Gasnum == 0 then
+	-- 	print("Gasnum == 0 ")
+	-- 	return 0
+	-- end
 
 	self.HandChess[Player] = self.HandChess[Player] -1
 
@@ -421,6 +487,9 @@ function Goboard:PlayerMove(Player,PosX,PosY)
 			if other.link > 0 then
 				chess.link = other.link
 				local Pos1 = CoverPos(PosX,PosY)
+				-- if self:AddToLink(chess.link,Pos1) > 1 then
+				-- 	self:UpdateLink(chess.link,Pos1,chess.color)
+				-- end
 				self:AddToLink(chess.link,Pos1)
 				self:UpdateLink(chess.link,Pos1,chess.color)
 				print(Pos1.."put chess")
@@ -448,6 +517,9 @@ function Goboard:PlayerMove(Player,PosX,PosY)
 			if other.link > 0 then
 				chess.link = other.link
 				local Pos1 = CoverPos(PosX,PosY)
+				-- if self:AddToLink(chess.link,Pos1) > 1 then
+				-- 	self:UpdateLink(chess.link,Pos1,chess.color)
+				-- end
 				self:AddToLink(chess.link,Pos1)
 				self:UpdateLink(chess.link,Pos1,chess.color)
 				print(Pos1.."put chess")
@@ -475,6 +547,9 @@ function Goboard:PlayerMove(Player,PosX,PosY)
 			if other.link > 0 then
 				chess.link = other.link
 				local Pos1 = CoverPos(PosX,PosY)
+				-- if self:AddToLink(chess.link,Pos1) > 1 then
+				-- 	self:UpdateLink(chess.link,Pos1,chess.color)
+				-- end
 				self:AddToLink(chess.link,Pos1)
 				self:UpdateLink(chess.link,Pos1,chess.color)
 				print(Pos1.."put chess")
@@ -502,6 +577,9 @@ function Goboard:PlayerMove(Player,PosX,PosY)
 			if other.link > 0 then
 				chess.link = other.link
 				local Pos1 = CoverPos(PosX,PosY)
+				-- if self:AddToLink(chess.link,Pos1) > 1 then
+				-- 	self:UpdateLink(chess.link,Pos1,chess.color)
+				-- end
 				self:AddToLink(chess.link,Pos1)
 				self:UpdateLink(chess.link,Pos1,chess.color)
 				print(Pos1.."put chess")
@@ -552,6 +630,18 @@ function Goboard:CheckWinLose(  )
 		return WhitePlayer
 	end
 	return 0
+end
+
+function Goboard:GetChessLinkGas( linkindex )
+	local linkgas = 0
+	if ChessLink ~= nil and ChessLink[linkindex] ~= nil then
+		if ChessLink[linkindex].linknum > 0 then
+			for j,k in pairs( ChessLink[linkindex].linkid) do
+				linkgas = linkgas + self:GetPosGas(k)
+			end
+		end
+	end
+	return linkgas
 end
 
 function Goboard:CapturesChess(  )
@@ -629,12 +719,20 @@ function Goboard:RequestDM(  ) --玩家点目,返回输家
 	return BlackPlayer
 end
 
+function Goboard:RequestDMNum( ... ) --点目的具体数量
+	local x ,y = self:ChessInfluence()
+	return x - 4 + y 
+end
+
 function Goboard:Print( ... )
 	local file = io.open("D:\\work\\framework\\go\\chess.txt","w+")
 	if file ~= nil then
 		local x ,y = self:ChessInfluence()
+		file:write("RequestDM : "..self:RequestDM().." \n")
+		file:write("RequestDMNum : "..self:RequestDMNum().." \n")
 		file:write("black : "..x.." \n")
 		file:write("white : "..y.." \n")
+
 		local Chesstable = self:GetboardTable()
 		print("MaxRange "..ChessBoard.MaxRange)
 		local i = ChessBoard.MaxRange

@@ -22,7 +22,7 @@ end
 function RoomsvrCMD.start(conf)
 	local server = msghelper:get_server()
 	server.friend_table_id = string.match(skynet.getenv("svr_id"), "%a*_(%d+)")
-	server.friend_table_id = server.friend_table_id * 100000
+	server.friend_table_id = math.floor(server.friend_table_id * 100000)
 
 	msghelper:set_idle_table_pool(conf)
 

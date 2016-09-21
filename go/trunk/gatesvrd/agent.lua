@@ -23,7 +23,7 @@ local Agent = serverbase:new({
 		--玩家基本信息
 		info = nil,
 		money = nil,
-		playchess = nil,
+		playgame = nil,
 		online = nil,
 
 		--渠道版本信息
@@ -158,7 +158,7 @@ function Agent:reconnect(conf)
 	responsemsg.roomsvr_id = self.roomsvr_id
 	responsemsg.roomsvr_table_address = self.roomsvr_table_address 
 	responsemsg.baseinfo = {}
-	msghelper:copy_base_info(responsemsg.baseinfo, self.info, self.playchess, self.money)
+	msghelper:copy_base_info(responsemsg.baseinfo, self.info, self.playgame, self.money)
 
 	msghelper:send_resmsgto_client(self.client_fd, "EnterGameRes", responsemsg)
 	--msghelper:write_agentinfo_log(self.last_heart_time.." Agent:reconnect end")
@@ -233,7 +233,7 @@ function Agent:clear()
 	--玩家基本信息
 	self.info = nil
 	self.money = nil
-	self.playchess = nil
+	self.playgame = nil
 	self.online = nil
 end
 

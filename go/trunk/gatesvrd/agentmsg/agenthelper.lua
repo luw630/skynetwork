@@ -26,16 +26,16 @@ function AgentHelper:write_agentinfo_log(...)
 end
 
 --用于copy玩家的基本信息
-function AgentHelper:copy_base_info(baseinfo, info, playchess, money)
+function AgentHelper:copy_base_info(baseinfo, info, playgame, money)
 	baseinfo.rid = info.rid
 	baseinfo.rolename = info.rolename
     baseinfo.logo = info.logo
     baseinfo.phone = info.phone
-    baseinfo.level = playchess.level
-    baseinfo.dan = playchess.dan
-    baseinfo.winnum = playchess.winnum 
-    baseinfo.losenum = playchess.losenum
-    baseinfo.drawnum = playchess.drawnum
+    baseinfo.level = playgame.level
+    baseinfo.dan = playgame.dan
+    baseinfo.winnum = playgame.winnum 
+    baseinfo.losenum = playgame.losenum
+    baseinfo.drawnum = playgame.drawnum
     baseinfo.sex = info.sex
 end
 

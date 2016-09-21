@@ -1,5 +1,7 @@
-black : 50 
-white : 0 
+RequestDM : 2 
+RequestDMNum : 262 
+black : 278 
+white : -12 
 x x x x x x x x x x x x x x x x x x x 
 x x x x x x x x x x x x x x x x x x x 
 x x x x x x x x x x x x x x x x x x x 
@@ -13,9 +15,9 @@ x x x x x x x x x x x x x x x x x x x
 x x x x x x x x x x x x x x x x x x x 
 x x x x x x x x x x x x x x x x x x x 
 x x x x x x x x x x x x x x x x x x x 
-x x x x x x x x x x x x x x x x x x x 
-x x x x x x x x x x x x x x x x x x x 
-x x x x x x x x x x x x x x x x x x x 
+x x x x 1 x x x x x x x x x x x x x x 
+x x x 1 x 1 x x x x x x x x x x x x x 
+x x x x 1 x x x x x x x x x x x x x x 
 x x x x x x x x x x x x x x x x x x x 
 x x x x x x x x x x x x x x x x x x x 
 x 1 x x x x x x x x x x x x x x x x x 

@@ -22,7 +22,7 @@ create table if not exists role_info(
                                           primary key(rid) 
                                     )engine = InnoDB, charset = utf8;
 #创建玩家玩棋数据表    insert update                                                                                       
-create table if not exists role_playchess(
+create table if not exists role_playgame(
                                             rid int(11) NOT NULL DEFAULT '0' comment '角色id',
                                             level int(11) NOT NULL DEFAULT '0' comment '级位',   
                                             dan int(11) NOT NULL DEFAULT '0' comment '段位',     

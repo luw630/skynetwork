@@ -183,9 +183,9 @@ function TableRequest.leavetable(request)
 		return
 	end
 
+	base.skynet_retpack(responsemsg)	
 	roomtablelogic.standuptable(table_data, request, seat)
 	roomtablelogic.leavetable(table_data, request, seat)	
-	base.skynet_retpack(responsemsg)		
 end
 
 --[[
@@ -318,8 +318,14 @@ function TableRequest.startgame(request)
 		base.skynet_retpack(responsemsg)
 		return		
 	end
-	base.skynet_retpack(responsemsg)
 	local roomtablelogic = logicmng.get_logicbyname("roomtablelogic")
+	if roomtablelogic.get_sitdown_player_num(table_data) < table_data.conf.max_player_num then
+		responsemsg.errcode = EErrCode.ERR_INVALID_REQUEST
+		responsemsg.errcodedes = "人数不够！"
+		base.skynet_retpack(responsemsg)
+		return	
+	end
+	base.skynet_retpack(responsemsg)
 	roomtablelogic.startgame(table_data, request)
 end
 

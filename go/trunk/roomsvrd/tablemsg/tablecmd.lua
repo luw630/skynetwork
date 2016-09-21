@@ -44,7 +44,7 @@ function TableCMD.start(conf, roomsvr_id)
 
 	local server = msghelper:get_server()
 	local roomtablelogic = logicmng.get_logicbyname("roomtablelogic")
-	roomtablelogic.init(server.table_data, conf, roomsvr_id, "object.gameobj", "object.seatobj")	
+	roomtablelogic.init(server.table_data, conf, roomsvr_id)	
     --上报状态
     msghelper:report_table_state()
 	
@@ -61,15 +61,28 @@ function TableCMD.delete(...)
 	local table_data = server.table_data
 	local roomtablelogic = logicmng.get_logicbyname("roomtablelogic")
 
-	msgproxy.sendrpc_broadcastmsgto_tablesvrd("delete", table_data.svr_id , table_data.id)
-	
-	--检查桌子当前是否能够删除
+	if roomtablelogic.is_gameend(table_data) == false then
+		return
+	end
 
+	if roomtablelogic.get_sitdown_player_num(table_data) > 0 then
+		for i=1,table_data.conf.max_player_num do
+			local  seat = table_data.seats[i]	
+			assert(seat~=nil,"delete table seat nil")
+			roomtablelogic.standuptable(table_data, nil, seat)
+			print("delete table player")
+		end
+	end
+
+	msgproxy.sendrpc_broadcastmsgto_tablesvrd("delete", table_data.svr_id , table_data.id)
+	print("msgproxy.sendrpc_broadcastmsgto_tablesvrd delete TableCMD")
+	--检查桌子当前是否能够删除
+	
 	--检查游戏是否结束
 
 	--踢出座位上的玩家
 
-	msgproxyrpc.sendrpc_broadcastmsgto_tablesvrd("delete", table_data.svr_id , table_data.id)
+	--msgproxy.sendrpc_broadcastmsgto_tablesvrd("delete", table_data.svr_id , table_data.id)
 
 	--通知roomsvrd删除table
 	skynet.send(table_data.svr_id, "lua", "cmd", "delete_table", table_data.id)

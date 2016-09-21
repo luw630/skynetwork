@@ -54,6 +54,7 @@ function RoomsvrRequest.createfriendtable(session, source, request)
 		responsemsg.errcodedes = "无效请求！"
 		base.skynet_retpack(responsemsg)
 		filelog.sys_error("RoomsvrRequest.createfriendtable two invalid request param")		
+		return
 	end 
 
 	local conf = {

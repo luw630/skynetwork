@@ -17,6 +17,8 @@ EErrCode = {
 	ERR_HAD_STANDUP = 16, --已经站起来了
 	ERR_NOT_INTABLE = 17, --玩家不在座位上
 	ERR_CANNOT_MOVE = 18, --此位置不能落子
+	ERR_NOTENOUGH_COIN = 19, --没有足够的金币
+	ERR_INVALID_CREATETABLEID = 20, --无效的桌号
 }
 
 --agent的状态
@@ -56,6 +58,7 @@ ESeatState = {
 	SEAT_STATE_NO_PLAYER = 1,  --没有玩家
 	SEAT_STATE_WAIT_START = 2, --等待开局
 	SEAT_STATE_PLAYING  = 3,   --正在游戏中
+	SEAT_STATE_ESCAPE = 4,     --玩家逃跑
 }
 
 --玩家操作类型
@@ -64,6 +67,9 @@ EActionType = {
 	ACTION_TYPE_STANDUP = 1,
 	ACTION_TYPE_LAOZI = 2,
 	ACTION_TYPE_TIMEOUT = 3,
+	ACTION_TYPE_LOSE = 4,    --认输
+	ACTION_TYPE_STOPONCE = 5, --停一手
+
 }
 
 --房间类型
@@ -86,6 +92,9 @@ DianMuType = {
 	REQUEST_QUEST_DIANMU = 1,
 	REQUEST_AGREE_DIANMU = 2,
 	REQUEST_REFUSE_DIANMU = 3,
+	REQUEST_QUEST_DRAW = 4,  --请求平局
+	REQUEST_AGREE_DRAW = 5,  --同意平局
+	REQUEST_REFUSE_DRAW = 6,  --拒绝平局
 }
 
 
@@ -118,5 +127,6 @@ EWinResult = {
 	WIN_RESULT_UNKNOW = 0,
 	WIN_RESULT_WIN = 1,
 	WIN_RESULT_LOSE = 2,
+	WIN_RESULT_DRAW = 3,
 }
 
