@@ -1,7 +1,7 @@
-black : 8 
-white : -30 
-0 x x x x x x x x x x x x x x x x x x 
-1 x x x x x x x x x x x x x x x x x x 
+RequestDM : 2 
+RequestDMNum : 116 
+black : 224 
+white : -104 
 x x x x x x x x x x x x x x x x x x x 
 x x x x x x x x x x x x x x x x x x x 
 x x x x x x x x x x x x x x x x x x x 
@@ -10,7 +10,9 @@ x x x x x x x x x x x x x x x x x x x
 x x x x x x x x x x x x x x x x x x x 
 x x x x x x x x x x x x x x x x x x x 
 x x x x x x x x x x x x x x x x x x x 
-x x x x x x x x x x x x x x x x x x x 
+x x x x 1 2 x x x x x x x x x x x x x 
+x x x 1 2 x 2 x x 1 x x x x x 1 x x x 
+x x x x 1 2 x x x x x x x x x x x x x 
 x x x x x x x x x x x x x x x x x x x 
 x x x x x x x x x x x x x x x x x x x 
 x x x x x x x x x x x x x x x x x x x 

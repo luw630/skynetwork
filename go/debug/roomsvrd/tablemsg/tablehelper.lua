@@ -1,0 +1,198 @@
+local skynet = require "skynet"
+local filelog = require "filelog"
+local msgproxy = require "msgproxy"
+local configdao = require "configdao"
+local base = require "base"
+local tabletool = require "tabletool"
+local timetool = require "timetool"
+local helperbase = require "helperbase"
+require "enum"
+
+local TablesvrHelper = helperbase:new({
+    writelog_tables = nil,
+    })
+
+function TablesvrHelper:sendmsg_to_alltableplayer(msgname, msg, ...)
+    local table_data = self.server.table_data
+    --通知座位上的玩家
+    for _, seat in ipairs(table_data.seats) do
+        if seat.state ~= ESeatState.SEAT_STATE_NO_PLAYER and seat.gatesvr_id ~= "" then
+            --filelog.sys_protomsg(msgname..":"..seat.rid, "____"..skynet.self().."_game_notice_____", msg)
+            msgproxy.sendrpc_noticemsgto_gatesvrd(seat.gatesvr_id,seat.agent_address, msgname, msg, ...)
+        end
+    end
+    --通知旁观玩家
+    for rid, wait in pairs(table_data.waits) do
+        --filelog.sys_protomsg(msgname..":"..rid, "____"..skynet.self().."_game_notice_____", msg)
+        if wait.gatesvr_id ~= "" then
+            msgproxy.sendrpc_noticemsgto_gatesvrd(wait.gatesvr_id, wait.agent_address, msgname, msg, ...)
+        end
+    end
+end
+
+function TablesvrHelper:sendmsg_to_tableplayer(seat, msgname, ...)
+    if seat.state ~= ESeatState.SEAT_STATE_NO_PLAYER and seat.gatesvr_id ~= "" then
+        msgproxy.sendrpc_noticemsgto_gatesvrd(seat.gatesvr_id,seat.agent_address, msgname, ...)
+    end
+end
+
+function TablesvrHelper:sendmsg_to_waitplayer(wait, msgname, ...)
+    if wait.gatesvr_id ~= "" then
+        msgproxy.sendrpc_noticemsgto_gatesvrd(wait.gatesvr_id, wait.agent_address, msgname, ...)
+    end
+end
+
+--[[
+message SeatInfo {
+    optional int32 rid = 1;
+    optional int32 index = 2;
+    optional int32 state = 3;
+    optional int32 is_tuoguan = 4; //1表示是 2表示否
+}
+
+message TablePlayerInfo {
+    optional int32 rid = 1;
+    optional string rolename = 2;
+    optional string logo = 3;
+    optional int32 sex = 4;
+}
+
+message GameInfo {
+    optional int32 id = 1;    //table id
+    optional int32 state = 2; //table state
+    optional string name = 3; //桌子名字
+    optional int32 room_type = 4; //房间类型
+    optional int32 game_type = 5; //游戏类型
+    optional int32 max_player_num = 6;   //房间支持的最大人数
+    optional int32 cur_player_num = 7;   //状态服务器
+    optional int32 game_time = 8;        //棋局限时 
+    optional int32 retain_to_time = 9;   //桌子保留到的时间(linux时间擢)
+    optional int32 create_user_rid = 10; //创建者rid
+    optional string create_user_rolename = 11; //创建者姓名
+    optional int32 create_time = 12;      //桌子的创建时间
+    optional string create_table_id = 13; //创建桌子的索引id   
+    optional string roomsvr_id = 14;      //房间服务器id
+    optional int32 roomsvr_table_address = 15; //桌子table的地址
+    optional int32 action_timeout = 16;       //玩家操作限时
+    optional int32 action_timeout_count = 17; //玩家可操作超时次数   
+    optional string create_user_logo = 18;
+    
+    optional int32 action_seat_index = 19;    //当前操作玩家的座位号
+    optional int32 action_to_time = 20;       //当前操作玩家的到期时间
+
+    repeated int32 checker_board = 21; // 棋盘
+
+    //下面两个结构按数组下标一一对应
+    repeated SeatInfo seats = 22; //座位
+    repeated TablePlayerInfo tableplayerinfos = 23;
+}
+
+]]
+
+function TablesvrHelper:copy_table_gameinfo(gameinfo)
+    local table_data = self.server.table_data
+    gameinfo.id = table_data.id
+    gameinfo.state = table_data.state
+    gameinfo.name = table_data.conf.name
+    gameinfo.room_type = table_data.conf.room_type
+    gameinfo.game_type = table_data.conf.game_type
+    gameinfo.max_player_num = table_data.conf.max_player_num
+    gameinfo.cur_player_num = table_data.conf.cur_player_num
+    gameinfo.game_time = table_data.conf.game_time
+    gameinfo.retain_to_time = table_data.retain_to_time
+    gameinfo.create_user_rid = table_data.conf.create_user_rid
+    gameinfo.create_user_rolename = table_data.conf.create_user_rolename
+    gameinfo.create_time = table_data.conf.create_time
+    gameinfo.create_table_id = table_data.conf.create_table_id
+    gameinfo.action_timeout = table_data.conf.action_timeout
+    gameinfo.action_timeout_count = table_data.conf.action_timeout_count           
+    gameinfo.create_user_logo = table_data.conf.create_user_logo
+    gameinfo.roomsvr_id = table_data.svr_id
+    gameinfo.roomsvr_table_address = skynet.self()        
+
+    gameinfo.action_seat_index = table_data.action_seat_index
+    gameinfo.action_to_time = table_data.action_to_time
+
+    --copy 棋牌
+    
+    gameinfo.checker_board = table_data.gogame:GetboardTable()
+
+    gameinfo.seats = {}
+    gameinfo.tableplayerinfos = {}
+    local seatinfo, tableplayerinfo
+    for index, seat in pairs(table_data.seats) do
+        seatinfo = {}
+        tableplayerinfo = {}
+        self:copy_seatinfo(seatinfo, seat)
+        table.insert(gameinfo.seats, seatinfo)
+        self:copy_tableplayerinfo(tableplayerinfo, seat)
+        table.insert(gameinfo.tableplayerinfos, tableplayerinfo)
+    end
+
+end
+
+function TablesvrHelper:copy_seatinfo(seatinfo, seat)
+    seatinfo.rid = seat.rid
+    seatinfo.index = seat.index
+    seatinfo.state = seat.state
+    seatinfo.is_tuoguan = seat.is_tuoguan
+end
+
+function TablesvrHelper:copy_tableplayerinfo(tableplayerinfo, seat)
+    tableplayerinfo.rid = seat.rid
+    tableplayerinfo.rolename = seat.playerinfo.rolename
+    tableplayerinfo.logo = seat.playerinfo.logo
+    tableplayerinfo.sex = seat.playerinfo.sex
+end
+
+
+--用于输出指定table_id桌子的信息，方便定位问题
+function TablesvrHelper:write_tableinfo_log(...)
+    if self.writelog_tables == nil then
+        self.writelog_tables = configdao.get_common_conf("tables")
+    end
+
+    if self.writelog_tables == nil then
+        return
+    end
+    if self.writelog_tables[self.server.table_data.id] ~= nil then
+        filelog.sys_obj("table", self.server.table_data.id, ...)           
+    end 
+end
+
+--记录调试日志
+function TablesvrHelper:write_debug_log(classname, objname, ...)
+    if base.isdebug() then
+        filelog.sys_obj(classname, objname, ...)
+    end
+end
+
+function TablesvrHelper:report_table_state()
+    local table_data = self.server.table_data
+    --上报table
+    local table_state = {
+        id = table_data.id,
+        state = table_data.state,
+        name = table_data.conf.name,
+        room_type = table_data.conf.room_type,
+        game_type = table_data.conf.game_type,
+        max_player_num = table_data.conf.max_player_num,
+        cur_player_num = table_data.sitdown_player_num,
+        game_time = table_data.conf.game_time,
+
+        retain_to_time = table_data.retain_to_time,
+        create_user_rid = table_data.conf.create_user_rid,
+        create_user_rolename = table_data.conf.create_user_rolename,
+        create_user_logo = table_data.conf.create_user_logo,
+        create_time = table_data.conf.create_time,
+        create_table_id = table_data.conf.create_table_id,
+        action_timeout = table_data.conf.action_timeout,
+        action_timeout_count = table_data.conf.action_timeout_count,           
+        roomsvr_id = table_data.svr_id,
+        roomsvr_table_address = skynet.self(),        
+    }
+    msgproxy.sendrpc_broadcastmsgto_tablesvrd("update", table_data.svr_id, table_state)
+end
+
+
+return  TablesvrHelper

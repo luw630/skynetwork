@@ -1,0 +1,25 @@
+---------------------------------------------------
+--平台索引
+platforms={
+	[1]="juzhong",  --平台号1表示聚众互动
+	[100]="common", --通用
+}
+
+common={
+	[1000]={
+	}
+}
+
+juzhong={
+	[1] = {
+		rechargecfg = {
+			file = "../config/business/ios_rechargecfg",
+		},
+	},
+	[2] = {
+		rechargecfg = {
+			file = "../config/business/android_rechargecfg",
+		},
+	}
+
+}

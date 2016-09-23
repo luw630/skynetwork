@@ -45,4 +45,4 @@ def do_gmcommand(command, params={}):
 # do_gmcommand("send_mail", {"rid":1000001,"content":'{"isattach":true,"des":"尊敬的玩家，您报名参加了【星期六资格赛】，但由于一些无法避免的问题，该比赛无法依约举办。您支出的报名费用【100】【筹码】将如数退还。请您在邮件后注意查收。对您造成的不便，恳请您的谅解。","awards":[{"id":1,"num":100}]}'})
 # do_gmcommand("push_notice", {"message":"测试推送消息123", "list":[[2, 1000003], [1, 1113556]]})
 # do_gmcommand("proplist")
-do_gmcommand("send_chat", {"rid":1000001,"content":"测试聊天消息456"})
+#do_gmcommand("send_chat", {"rid":1000001,"content":"测试聊天消息456"})
