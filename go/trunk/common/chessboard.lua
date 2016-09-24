@@ -764,9 +764,7 @@ function Goboard:CapturesChess(  )
 		for i,v in ipairs(ChessLink) do
 			local linkgas = 0
 			if v.linknum > 0 then
-				for j,k in pairs(v.linkid) do
-					linkgas = linkgas + self:GetPosGas(k)
-				end
+				linkgas = self:GetChessLinkGas(i)
 				if linkgas == 0 then
 					for j,k in pairs(v.linkid) do
 						self:EatChess(k)
