@@ -254,8 +254,12 @@ end
 function Goboard:MergeLink( link1,link2,Pos )
 	if ChessLink[link1] ~= nil and ChessLink[link2] ~= nil then
 		local newlinkindex = self:GeneraLinkIndex()
-		ChessLink[newlinkindex] = {}
-		ChessLink[newlinkindex] = ChessLink[link1].mergelink(newlinkindex,ChessLink[link1],ChessLink[link2])
+		if ChessLink[newlinkindex] == nil then
+			ChessLink[newlinkindex] = ChessLinktable.new(nil,newlinkindex)
+		end
+		assert(ChessLink[newlinkindex].linknum==0,"MergeLink GeneraLinkIndex unull ")
+	
+		ChessLink[newlinkindex] = ChessLink[link1].mergelink(ChessLink[newlinkindex],ChessLink[link1],ChessLink[link2])
 		ChessLink[newlinkindex].updatechess(ChessLink[newlinkindex],self)
 
 		if Linkmergedata[Pos] == nil then
@@ -292,13 +296,14 @@ end
 function Goboard:CreateLink( Pos1,Pos2 )
 	
 	local linkindex = self:GeneraLinkIndex()
-	ChessLink[linkindex] = {}
+	if ChessLink[linkindex] == nil then
+		ChessLink[linkindex] = ChessLinktable.new(nil,linkindex)
+	end
+	assert(ChessLink[linkindex].linknum==0,"GeneraLinkIndex unull ")
+ 	ChessLink[linkindex].addtolink(ChessLink[linkindex],Pos1)
+	ChessLink[linkindex].addtolink(ChessLink[linkindex],Pos2)
+	ChessLink[linkindex].updatechess(ChessLink[linkindex],self)
 
-	local linktable = ChessLinktable.new(linktable,linkindex)
-	linktable.addtolink(linktable,Pos1)
-	linktable.addtolink(linktable,Pos2)
-	linktable.updatechess(linktable,self)
-	ChessLink[linkindex] = linktable
 	return linkindex
 end
 

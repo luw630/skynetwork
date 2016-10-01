@@ -85,23 +85,28 @@ function linktable.clear( lt )
 	return lt
 end
 
-function linktable.mergelink(linkindex,lt1,lt2 )
+function linktable.mergelink(ltnew,lt1,lt2 )
 	if getmetatable(lt1) ~= linktable and getmetatable(lt2) ~= linktable then
 		print("wrong tye")
 		return 0
 	end
-	local newlink = linktable.new(newlink,linkindex)
+
+	if getmetatable(ltnew) ~= linktable then
+		print("wrong tye")
+		return 0
+	end
+
 	for k,v in pairs(lt2.linkid) do
-		newlink.addtolink(newlink,v)
+		ltnew.addtolink(ltnew,v)
 	end
 
 	for k,v in pairs(lt1.linkid) do
-		newlink.addtolink(newlink,v)
+		ltnew.addtolink(ltnew,v)
 	end
 
 	lt1.isvalid = false
 	lt2.isvalid = false
-	return newlink
+	return ltnew
 end
 
 function linktable.poplink( lt ,Pos)
