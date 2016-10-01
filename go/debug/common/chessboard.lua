@@ -1,4 +1,7 @@
-local filelog = require "filelog"
+local filelog = nil
+if os.getenv("OS") == nil then
+	filelog = require "filelog"
+end
 
 local InfluenceRange = 3
 local InfluenceBase = 2      --影响力基数
@@ -7,11 +10,13 @@ local CurrentEats = {}		--当前的提子操作
 local CHESSCOLOR ={Black = 1,White = 2,}
 
 local ChessBoard = require "godefine"
+local ChessLinktable = require "chesslink"
 
-local debug = 1
+local debug = 0
 local print = print
 if debug == 0 then
-	print = function(...)end
+	print = PrintWnd
+	--print = function(...)end
 end
 
 
@@ -26,9 +31,11 @@ local Goboard =
 
 local CaptureList = {}
 local ChessLink = {}
+local Linkmergedata = {}
 --local chess = {color=CHESSCOLOR.Black,gas=4,pos={}}
 local BlackPlayer = 1
 local WhitePlayer = 1
+local NullObject = {}
 
 local function GetPosValid( PosX,PosY )
 	if (PosX > 0 and PosX <= ChessBoard.MaxWidth) and (PosY > 0 and PosY <= ChessBoard.MaxHeight) then 
@@ -42,21 +49,22 @@ end
 
 local function RecoveryPos( Pos )
 	if Pos > 0 and Pos <= ChessBoard.MaxWidth*ChessBoard.MaxHeight then
-		if Pos > ChessBoard.MaxWidth then
-			local PosX = Pos % ChessBoard.MaxWidth
-			local PosY = ((Pos - PosX)/ChessBoard.MaxHeight) + 1
-			return PosX,PosY
+		local PosY = Pos / ChessBoard.MaxWidth
+		local PosX = 0
+		if Pos % ChessBoard.MaxWidth == 0 then
+			PosX = ChessBoard.MaxWidth
 		else
-			return Pos,1
+			PosX = Pos % ChessBoard.MaxWidth
+			PosY = PosY + 1
 		end
+		return PosX,PosY
 	end 
 	return nil
 end 
 
 local function IsValidPos( Pos )
-	local PosX,PosY = RecoveryPos(Pos)
-	if PosX ~= nil then
-		return GetPosValid(PosX,PosY)
+	if Pos > 0 and Pos <= ChessBoard.MaxRange then
+		return 1
 	end
 	return 0
 end 
@@ -98,6 +106,21 @@ function Goboard:InitGoBoard(BlackPlayer1, WhitePlayer2)
 	self.HandChess[WhitePlayer2] = ChessBoard.HandChessNum
 	BlackPlayer = BlackPlayer1
 	WhitePlayer = WhitePlayer2
+
+
+	if self.CaptureList ~= nil then
+		for k,v in pairs(self.CaptureList) do
+			self.CaptureList[k]=nil
+		end
+	end
+	self.CaptureList={}
+
+	if ChessLink ~= nil then
+		for k,v in pairs(ChessLink) do
+			ChessLink[k]=nil
+		end
+	end
+	ChessLink = {}
 
 	CurrentEats.hands = 0
 	CurrentEats.color = 0
@@ -168,118 +191,123 @@ end
 
 
 function Goboard:GetGas(Player,PosX,PosY)  --获取坐标的气
-	local Gasnum = 4
+	local Pos = CoverPos(PosX,PosY)
+	return self:GetPosGas(Pos)
 	--local chess =  self:GetChess(PosX,PosY)
 	--print(self.GoboardTable==nil)
-	if self.GoboardTable ~= nil then
-		if PosY == 1 or PosY == ChessBoard.MaxHeight then
-			Gasnum = Gasnum - 1
-		end
-
-		if PosX == 1 or PosX == ChessBoard.MaxWidth then
-			Gasnum = Gasnum - 1
-		end
-
-		local chesscolor = 0
-		if Player == 1 then
-			chesscolor = CHESSCOLOR.Black
-		else
-			chesscolor = CHESSCOLOR.White
-		end
-
-		if PosX > 1 then
-			local other = self:GetChess(PosX-1,PosY)
-			if other ~= nil  then
-				Gasnum = Gasnum - 1
-			end
-		end
-
-		if PosX < ChessBoard.MaxWidth then
-			local other = self:GetChess(PosX+1,PosY)
-			if other ~= nil then
-				Gasnum = Gasnum - 1
-			end
-		end
-
-		if PosY > 1 then
-			local other = self:GetChess(PosX,PosY-1)
-			if other ~= nil  then
-				Gasnum = Gasnum - 1
-			end
-		end
-
-		if PosY < ChessBoard.MaxHeight then
-			local other = self:GetChess(PosX,PosY+1)
-			if other ~= nil  then
-				Gasnum = Gasnum - 1
-			end
-		end
-
-		return Gasnum
-	end
-	return 0
 end
 
 
 function Goboard:GetPosGas(Pos)  --获取坐标的气
-	local PosX,PosY = RecoveryPos(Pos)
-	if PosX ~= nil then
-		return self:GetGas(1,PosX,PosY)
+	--local chess = self:GetPosChess(Pos)
+	assert(IsValidPos(Pos)>0,"IsValidPos  "..Pos)
+	
+	local Gasnum = 4
+	if Pos % ChessBoard.MaxHeight == 0   then
+		Gasnum = Gasnum - 1
+	else
+		local other = self:GetPosChess(Pos+1)
+		if other ~= nil then
+			Gasnum = Gasnum - 1
+		else
+			self:AddnullPos(Pos+1)
+		end
+	end
+
+	if Pos % ChessBoard.MaxHeight == 1  then
+		Gasnum = Gasnum - 1
+	else
+		local other = self:GetPosChess(Pos-1)
+		if other ~= nil then
+			Gasnum = Gasnum - 1
+		else
+			self:AddnullPos(Pos-1)
+		end
+	end
+
+	if Pos <= ChessBoard.MaxHeight  then
+		Gasnum = Gasnum - 1
+	else
+		local other = self:GetPosChess(Pos-ChessBoard.MaxHeight)
+		if other ~= nil then
+			Gasnum = Gasnum - 1
+		else
+			self:AddnullPos(Pos-ChessBoard.MaxHeight)
+		end
+	end
+
+	if Pos >= (ChessBoard.MaxHeight - 1) * ChessBoard.MaxHeight then
+		Gasnum = Gasnum - 1
+	else
+		local other = self:GetPosChess(Pos+ChessBoard.MaxHeight)
+		if other ~= nil then
+			Gasnum = Gasnum - 1
+		else
+			self:AddnullPos(Pos+ChessBoard.MaxHeight)
+		end
+	end
+
+	return Gasnum
+end
+
+--合并已经存在的2个链，创建新的链，设置当前的链无效,纪录链接合并的坐标
+function Goboard:MergeLink( link1,link2,Pos )
+	if ChessLink[link1] ~= nil and ChessLink[link2] ~= nil then
+		local newlinkindex = self:GeneraLinkIndex()
+		ChessLink[newlinkindex] = {}
+		ChessLink[newlinkindex] = ChessLink[link1].mergelink(newlinkindex,ChessLink[link1],ChessLink[link2])
+		ChessLink[newlinkindex].updatechess(ChessLink[newlinkindex],self)
+
+		if Linkmergedata[Pos] == nil then
+			Linkmergedata[Pos] = {}
+		end
+		table.insert(Linkmergedata[Pos],link1)
+		table.insert(Linkmergedata[Pos],link2)
+		return newlinkindex
 	end
 	return 0
 end
 
-function Goboard:MergeLink( link1,link2 )
-	if ChessLink[link1] ~= nil and ChessLink[link2] ~= nil then
-		for k,v in pairs(ChessLink[link2].linkid) do
-			local other = self:GetPosChess(v)
-			if other ~= nil then
-				other.link = link1
-			end
-			table.insert(ChessLink[link1].linkid,v)
-			ChessLink[link1].linknum = ChessLink[link1].linknum + 1
-		end
-		ChessLink[link2] = nil
-		ChessLink[link2] = {}
-		ChessLink[link2].linkid = {}
-		ChessLink[link2].linknum = 0
+function Goboard:GetChessLink( linkindex)
+	if ChessLink[linkindex] ~= nil  then
+		return ChessLink[linkindex]
 	end
+	return nil
 end
 
-function Goboard:CreateLink( Pos1,Pos2 )
+function Goboard:GeneraLinkIndex(  )
 	local linkindex = #ChessLink
-	local bcreatelink = 0
 	if linkindex > 0 then
 		for i,v in ipairs(ChessLink) do
 			if v.linknum == 0 then  --合并后的空链接
-				table.insert(v.linkid,Pos1)
-				table.insert(v.linkid,Pos2)
-				v.linknum = 2
 				return i
 			end
 		end
 	end
-
 	linkindex = linkindex + 1
+	return linkindex
+end
+
+--使用2个坐标创建1个链
+function Goboard:CreateLink( Pos1,Pos2 )
+	
+	local linkindex = self:GeneraLinkIndex()
 	ChessLink[linkindex] = {}
-	local linktable = {}
-	linktable.linknum = 2
-	linktable.linkid = {}
-	table.insert(linktable.linkid,Pos1)
-	table.insert(linktable.linkid,Pos2)
+
+	local linktable = ChessLinktable.new(linktable,linkindex)
+	linktable.addtolink(linktable,Pos1)
+	linktable.addtolink(linktable,Pos2)
+	linktable.updatechess(linktable,self)
 	ChessLink[linkindex] = linktable
 	return linkindex
 end
 
+
+--把坐标加入到已经存在的链中
 function Goboard:AddToLink( linkindex,Pos )
 	if ChessLink[linkindex] ~= nil then
-		for k,v in pairs(ChessLink[linkindex].linkid) do
-			if v == Pos then
-				return 1
-			end
-		end
-		table.insert(ChessLink[linkindex].linkid,Pos)
-		ChessLink[linkindex].linknum = ChessLink[linkindex].linknum + 1
+		ChessLink[linkindex].addtolink(ChessLink[linkindex],Pos)
+		ChessLink[linkindex].updatechess(ChessLink[linkindex],self)
 		return 1
 	end
 	return 0
@@ -287,16 +315,27 @@ end
 
 function Goboard:PopfromLink( linkindex,Pos  )
 	if ChessLink ~= nil and ChessLink[linkindex] ~= nil then
-		if ChessLink[linkindex].linknum > 0 then
-			for k,v in pairs(ChessLink[linkindex].linkid) do
-				if v == Pos then
+		ChessLink[linkindex].poplink(ChessLink[linkindex],Pos)
 
-				end
+		if Linkmergedata[Pos] == nil then
+			print("no mergedata ")
+			return
+		end
+		for k,v in pairs(Linkmergedata[Pos]) do
+			if ChessLink[v].isvalid == false then
+				ChessLink[v].isvalid = true
+				ChessLink[v].poplink(ChessLink[v],Pos)
+				ChessLink[v].updatechess(ChessLink[v],self)
+				print("breakLink "..v.."   num "..ChessLink[v].linknum)
 			end
 		end
+		ChessLink[linkindex].clear(ChessLink[linkindex])
+		Linkmergedata[Pos] = nil
+		Linkmergedata[Pos] = {}
 	end
 end
 
+--得到指定的链中的棋子数量
 function Goboard:GetLinkChessNum( linkindex )
 	if ChessLink ~= nil and ChessLink[linkindex] ~= nil then
 		return  ChessLink[linkindex].linknum
@@ -304,47 +343,48 @@ function Goboard:GetLinkChessNum( linkindex )
 	return 0
 end
 
+function Goboard:SortLink( linkindex )
+	if ChessLink ~= nil and ChessLink[linkindex] ~= nil then
+		
+	end
+end
+
+
+--更新链。主动探测坐标的四向位置是否有需要加入到链中的棋子
 function Goboard:UpdateLink( linkindex,Pos,color )
 	--print("UpdateLink")
-	if Pos > 1 then
-		if Pos % ChessBoard.MaxWidth > 1 then
-			local other = self:GetPosChess(Pos-1)
-			if other ~= nil and other.color == color then
-				if other.link > 0 and other.link ~= linkindex then
-					if other.link > linkindex then
-						self:MergeLink(linkindex,other.link)
-					else
-						self:MergeLink(other.link,linkindex)
-					end
-				elseif other.link == 0 then
-					other.link = linkindex
-					self:AddToLink(linkindex,Pos-1)
-					--print("1 AddToLink")
-				end
-			end	
-		end
-
+	local UpLink = linkindex
+	if Pos % ChessBoard.MaxWidth > 1 or Pos % ChessBoard.MaxWidth <= 0 then
+		local other = self:GetPosChess(Pos-1)
+		if other ~= nil and other.color == color then
+			if other.link > 0 and other.link ~= linkindex then
+				UpLink = self:MergeLink(linkindex,other.link,Pos)
+			elseif other.link == 0 then
+				other.link = linkindex
+				self:AddToLink(linkindex,Pos-1)
+				self:UpdateLink(linkindex,Pos-1)
+				--print("1 AddToLink")
+			end
+		end	
 	end
 
-	if Pos < ChessBoard.MaxRange then
-		if Pos % ChessBoard.MaxWidth > 0 then
-			local other = self:GetPosChess(Pos+1)
-			--print("2 otherlink "..other.link.." color "..other.color.."  upcolor "..color )
-			if other ~= nil and other.color == color then
-				if other.link > 0 and other.link ~= linkindex then
-					if other.link > linkindex then
-						self:MergeLink(linkindex,other.link)
-					else
-						self:MergeLink(other.link,linkindex)
-					end
-				elseif other.link == 0 then
-					other.link = linkindex
-					self:AddToLink(linkindex,Pos+1)
-					--print("AddToLink Pos+1 "..Pos+1)
-				end
-			end		
-		end
+	
+
+	if Pos % ChessBoard.MaxWidth > 0 then
+		local other = self:GetPosChess(Pos+1)
+		--print("2 otherlink "..other.link.." color "..other.color.."  upcolor "..color )
+		if other ~= nil and other.color == color then
+			if other.link > 0 and other.link ~= linkindex then
+				UpLink = self:MergeLink(linkindex,other.link,Pos)
+			elseif other.link == 0 then
+				other.link = linkindex
+				self:AddToLink(linkindex,Pos+1)
+				self:UpdateLink(linkindex,Pos+1)
+				--print("AddToLink Pos+1 "..Pos+1)
+			end
+		end		
 	end
+	
 
 	if Pos > ChessBoard.MaxWidth then
 		local bpos = Pos - ChessBoard.MaxWidth
@@ -352,14 +392,11 @@ function Goboard:UpdateLink( linkindex,Pos,color )
 		--print("3 otherlink "..other.link.." color "..other.color.."  upcolor "..color )
 		if other ~= nil and other.color == color then
 			if other.link > 0 and other.link ~= linkindex then
-				if other.link > linkindex then
-					self:MergeLink(linkindex,other.link)
-				else
-					self:MergeLink(other.link,linkindex)
-				end
+				UpLink = self:MergeLink(linkindex,other.link,Pos)
 			elseif other.link == 0 then
 				other.link = linkindex
 				self:AddToLink(linkindex,bpos)
+				self:UpdateLink(linkindex,bpos)
 				--print("AddToLink bpos "..bpos)
 			end
 		end		
@@ -372,23 +409,25 @@ function Goboard:UpdateLink( linkindex,Pos,color )
 		--print("4  otherlink "..other.link.." color "..other.color.."  upcolor "..color )
 		if other ~= nil and other.color == color then
 			if other.link > 0 and other.link ~= linkindex then
-				if other.link > linkindex then
-					self:MergeLink(linkindex,other.link)
-				else
-					self:MergeLink(other.link,linkindex)
-				end
+				UpLink = self:MergeLink(linkindex,other.link,Pos)
 			elseif other.link == 0 then
 				other.link = linkindex
 				self:AddToLink(linkindex,tpos)
+				self:UpdateLink(linkindex,tpos)
 				--print("AddToLink tpos"..tpos)
 			end
 		end		
 	end
+	return UpLink
 end
+
+
 
 function Goboard:PutChess( Pos,chess )
 	self.GoboardTable[Pos] = chess
-	self:CapturesChess()
+	--local PosX,PosY = RecoveryPos(Pos)
+	self:CapturesOne(Pos,chess.color)
+	--self:CapturesChess()
 	self:ComputeInf(Pos,chess.color)
 end
 
@@ -447,6 +486,9 @@ function Goboard:PlayerMove( Player,PosX,PosY,linkindex )
 	return 1
 end
 
+
+
+--能否落子时会加入到链中判断能否落子提子
 function Goboard:PutLink(Player,PosX,PosY) 
 	local chess = {}
 
@@ -476,36 +518,32 @@ function Goboard:PutLink(Player,PosX,PosY)
 	chess.gas = Gasnum
 	chess.link = 0
 	local LinkGas = 0
-
 	
-
+	
 	local bputchess = 0
-	
-	if PosX > 1 then
-		local other = self:GetChess(PosX-1,PosY)
+	local Pos1 = CoverPos(PosX,PosY)
+	local otherpos = 0
+	if Pos1 % ChessBoard.MaxWidth > 1 or Pos1 % ChessBoard.MaxWidth <=0 then
+		otherpos = Pos1 -1
+		local other = self:GetPosChess(otherpos)
 		if other ~= nil and other.color == chess.color then
 			if other.link > 0 then
 				chess.link = other.link
-				local Pos1 = CoverPos(PosX,PosY)
-				-- if self:AddToLink(chess.link,Pos1) > 1 then
-				-- 	self:UpdateLink(chess.link,Pos1,chess.color)
-				-- end
+		
 				self:AddToLink(chess.link,Pos1)
-				self:UpdateLink(chess.link,Pos1,chess.color)
-				LinkGas = self:GetChessLinkGas(chess.link)
+				chess.link = self:UpdateLink(chess.link,Pos1,chess.color)
+				LinkGas= self:GetChessLinkGas(chess.link,Pos1)
 
 				bputchess = 1
 				--self:PutChess(Pos1,chess)
 				--self.GoboardTable[Pos1] = chess
 				--return 1
 			elseif other.link == 0 then
-				local Pos1 = CoverPos(PosX,PosY)
-				local Pos2 = CoverPos(PosX-1,PosY)
-				local linkid = self:CreateLink(Pos1,Pos2)
+				local linkid = self:CreateLink(Pos1,otherpos)
 				chess.link = linkid
 				other.link = linkid
-				self:UpdateLink(chess.link,Pos1,chess.color)
-				LinkGas = self:GetChessLinkGas(chess.link)
+				chess.link = self:UpdateLink(chess.link,Pos1,chess.color)
+				LinkGas= self:GetChessLinkGas(chess.link,Pos1)
 				
 				bputchess = 1
 				--self:PutChess(Pos1,chess)
@@ -515,31 +553,26 @@ function Goboard:PutLink(Player,PosX,PosY)
 		end
 	end
 
-	if PosX < ChessBoard.MaxWidth and chess.link == 0 then
-		local other = self:GetChess(PosX+1,PosY)
+	if Pos1 % ChessBoard.MaxWidth > 0 and chess.link == 0 then
+		otherpos = Pos1 +1
+		local other = self:GetPosChess(otherpos)
 		if other ~= nil and other.color == chess.color then
 			if other.link > 0 then
 				chess.link = other.link
-				local Pos1 = CoverPos(PosX,PosY)
-				-- if self:AddToLink(chess.link,Pos1) > 1 then
-				-- 	self:UpdateLink(chess.link,Pos1,chess.color)
-				-- end
 				self:AddToLink(chess.link,Pos1)
-				self:UpdateLink(chess.link,Pos1,chess.color)
-				LinkGas = self:GetChessLinkGas(chess.link)
+				chess.link = self:UpdateLink(chess.link,Pos1,chess.color)
+				LinkGas= self:GetChessLinkGas(chess.link,Pos1)
 				--print(Pos1.."put chess")
 				bputchess = 1
 				--self:PutChess(Pos1,chess)
 				--self.GoboardTable[Pos1] = chess
 				--return 1
 			elseif other.link == 0  then
-				local Pos1 = CoverPos(PosX,PosY)
-				local Pos2 = CoverPos(PosX+1,PosY)
-				local linkid = self:CreateLink(Pos1,Pos2)
+				local linkid = self:CreateLink(Pos1,otherpos)
 				chess.link = linkid
 				other.link = linkid
-				self:UpdateLink(chess.link,Pos1,chess.color)
-				LinkGas = self:GetChessLinkGas(chess.link)
+				chess.link = self:UpdateLink(chess.link,Pos1,chess.color)
+				LinkGas= self:GetChessLinkGas(chess.link,Pos1)
 				--print(Pos1.."put chess")
 				bputchess = 1
 				--self:PutChess(Pos1,chess)
@@ -549,102 +582,78 @@ function Goboard:PutLink(Player,PosX,PosY)
 		end
 	end
 
-	if PosY > 1 and chess.link == 0 then
-		local other = self:GetChess(PosX,PosY-1)
+	if Pos1 > ChessBoard.MaxHeight and chess.link == 0 then
+		otherpos = Pos1 - ChessBoard.MaxHeight
+		local other = self:GetPosChess(otherpos)
 		if other ~= nil and other.color == chess.color then
 			if other.link > 0 then
 				chess.link = other.link
-				local Pos1 = CoverPos(PosX,PosY)
-				-- if self:AddToLink(chess.link,Pos1) > 1 then
-				-- 	self:UpdateLink(chess.link,Pos1,chess.color)
-				-- end
 				self:AddToLink(chess.link,Pos1)
-				self:UpdateLink(chess.link,Pos1,chess.color)
-				LinkGas = self:GetChessLinkGas(chess.link)
-				--print(Pos1.."put chess")
-				bputchess = 1
-				--self:PutChess(Pos1,chess)
-				--self.GoboardTable[Pos1] = chess
-				--return 1
+				chess.link = self:UpdateLink(chess.link,Pos1,chess.color)
+				LinkGas = self:GetChessLinkGas(chess.link,Pos1)
 			elseif other.link == 0  then
-				local Pos1 = CoverPos(PosX,PosY)
-				local Pos2 = CoverPos(PosX,PosY-1)
-				local linkid = self:CreateLink(Pos1,Pos2)
+				local linkid = self:CreateLink(Pos1,otherpos)
 				chess.link = linkid
 				other.link = linkid
-				self:UpdateLink(chess.link,Pos1,chess.color)
-				LinkGas = self:GetChessLinkGas(chess.link)
+				chess.link = self:UpdateLink(chess.link,Pos1,chess.color)
+				LinkGas= self:GetChessLinkGas(chess.link,Pos1)
 				--print(Pos1.."put chess")
 				bputchess = 1
-				---self:PutChess(Pos1,chess)
-				--self.GoboardTable[Pos1] = chess
-				--return 1
 			end
 		end
 	end
 
-	if PosY < ChessBoard.MaxHeight and chess.link == 0  then
-		local other = self:GetChess(PosX,PosY+1)
+	if Pos1 + ChessBoard.MaxHeight  <= ChessBoard.MaxRange  and chess.link == 0  then
+		otherpos = Pos1 + ChessBoard.MaxHeight
+		local other = self:GetPosChess(otherpos)
 		if other ~= nil and other.color == chess.color then
 			if other.link > 0 then
 				chess.link = other.link
-				local Pos1 = CoverPos(PosX,PosY)
-				-- if self:AddToLink(chess.link,Pos1) > 1 then
-				-- 	self:UpdateLink(chess.link,Pos1,chess.color)
-				-- end
 				self:AddToLink(chess.link,Pos1)
-				self:UpdateLink(chess.link,Pos1,chess.color)
-				LinkGas = self:GetChessLinkGas(chess.link)
-				--print(Pos1.."put chess")
-				bputchess = 1
-				--self:PutChess(Pos1,chess)
-				--self.GoboardTable[Pos1] = chess
-				--return 1
+				chess.link = self:UpdateLink(chess.link,Pos1,chess.color)
+				LinkGas = self:GetChessLinkGas(chess.link,Pos1)
 			elseif other.link == 0  then
-				local Pos1 = CoverPos(PosX,PosY)
-				local Pos2 = CoverPos(PosX,PosY+1)
-				local linkid = self:CreateLink(Pos1,Pos2)
+				local linkid = self:CreateLink(Pos1,otherpos)
 				chess.link = linkid
 				other.link = linkid
-				self:UpdateLink(chess.link,Pos1,chess.color)
-				LinkGas = self:GetChessLinkGas(chess.link)
+				chess.link = self:UpdateLink(chess.link,Pos1,chess.color)
+				LinkGas= self:GetChessLinkGas(chess.link,Pos1)
 				--print(Pos1.."put chess")
 				bputchess = 1
-				--self:PutChess(Pos1,chess)
-				--self.GoboardTable[Pos1] = chess
-				--return 1
 			end
 		end
 	end
+
+
 	local Pos1 = CoverPos(PosX,PosY)
 	if LinkGas > 0 then
 	 	--self:PutChess(Pos1,chess)
-		print(Pos1.." can put chess LinkGas "..LinkGas.." LinkChessNum  "..self:GetLinkChessNum(chess.link))
+		print(Pos1.." can put chess LinkGas "..LinkGas.."  linknum "..self:GetLinkChessNum(chess.link))
 		return 1,chess.link
 	elseif chess.gas > 0 then
 		--self:PutChess(Pos1,chess)
 		print(Pos1.." can put chess chess.gas "..chess.gas)
 		return 1,chess.link
-	elseif self:CanEat( PosX,PosY,chess ) > 0 then
+	elseif self:CanEat( Pos1,chess ) > 0 then
 		print(Pos1.." can put chess CanEat ")
 		return 1,chess.link
 	end
 	print(Pos1.." chess not gas ")
+	self:PopfromLink(chess.link,Pos1)
 	return 0
 end
 
-function Goboard:CanEat( PosX,PosY,chess )
-	local Pos = CoverPos(PosX,PosY)
+function Goboard:CanEat( Pos,chess )
+	--local Pos = CoverPos(PosX,PosY)
 	--print(" CurrentHands "..CurrentHands.." CurrentEats.hands "..CurrentEats.hands)
 	if CurrentHands - CurrentEats.hands == 1 then
-		
 		if CurrentEats.pos == Pos then
 			return 0
 		end
 	end
 
 	self.GoboardTable[Pos] = chess
-	if self:CapturesOne(PosX,PosY,chess.color) > 0 then
+	if self:CapturesOne(Pos,chess.color) > 0 then
 		return 1
 	end
 	self.GoboardTable[Pos] = nil
@@ -656,7 +665,7 @@ end
 --提子，需要记录当前的操作
 function Goboard:EatChess(Pos)
 	local chess = self:GetPosChess(Pos)
-	assert(chess~=nil,"EatChess nil")
+	assert(chess~=nil,"EatChess Pos "..Pos.." nil")
 	CurrentEats.hands = CurrentHands
 	CurrentEats.color = chess.color
 	CurrentEats.pos = Pos
@@ -685,29 +694,58 @@ function Goboard:CheckWinLose(  )
 	return 0
 end
 
-function Goboard:GetChessLinkGas( linkindex )
+function Goboard:AddnullPos( Pos)
+	for k,v in pairs(NullObject) do
+		if v == Pos then
+			return
+		end
+	end
+	table.insert(NullObject,Pos)
+end
+
+function Goboard:RemovePos( Pos ) --棋子自身所占用的气
+	for k,v in pairs(NullObject) do
+		if v == Pos then
+			return 1
+		end
+	end
+	return 0
+end
+
+--在落子时返回所在链的气
+function Goboard:GetChessLinkGas( linkindex ,Pos)
 	local linkgas = 0
+	NullObject = {}
+
 	if ChessLink ~= nil and ChessLink[linkindex] ~= nil then
 		if ChessLink[linkindex].linknum > 0 then
 			for j,k in pairs( ChessLink[linkindex].linkid) do
-				linkgas = linkgas + self:GetPosGas(k)
+				self:GetPosGas(k)
+				--print("GetChessLinkGas link"..linkindex.." Pos "..k.." Gas "..self:GetPosGas(k))
+				--linkgas = linkgas + self:GetPosGas(k)
 			end
 		end
+		if Pos ~= nil then
+			if self:RemovePos(Pos) > 0 then
+				return #NullObject - 1
+			end
+		end
+
 	end
-	return linkgas
+	return #NullObject
 end
 
 --多个提子。遍历所有的链，如果有链的气为0，将整个链提子，并将链置为空链，在创建链接时会优先使用空链
 function Goboard:CapturesChess(  )
 	--print("CapturesChess")
+
 	local linknum = #ChessLink
 	if linknum > 0 then
 		for i,v in ipairs(ChessLink) do
 			local linkgas = 0
 			if v.linknum > 0 then
-				for j,k in pairs(v.linkid) do
-					linkgas = linkgas + self:GetPosGas(k)
-				end
+				linkgas = self:GetChessLinkGas(i)
+				print("linkgas "..i.."   "..linkgas.."   num "..v.linknum)
 				if linkgas == 0 then
 					for j,k in pairs(v.linkid) do
 						self:EatChess(k)
@@ -723,43 +761,56 @@ function Goboard:CapturesChess(  )
 	end
 
 end
+
+function Goboard:CapturesLink( linkindex )
+	local EatNum = 0
+	if ChessLink[linkindex] ~= nil and ChessLink[linkindex].isvalid == true then
+		local linkgas = self:GetChessLinkGas(linkindex)
+		print("CapturesLink  "..linkindex.."  linkgas "..linkgas)
+		if linkgas == 0 then
+			for j,k in pairs(ChessLink[linkindex].linkid) do
+				self:EatChess(k)
+				EatNum = EatNum + 1
+			end
+			ChessLink[linkindex].clear(ChessLink[linkindex])
+		end
+	end
+	return EatNum
+end
+
+
 --单个提子，对落子以后坐标做出四向探测，如果有不同颜色的棋子并且没气，会做出一次提子
-function Goboard:CapturesOne( PosX,PosY,color ) 
-	local chess = self:GetChess(PosX,PosY+1)
-	if chess ~= nil and chess.color ~= color and chess.link == 0 then
-		local gas = self:GetGas(1,PosX,PosY+1)
-		if gas == 0 then
-			self:EatPosChess(PosX,PosY+1)
-			return 1
+function Goboard:CapturesOne( Pos,color ) 
+	local EatNum = 0
+	local otherpos = Pos + ChessBoard.MaxHeight
+	for i=1,4 do
+		if i == 2 then
+			otherpos = Pos - ChessBoard.MaxHeight
+		elseif i == 3 then
+			otherpos = Pos + 1
+		elseif i == 4 then
+			otherpos = Pos - 1
 		end
+
+		local chess = self:GetPosChess(otherpos)
+		if chess ~= nil and chess.color ~= color   then
+			print("CapturesOne "..chess.link.."     "..self:GetLinkChessNum(chess.link))
+			if chess.link == 0 then
+				local gas = self:GetPosGas(otherpos)
+				if gas == 0 then
+					self:EatChess(otherpos)
+					EatNum = EatNum + 1
+					--print("EatChess "..PosX.."  "..(PosY+1))
+				end
+			else 
+				EatNum = EatNum + self:CapturesLink(chess.link)
+			end
+		end
+
 	end
 
-	chess = self:GetChess(PosX,PosY-1)
-	if chess ~= nil and chess.color ~= color and chess.link == 0 then
-		local gas = self:GetGas(1,PosX,PosY-1)
-		if gas == 0 then
-			self:EatPosChess(PosX,PosY-1)
-			return 1
-		end
-	end
-
-	chess = self:GetChess(PosX+1,PosY)
-	if chess ~= nil and chess.color ~= color and chess.link == 0 then
-		local gas = self:GetGas(1,PosX+1,PosY)
-		if gas == 0 then
-			self:EatPosChess(PosX+1,PosY)
-			return 1
-		end
-	end
-
-	chess = self:GetChess(PosX-1,PosY)
-	if chess ~= nil and chess.color ~= color and chess.link == 0 then
-		local gas = self:GetGas(1,PosX-1,PosY)
-		if gas == 0 then
-			self:EatPosChess(PosX-1,PosY)
-			return 1
-		end 
-	end
+	
+	return EatNum 
 end
 
 function Goboard:RequestDM(  ) --玩家点目,返回输家
@@ -775,8 +826,10 @@ function Goboard:RequestDMNum( ... ) --点目的具体数量
 	return x - 4 + y 
 end
 
+
+--写当前的棋盘信息到文件中
 function Goboard:Print( ... )
-	local file = io.open("D:\\work\\framework\\go\\chess.txt","w+")
+	local file = io.open("./chess.txt","w+")
 	if file ~= nil then
 		local x ,y = self:ChessInfluence()
 		file:write("RequestDM : "..self:RequestDM().." \n")
@@ -817,6 +870,7 @@ function Goboard:Print( ... )
 
 end
 
+--计算棋子的形势
 function Goboard:GetInfluence(PosX,PosY,color,level )
 	local chessInfluence = 0
 	local InfluencePos = 0
@@ -859,7 +913,7 @@ function Goboard:ComputeInf( Pos,color)
 	if PosX == nil then
 		return
 	end
-	self:CapturesOne(PosX,PosY,color)
+	--self:CapturesOne(PosX,PosY,color)
 
 	for i=1,3 do
 		--print("ComputeInf "..Pos)
