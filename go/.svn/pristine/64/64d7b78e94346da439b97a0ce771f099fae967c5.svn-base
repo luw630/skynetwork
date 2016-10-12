@@ -1,0 +1,34 @@
+root = "../../../common"
+projectdir="../"
+thread = 8
+--logservice="snlua"
+logger = "systemlog"
+logpath = "."
+harbor = 0
+start = "main"	-- main script
+bootstrap = "snlua bootstrap"	-- The service for bootstrap
+luaservice = root.."service/?.lua;"..projectdir.."gatesvrd/?.lua;"..root.."skynet/service/?.lua"
+lualoader = root.."skynet/lualib/loader.lua"
+--preload = "./examples/preload.lua"	-- run preload.lua before every lua service run
+snax = root.."service/?.lua;"..root.."skynet/service/?.lua;"..root.."core/?.lua;"..projectdir.."gatesvrd/?.lua"
+-- snax_interface_g = "snax_g"
+cpath = root.."skynet/cservice/?.so"
+lua_path = root.."skynet/lualib/?.lua;"..root.."core/?.lua;"..projectdir.."gatesvrd/gatesvrmsg/?.lua;"..projectdir.."gatesvrd/agentmsg/?.lua;"..projectdir.."common/?.lua;"..root.."core/3rd/lua-pbc/?.lua"
+lua_cpath = root.."skynet/luaclib/?.so;"..root.."core/3rd/lua-cjson/?.so;"..root.."core/3rd/lua-snapshot/?.so;"..root.."core/3rd/lua-pbc/?.so"
+cluster=projectdir.."config/svr/config_clusters"
+cfgcenter_config=projectdir.."gatesvrd/config_cfgcenter"
+svrs_config=projectdir.."config/svr/config_svrs"
+dbhash_config=projectdir.."config/svr/config_dbhash"
+proto_config=projectdir.."proto/clientmsg.proto"
+
+svr_id = "gate_1"
+
+
+---日志系统配置
+error = true
+info = false
+warning = false
+obj = true
+protomsg = false
+
+daemon = "./skynet.pid"

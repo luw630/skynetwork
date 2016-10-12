@@ -72,6 +72,13 @@ function  Updateinfo.process(session, source, fd, request)
 	if ismodify then
 		playerdatadao.save_player_info("update", server.rid, server.info)
 	end
+
+	if server.playgame.level ~= request.level then
+		server.playgame.level = request.level
+		responsemsg.level = request.level
+		playerdatadao.save_player_playgame("update",server.rid,server.playgame)
+	end 
+
 	msghelper:send_resmsgto_client(fd, "UpdateinfoRes", responsemsg)
 end
 

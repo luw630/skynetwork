@@ -6,6 +6,8 @@ local json = require "cjson"
 local md5 = require "md5"
 local filelog = require "filelog"
 local timetool = require "timetool"
+local urllib = require "http.url"
+local util = require "util"
 require "xmlSimple"
 local xmlparser = newParser()
 
@@ -41,7 +43,6 @@ function reply_ios_pay(body, channelinfo)
 end
 
 --微信支付相关
-
 function do_wechat_prepay(request, channelinfo)
     local option_data = json.decode(request.option_data)
     local rechargeconf = json.decode(request.rechargeconf)
@@ -280,6 +281,267 @@ function reply_wechat_pay(errcode, info)
     return retstr
 end
 
+--支付宝支付
+function generate_zhifubao_params(request, rechargeconf, channelinfo)
+    local partner = channelinfo.appid
+
+    local notify_url = channelinfo.notify_url..channelinfo.url
+    local out_trade_no=request.order_id 
+    local subject=rechargeconf.name
+    local total_fee=rechargeconf.price / 100
+    local payment_type = "1"
+    local seller_id = "pay@juzhongjoy.com"
+    local body = rechargeconf.des
+
+    local signstr = "partner=\""..partner.."\"&seller_id=\""..seller_id
+                    .."\"&out_trade_no=\""..out_trade_no.."\"&subject=\""..subject
+                    .."\"&body=\""..body.."\"&total_fee=\""..total_fee
+                    .."\"&notify_url=\""..notify_url
+                    .."\"&service=\"mobile.securitypay.pay\"&payment_type=\"1\"&_input_charset=\"utf-8\"&it_b_pay=\"30m\"&return_url=\"m.alipay.com\""
+    local sign = util.rsa_private_sign(signstr, channelinfo.privatekey)
+
+    --filelog.sys_info(signstr.."&sign=\""..sign.."\"")
+    
+    local requestpaystr = signstr.."&sign=\""..util.encodeuri(sign).."\"&sign_type=\"RSA\""
+
+    --filelog.sys_info("requestpaystr", requestpaystr)
+    return requestpaystr
+end
+
+function do_zhifubao_prepay(request, channelinfo)
+end
+function reply_zhifubao_prepay(body, channelinfo)
+end
+
+function do_zhifubao_pay(params, channelinfo)
+    local errret = 0
+    local orderinfo = {}
+    --filelog.sys_obj("paycallback", "zhifubao", params)
+    params = util.decodeuri(params)
+    --解析notify_time 通知时间
+    local notify_time = util.find_value_Of_key(params, "notify_time")
+    if notify_time == nil then
+        filelog.sys_obj("paycallback", "zhifubao", "*** ZhiFuBaoUniform: can't find notify_time")
+        return -1, nil
+    end
+
+    --解析notify_type 通知类型 
+    local notify_type = util.find_value_Of_key(params, "notify_type")
+    if notify_type == nil then      
+        filelog.sys_obj("paycallback", "zhifubao", "*** ZhiFuBaoUniform: can't find notify_type")
+        return -1, nil
+    end
+
+    --notify_id解析通知校验ID 
+    local notify_id = util.find_value_Of_key(params, "notify_id")
+    if notify_id == nil then      
+        filelog.sys_obj("paycallback", "zhifubao", "*** ZhiFuBaoUniform: can't find notify_id")
+        return -1, nil
+    end
+
+    --解析sign_type签名方式
+    local sign_type = util.find_value_Of_key(params, "sign_type")
+    if sign_type == nil then     
+        filelog.sys_obj("paycallback", "zhifubao", "*** ZhiFuBaoUniform: can't find sign_type")
+        return -1, nil
+    end
+
+    --解析sign 签名 
+    local sign = util.find_value_Of_key(params, "sign")
+    if sign == nil then        
+        filelog.sys_obj("paycallback", "zhifubao", "*** ZhiFuBaoUniform: can't find sign")
+        return -1, nil
+    end
+
+    ----------------------------------------------------------------------
+    --------------------------------业务参数------------------------------
+    --解析out_trade_no 商户网站唯一订单号
+    local out_trade_no = util.find_value_Of_key(params, "out_trade_no")
+    if out_trade_no == nil then
+        filelog.sys_obj("paycallback", "zhifubao", "*** ZhiFuBaoUniform: can't find out_trade_no")
+        return -1, nil
+    end
+    local discount = util.find_value_Of_key(params, "discount")
+    if discount == nil then
+        filelog.sys_obj("paycallback", "zhifubao", "*** ZhiFuBaoUniform: can't find discount")
+        return -1, nil
+    end
+    local payment_type = util.find_value_Of_key(params, "payment_type")
+    if payment_type == nil then
+        filelog.sys_obj("paycallback", "zhifubao", "*** ZhiFuBaoUniform: can't find payment_type")
+        return -1, nil
+    end
+    local body = util.find_value_Of_key(params, "body")
+    if body == nil then
+        filelog.sys_obj("paycallback", "zhifubao", "*** ZhiFuBaoUniform: can't find body")
+        return -1, nil
+    end
+    local is_total_fee_adjust = util.find_value_Of_key(params, "is_total_fee_adjust")
+    if is_total_fee_adjust == nil then
+        filelog.sys_obj("paycallback", "zhifubao", "*** ZhiFuBaoUniform: can't find is_total_fee_adjust")
+        return -1, nil
+    end
+    local use_coupon = util.find_value_Of_key(params, "use_coupon")
+    if use_coupon == nil then
+        filelog.sys_obj("paycallback", "zhifubao", "*** ZhiFuBaoUniform: can't find use_coupon")
+        return -1, nil
+    end
+
+     --解析subject 商品名称 
+    local subject = util.find_value_Of_key(params, "subject")
+    if subject == nil then
+        filelog.sys_obj("paycallback", "zhifubao", "*** ZhiFuBaoUniform: can't find subject")
+        return -1, nil
+    end
+
+    --解析trade_no 支付宝交易号
+    local trade_no = util.find_value_Of_key(params, "trade_no")
+    if trade_no == nil then
+        filelog.sys_obj("paycallback", "zhifubao", "*** ZhiFuBaoUniform: can't find trade_no")
+        return -1, nil
+    end
+
+    --解析trade_status 交易状态 
+    local trade_status = util.find_value_Of_key(params, "trade_status")
+    if trade_status == nil then--or trade_status ~= "TRADE_SUCCESS" then
+        filelog.sys_obj("paycallback", "zhifubao", "*** ZhiFuBaoUniform: can't find trade_status")
+        return -1, nil
+    end
+
+    if trade_status == "WAIT_BUYER_PAY"  or trade_status == "TRADE_FINISHED" then
+        return 1000, nil
+    end
+
+    --解析gmt_create 交易创建时间
+    local gmt_create = util.find_value_Of_key(params, "gmt_create")
+    if gmt_create == nil then
+        filelog.sys_obj("paycallback", "zhifubao", "*** ZhiFuBaoUniform: can't find gmt_create")
+        return -1, nil
+    end
+
+    --解析gmt_payment 交易创建时间
+    local gmt_payment = util.find_value_Of_key(params, "gmt_payment")
+    if gmt_payment == nil then
+        filelog.sys_obj("paycallback", "zhifubao", "*** ZhiFuBaoUniform: can't find gmt_payment")
+        return -1, nil
+    end
+
+    --解析seller_email卖家支付宝账号
+    local seller_email = util.find_value_Of_key(params, "seller_email")
+    if seller_email == nil then
+        filelog.sys_obj("paycallback", "zhifubao", "*** ZhiFuBaoUniform: can't find seller_email")
+        return -1, nil
+    end
+
+    --解析buyer_email买家支付宝账号
+    local buyer_email = util.find_value_Of_key(params, "buyer_email")
+    if buyer_email == nil then
+        filelog.sys_obj("paycallback", "zhifubao", "*** ZhiFuBaoUniform: can't find buyer_email")
+        return -1, nil
+    end
+
+    --解析seller_id卖家支付宝用户号 
+    local seller_id = util.find_value_Of_key(params, "seller_id")
+    if seller_id == nil then
+        filelog.sys_obj("paycallback", "zhifubao", "*** ZhiFuBaoUniform: can't find seller_id")
+        return -1, nil
+    end
+
+    --解析buyer_id买家支付宝账号
+    local buyer_id = util.find_value_Of_key(params, "buyer_id")
+    if buyer_id == nil then
+        filelog.sys_obj("paycallback", "zhifubao", "*** ZhiFuBaoUniform: can't find buyer_id")
+        return -1, nil
+    end
+
+    --解析price商品单价
+    local price = util.find_value_Of_key(params, "price")
+    if price == nil then
+        filelog.sys_obj("paycallback", "zhifubao", "*** ZhiFuBaoUniform: can't find price")
+        return -1, nil
+    end
+
+    --解析quantity购买数量 
+    local quantity = util.find_value_Of_key(params, "quantity")
+    if quantity == nil then
+        filelog.sys_obj("paycallback", "zhifubao", "*** ZhiFuBaoUniform: can't find quantity")
+        return -1, nil
+    end
+
+    --解析total_fee交易金额 
+    local total_fee = util.find_value_Of_key(params, "total_fee")
+    if total_fee == nil then
+        filelog.sys_obj("paycallback", "zhifubao", "*** ZhiFuBaoUniform: can't find total_fee")
+        return -1, nil
+    end
+
+    -- 参数按照KEY=VALUE的方式排序如下：
+    --&body=Cocktail * 1
+    --&buyer_email=wct511@126.com
+    --&buyer_id=2088102650142454
+    --&discount=0.00
+    --&gmt_create=2015-07-27 19:12:20
+    --&gmt_payment=2015-07-27 19:12:21
+    --&is_total_fee_adjust=N
+    --&notify_id=3b461a65c9cc9973a4b4f0e78e946eb84i
+    --&notify_time=2015-07-27 19:26:59
+    --&notify_type=trade_status_sync
+    --&out_trade_no=072719120917694
+    --&payment_type=8
+    --&price=0.01
+    --&quantity=1
+    --&seller_email=ximipay1@ximigame.com
+    --&seller_id=2088511815999910
+    --&subject=Cocktail
+    --&total_fee=0.01
+    --&trade_no=2015072700001000450060986061
+    --&trade_status=TRADE_SUCCESS
+    --&use_coupon=N
+
+    --验证签名 签名字符串按照key0=value0&key1=value1&key2=value2MD5KEY然后用MD5加密
+    local sigstr = "body="..body.."&buyer_email="..buyer_email.."&buyer_id="..buyer_id.."&discount="..discount..
+        "&gmt_create="..gmt_create.."&gmt_payment="..gmt_payment.."&is_total_fee_adjust="..is_total_fee_adjust..
+        "&notify_id="..notify_id.."&notify_time="..notify_time.."&notify_type="..notify_type..
+        "&out_trade_no="..out_trade_no.."&payment_type="..payment_type.."&price="..price.."&quantity="..quantity..
+        "&seller_email="..seller_email.."&seller_id="..seller_id.."&subject="..subject..
+        "&total_fee="..total_fee.."&trade_no="..trade_no.."&trade_status="..trade_status..
+        "&use_coupon="..use_coupon
+
+    ---验证签名
+    if channelinfo.publickey == nil then
+        filelog.sys_obj("paycallback", "zhifubao", "*** ZhiFuBaoUniform: can't find appinfo")
+        return -1, nil                        
+    end
+
+    sign = string.gsub(sign, ' ', '+')
+    local sign_result = util.rsa_public_verify(sigstr, sign, channelinfo.publickey)
+    if sign_result ~= true then 
+        filelog.sys_obj("paycallback", "zhifubao", "zhifubao ph sign failed...", sign_result, sign, sigstr)
+        return errret
+    end
+
+    if trade_status == "TRADE_SUCCESS" then
+        --解析透传信息
+        local orderinfo = {}
+        orderinfo.pay_type = channelinfo.id
+        orderinfo.order_id = out_trade_no
+        orderinfo.price = tonumber(price)*100
+        return 0, orderinfo
+    end
+
+    return -1, nil
+end
+
+function reply_zhifubao_pay(errcode, info)
+    if errcode == 1000 then
+        return "success"
+    elseif errcode == 0 then
+        return "success"
+    else
+        return "failed"
+    end
+end 
+
 local Channel = {
 channels = {
     {
@@ -298,7 +560,6 @@ channels = {
         proxy_port = 6999,
         ispost = true,
     }, 
-
     {
         id = 2,  --支付渠道
         url = "/wechat/pay",
@@ -315,7 +576,48 @@ channels = {
         proxy_port = 6999,
         ispost = true,
     },  
- 
+
+    {
+        id = 3,  --支付宝支付渠道
+        url = "/zhifubao/pay",
+        urltest="/zhifubao/paytest",
+        preurl = "/zhifubao/prepay",        
+        preurltest = "/zhifubao/prepaytest",        
+        notify_url = "http://106.75.7.48:6888",
+        payfunc = do_zhifubao_pay,
+        payretfunc = reply_zhifubao_pay,
+        prepayfunc = do_zhifubao_prepay,
+        prepayretfunc = reply_zhifubao_prepay,
+        paramsfunc = generate_zhifubao_params,
+        appid = "2088121772403775",
+        sellerid = "pay@juzhongjoy.com",
+        key = "",
+        privatekey = [[-----BEGIN PRIVATE KEY-----
+MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAMJd0vt0T2HxynAt
+5dGKG/YROXa9y+ENieUE/On0ziJESFXd1M6OmZgjFOiCEZnfDCdmRKtDG3sunJHN
+ohSgXtnXtuU60mpeizoxzcaUycZbSN+CEyvnMYTMeiSBIPcIn7Osx74fs25IheC5
+sVhuyoAER47ZnZ8z3Ee8H2uM+2sBAgMBAAECgYEAplcTk/2DXmhGfuDY2Q4gReOR
+0Sw3SqCCjcxKApNuwma7nTjewfPKQShs4VtHYu8/gIyGYidpYm+OsT1R4+MnqDq+
+UKGl64C764GqV9xc0povf0ONpvRcZZm6XL0AoDkglISd/IEU6/2l3E6v4PxTorqb
+JHMyrla4x16kM5O7Co0CQQDu7wXccucGAfmShSp15h5TRGqzBQKG5XgkqlIUXpw/
+1DwNcxirXREb6C9uWCNUy9XvvPMNLYxEOAnmm2vVIRLDAkEA0D/gWs5LHWKM4Wc/
+cpwcTHRirwAXjpLCpOsOJJmUkxZORxha/Km9id23eyeMhqMKI+MoDyLHblVWYQ76
+N+zm6wJBANy74x1K5ZUORAORlK2A32krnqsuKKx41+p/kv6QfScWqjf+qb6+Zuzy
+LsdxE4rmGQm29I+rEZeAcd0inpcyS8MCQGne74p6sklgHstBGEqF/wUHblwVqeQ7
+zGTXczs8MQKOJoGSaj9ldAyxAWTE+HZCURdplqYLQmRfUijJ2n+wGr0CQFIUSMLb
+S0M7posF6Ch0fkPdmrIV23WlHazw7sCT8eDIk0kw9dAadbihY9a9v+0iaS3RvCxh
+gbSlsLOphh/QYCY=
+-----END PRIVATE KEY-----]],
+        publickey = [[-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCnxj/9qwVfgoUh/y2W89L6BkRAF
+ljhNhgPdyPuBV64bfQNN1PjbCzkIM6qRdKBoLPXmKKMiFYnkd6rAoprih3/PrQEB/
+VsW8OoM8fxn67UDYuyBTqA23MML9q1+ilIZwBC2AQ2UBVOrFXfFl75p6/B5KsiNG9
+zpgmLCUYuLkxpLQIDAQAB
+-----END PUBLIC KEY-----]],
+        proxy_ip = "127.0.0.1",
+        proxy_port = 6999,        
+        ispost = true,
+    },   
 }
 
 }

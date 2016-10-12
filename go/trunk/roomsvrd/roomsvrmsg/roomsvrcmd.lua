@@ -2,6 +2,7 @@ local skynet = require "skynet"
 local filelog = require "filelog"
 local msghelper = require "roomsvrhelper"
 local msgproxy = require "msgproxy"
+local configdao = require "configdao"
 local base = require "base"
 local filename = "roomsvrcmd.lua"
 local RoomsvrCMD = {}
@@ -45,6 +46,16 @@ function RoomsvrCMD.reload(conf)
 	end
 	skynet.retpack(msghelper.reload_config())
 	]]
+	base.skynet_retpack(1)
+	filelog.sys_error("RoomsvrCMD.reload start")
+
+	configdao.reload()
+
+	skynet.sleep(200)
+
+	msgproxy.reload()
+	
+	filelog.sys_error("RoomsvrCMD.reload end")
 end
 
 return RoomsvrCMD

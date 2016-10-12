@@ -1,0 +1,7 @@
+-------------聚众key-------------
+authkey = "keeshhskkebdghfdjfgfjdgdgdfjhfdgfgfhggg"
+thirdauthkey = "jzjoy"
+-----------超时时间相关----------
+--单位s
+agent_heart_timeout=600
+logintokentimeout = 1200

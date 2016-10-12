@@ -1,0 +1,25 @@
+#!/bin/bash
+PATH="$(dirname $0)/../../common/tools/lbf/lbf:$PATH"
+source lbf_init.sh
+
+export var_project_path=$(path::abs_pathname $(path::dirname $0))
+
+function usage 
+{
+  echo "Usage: $(path::basename $0) [ip port] [svrid]"
+}
+
+function main 
+{
+  cd ${var_project_path}
+  
+  util::is_empty $1 && usage && return 1
+  util::is_empty $2 && usage && return 1
+  address=`eval "echo 'list';sleep 3" | telnet $1 | grep $2|awk -F" " '{print $1}'` 
+
+  eval "echo 'call $address {cmd='reload'}';sleep 3"|telnet $1
+  io::no_output cd -
+}
+
+main "${@}"
+

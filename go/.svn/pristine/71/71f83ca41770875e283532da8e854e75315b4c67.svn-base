@@ -1,0 +1,23 @@
+--平台索引
+platforms={
+	[100]="common", --通用
+}
+
+common={
+	[1000]={
+		propcfg = {
+			file="../config/business/propcfg",			
+		},
+		playerdbinit = {
+			file="../config/business/playerdbinitdatacfg",
+		},
+	}
+}
+
+agentsessiontimeout = 5
+gmqueykey="sssdkdhhfjdgfjjfdggdshd123"
+thirdauthkey = "jzjoy"
+give_awards_mail=[[{"isattach":true,"des":"【%s】通过web平台赠送你【%d】聚众币，请在附件中领取。","awards":%s}]]
+from_give_awards_mail=[[{"isattach":false,"des":"你通过web赠送【%s】【%d】聚众币。"}]]
+
+

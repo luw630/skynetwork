@@ -1,0 +1,33 @@
+root = "../../../skynet/"
+projectdir="../"
+thread = 8
+--logservice="snlua"
+logger = "systemlog"
+logpath = "."
+harbor = 0
+start = "main"	-- main script
+bootstrap = "snlua bootstrap"	-- The service for bootstrap
+luaservice = projectdir.."service/?.lua;"..projectdir.."rechargesvrd/?.lua;"..root.."service/?.lua"
+lualoader = root.."lualib/loader.lua"
+--preload = "./examples/preload.lua"	-- run preload.lua before every lua service run
+snax = projectdir.."service/?.lua;"..projectdir.."core/?.lua;"..projectdir.."rechargesvrd/?.lua"
+-- snax_interface_g = "snax_g"
+cpath = root.."cservice/?.so"
+lua_path = root.."lualib/?.lua;"..projectdir.."core/?.lua;"..projectdir.."rechargesvrd/rechargesvrmsg/?.lua"
+lua_cpath = root.."luaclib/?.so;"..projectdir.."core/3rd/lua-cjson/?.so;"..projectdir.."core/3rd/lua-snapshot/?.so"
+cluster=projectdir.."config/svr/config_clusters"
+cfgcenter_config=projectdir.."rechargesvrd/config_cfgcenter"
+svrs_config=projectdir.."config/svr/config_svrs"
+dbhash_config=projectdir.."config/svr/config_dbhash"
+
+svr_id = "rechargesvr"
+
+
+---日志系统配置
+error = true
+info = true
+warning = true
+obj = true
+protomsg = true
+
+daemon = "./skynet.pid"

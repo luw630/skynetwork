@@ -134,6 +134,8 @@ function AgentRequestMsg.callback(client_fd)
 						info = rechargeresponse.info		    			
 		    		end
 		    		msghelper.write_http_info("AgentRequestMsg.callback rechargeresponse:", rechargeresponse)
+		    	elseif result == 1000 then
+		    		--TO ADD
 		    	end
 		    end
 		    responsestr = generate_http_payresp(channelinfo, result, info)
@@ -273,6 +275,21 @@ function AgentRequestMsg.versioninfo()
 	end
 	base.skynet_retpack(body)
 	--msghelper.write_httpclient_info("success http", code, recvheader, body)	
+end
+
+function AgentRequestMsg.generate_params(request, rechargeconf)
+	local channelinfo = msghelper.get_channel_byid(request.pay_type)
+
+	if channelinfo == nil then
+		filelog.sys_error(filename.." AgentRequestMsg.generate_params invalid pay_type", request, rechargeconf)
+		base.skynet_retpack(nil)
+		return
+	end
+
+	local f = channelinfo.paramsfunc
+	local params = f(request, rechargeconf, channelinfo)
+	filelog.sys_info("AgentRequestMsg.generate_params", params)
+	base.skynet_retpack(params)
 end
 
 return AgentRequestMsg

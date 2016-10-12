@@ -1,0 +1,305 @@
+local dao = require "dao.datadbdao"
+local filelog = require "filelog"
+local tonumber = tonumber
+local timetool = require "timetool"
+local tabletool = require "tabletool"
+local configdao = require "configdao"
+local json = require "cjson"
+
+local playerdbinit = nil
+
+json.encode_sparse_array(true,1,1)
+
+--[[
+	request {
+		rid,	   玩家的角色id
+		rediscmd,  redis操作命令
+		rediskey,  redis数据key
+		--都是可选的使用时一定是按顺序添加
+		rediscmdopt1, redis命令选项1
+		rediscmdopt2, redis命令选项2
+		rediscmdopt3,
+		rediscmdopt4,
+		rediscmdopt5,
+
+		mysqltable,  mysql数据表名
+		mysqldata, mysqldata表示存入mysql的数据, 一定是table
+		mysqlcondition, 是一个表格或是字符串（字符串表示完整sql语句）
+
+		choosedb, 1 表示redis， 2表示mysql，3表示redis+mysql
+	}
+
+	response {
+		issuccess, 表示成功或失败
+		isredisormysql, true表示返回的是mysql数据 false表示是redis数据（业务层可能要进行不同的处理）
+		data, 返回的数据
+	}
+]]
+
+local PlayerdataDAO = {}
+
+--[[
+	返回两个值，第一个表示是否是新建账号 true表示是, false表示否
+	第二个值返回查询数据 为nil表示查询失败
+]]
+function PlayerdataDAO.query_player_info(rid)
+	local responsemsg
+	local info
+	if rid == nil then
+		filelog.sys_error("PlayerdataDAO.query_player_info invalid rid")
+		return nil, nil
+	end
+	local requestmsg = {
+		rid = rid,
+		rediscmd = "hget",
+		rediskey = "roleinfo:"..rid,
+		--都是可选的使用时一定是按顺序添加
+		rediscmdopt1 = "info",
+
+		mysqltable = "role_info",
+		mysqlcondition = {
+			rid = rid,
+		},
+		choosedb = 3,
+	}
+
+	responsemsg = dao.query(rid, requestmsg)
+	if responsemsg == nil then
+		filelog.sys_error("PlayerdataDAO.query_player_info failed because cannot access datadbsvrd")
+		return nil, nil		
+	end
+
+	if not responsemsg.issuccess then
+		filelog.sys_error("PlayerdataDAO.query_player_info failed because datadbsvrd exception")		
+		return nil, nil
+	end
+
+	if (responsemsg.data == nil or tabletool.is_emptytable(responsemsg.data)) 
+		and responsemsg.isredisormysql then
+		if playerdbinit == nil then
+			playerdbinit = configdao.get_business_conf(100, 1000, "playerdbinit")
+		end
+		info = tabletool.deepcopy(playerdbinit.info)
+		info.rid = rid
+		--保存数据
+		PlayerdataDAO.save_player_info("insert", rid, info)
+		return true, info
+	elseif responsemsg.isredisormysql then
+		responsemsg.data[1].update_time = nil
+		PlayerdataDAO.save_player_info("update", rid, responsemsg.data[1])		
+		return false, responsemsg.data[1]
+	end
+
+	info = json.decode(responsemsg.data)
+	info.rid = rid
+	return false, info
+end
+
+function PlayerdataDAO.save_player_info(cmd, rid, info)
+	if cmd == nil or rid == nil or info == nil then
+		filelog.sys_error("PlayerdataDAO.save_player_info invalid params")
+		return
+	end
+
+	local noticemsg = {
+		rid = rid,
+		rediscmd = "hset",
+		rediskey = "roleinfo:"..rid,
+		--都是可选的使用时一定是按顺序添加
+		rediscmdopt1 = "info",
+		rediscmdopt2 = json.encode(info),
+		mysqltable = "role_info",
+		mysqldata = info,
+		mysqlcondition = {
+			rid = rid,
+		},
+		choosedb = 3,
+	}
+
+	local f = dao[cmd]
+	if f == nil then
+		filelog.sys_error("PlayerdataDAO.save_player_info invalid cmd", cmd, info)
+		return
+	end
+	f(rid, noticemsg)
+end
+
+--[[
+	返回两个值，第一个表示是否是新建账号 true表示是, false表示否
+	第二个值返回查询数据 为nil表示查询失败
+]]
+function PlayerdataDAO.query_player_playgame(rid)
+	local responsemsg
+	local playgame
+	if rid == nil then
+		filelog.sys_error("PlayerdataDAO.query_player_playgame invalid rid")
+		return nil, nil
+	end
+	local requestmsg = {
+		rid = rid,
+		rediscmd = "hget",
+		rediskey = "roleinfo:"..rid,
+		--都是可选的使用时一定是按顺序添加
+		rediscmdopt1 = "playgame",
+
+		mysqltable = "role_playgame",
+		mysqlcondition = {
+			rid = rid,
+		},
+		choosedb = 3,
+	}
+
+	responsemsg = dao.query(rid, requestmsg)
+	if responsemsg == nil then
+		filelog.sys_error("PlayerdataDAO.query_player_playgame failed because cannot access datadbsvrd")
+		return nil, nil		
+	end
+
+	if not responsemsg.issuccess then
+		filelog.sys_error("PlayerdataDAO.query_player_playgame failed because datadbsvrd exception")		
+		return nil, nil
+	end
+
+	if (responsemsg.data == nil or tabletool.is_emptytable(responsemsg.data)) 
+		and responsemsg.isredisormysql then
+		if playerdbinit == nil then
+			playerdbinit = configdao.get_business_conf(100, 1000, "playerdbinit")
+		end
+		playgame = tabletool.deepcopy(playerdbinit.playgame)
+		playgame.rid = rid
+		--playgame.zhanji = json.decode(playgame.zhanji)
+		--保存数据
+		PlayerdataDAO.save_player_playgame("insert", rid, playgame)
+		return true, playgame
+	elseif responsemsg.isredisormysql then
+		responsemsg.data[1].update_time = nil
+		
+		responsemsg.data[1].record = json.decode(responsemsg.data[1].record)
+		
+		PlayerdataDAO.save_player_playgame("update", rid, responsemsg.data[1])		
+		return false, responsemsg.data[1]
+	end
+
+	playgame = json.decode(responsemsg.data)
+	playgame.rid = rid
+	return false, playgame
+end
+
+function PlayerdataDAO.save_player_playgame(cmd, rid, playgame)
+	if cmd == nil or rid == nil or playgame == nil then
+		filelog.sys_error("PlayerdataDAO.save_player_playgame invalid params")
+		return
+	end
+
+	local noticemsg = {
+		rid = rid,
+		rediscmd = "hset",
+		rediskey = "roleinfo:"..rid,
+		--都是可选的使用时一定是按顺序添加
+		rediscmdopt1 = "playgame",
+		rediscmdopt2 = json.encode(playgame),
+		mysqltable = "role_playgame",
+		mysqldata = playgame,
+		mysqlcondition = {
+			rid = rid,
+		},
+		choosedb = 3,
+	}
+	noticemsg.mysqldata.record = json.encode(playgame.record)
+
+	local f = dao[cmd]
+	if f == nil then
+		filelog.sys_error("PlayerdataDAO.save_player_playgame invalid cmd", cmd, playgame)
+		return
+	end
+	f(rid, noticemsg)
+end
+
+--[[
+	返回两个值，第一个表示是否是新建账号 true表示是, false表示否
+	第二个值返回查询数据 为nil表示查询失败
+]]
+function PlayerdataDAO.query_player_online(rid)
+	local responsemsg
+	local online
+	if rid == nil then
+		filelog.sys_error("PlayerdataDAO.query_player_online invalid rid")
+		return nil, nil
+	end
+	local requestmsg = {
+		rid = rid,
+		rediscmd = "hget",
+		rediskey = "roleinfo:"..rid,
+		--都是可选的使用时一定是按顺序添加
+		rediscmdopt1 = "online",
+
+		mysqltable = "role_online",
+		mysqlcondition = {
+			rid = rid,
+		},
+		choosedb = 3,
+	}
+
+	responsemsg = dao.query(rid, requestmsg)
+	if responsemsg == nil then
+		filelog.sys_error("PlayerdataDAO.query_player_online failed because cannot access datadbsvrd")
+		return nil, nil		
+	end
+
+	if not responsemsg.issuccess then
+		filelog.sys_error("PlayerdataDAO.query_player_online failed because datadbsvrd exception")		
+		return nil, nil
+	end
+
+	if (responsemsg.data == nil or tabletool.is_emptytable(responsemsg.data)) 
+		and responsemsg.isredisormysql then
+		if playerdbinit == nil then
+			playerdbinit = configdao.get_business_conf(100, 1000, "playerdbinit")
+		end
+		online = tabletool.deepcopy(playerdbinit.online)
+		online.rid = rid
+		--保存数据
+		PlayerdataDAO.save_player_online("insert", rid, online)
+		return true, online
+	elseif responsemsg.isredisormysql then
+		responsemsg.data[1].update_time = nil
+		PlayerdataDAO.save_player_online("update", rid, responsemsg.data[1])		
+		return false, responsemsg.data[1]
+	end
+
+	online = json.decode(responsemsg.data)
+	online.rid = rid
+	return false, online
+end
+
+function PlayerdataDAO.save_player_online(cmd, rid, online)
+	if cmd == nil or rid == nil or online == nil then
+		filelog.sys_error("PlayerdataDAO.save_player_online invalid params")
+		return
+	end
+
+	local noticemsg = {
+		rid = rid,
+		rediscmd = "hset",
+		rediskey = "roleinfo:"..rid,
+		--都是可选的使用时一定是按顺序添加
+		rediscmdopt1 = "online",
+		rediscmdopt2 = json.encode(online),
+		mysqltable = "role_online",
+		mysqldata = online,
+		mysqlcondition = {
+			rid = rid,
+		},
+		choosedb = 3,
+	}
+
+	local f = dao[cmd]
+	if f == nil then
+		filelog.sys_error("PlayerdataDAO.save_player_online invalid cmd", cmd, online)
+		return
+	end
+	f(rid, noticemsg)
+end
+
+
+return PlayerdataDAO

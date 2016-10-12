@@ -1,0 +1,47 @@
+=====================
+= 2012-07-03 Ver 3
+=====================
+1. Reconfig lib structure, now containing 3 directories.
+    > "bin/*.sh" will be installed in user's or system's bin directory.
+    > "lbf/*.sh" and "lbf_temp/*.sh" will be installed in "bin/lbf" directory.
+
+2. Add "lbf/array.sh", implement oo-type array class.
+
+3. Modify Makefile, for better install and uninstall, compatiable with older version uninstallation.
+
+
+=====================
+= 2012-07-05 Ver 4
+=====================
+1. Rewrite all scripts in "lbf/" to adapt object-orient type.
+
+2. Implement unit test framework, functions are defined in "lbf/test.sh", test files are in "test/".
+
+3. Rewrite "lbf/network.sh" script
+    > Add ip-related functions.
+    > Solve '^M' character problem when using ssh.
+
+=====================
+= 2012-07-05 Ver 5
+=====================
+1. Rewrite all scripts in "lbf/" to adapt object-orient type.
+
+2. Implement unit test framework, functions are defined in "lbf/test.sh", test files are in "test/".
+
+3. Rewrite "lbf/network.sh" script
+    > Add ip-related functions.
+    > Solve '^M' character problem when using ssh.
+
+4. Modify "lbf/array.sh"
+    > Solve "space problem" when add and get iterm from array.
+    > Add new function to del item from array by name.
+
+=====================
+= 2012-07-05 Ver 6
+=====================
+1. Reconstruct directory structure.
+
+=====================
+= 2012-08-03 Ver 6
+=====================
+1. network::ssh_do can return the retval of remote execute.

@@ -16,6 +16,7 @@ playgame = {
     winnum = 0,  --胜局 
     losenum = 0, --败局
     drawnum = 0, --和局
+    record={}, --战绩
 }
 
 money = {

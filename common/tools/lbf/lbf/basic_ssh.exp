@@ -1,0 +1,46 @@
+#!/usr/bin/expect --
+#===============================================================================
+#      FILENAME: ssh.exp
+#
+#   DESCRIPTION: ---
+#         NOTES: ---
+#        AUTHOR: leoxiang, leoxiang@tencent.com
+#       COMPANY: Tencent Co.Ltd
+#      REVISION: 2011-09-07 by leoxiang
+#===============================================================================
+
+if { $argc < 2 } {
+  send_user "Usage: $argv0 \[PASSWD\] \[SSH_CMD\] \n"
+  send_user "  \[PASSWD\]  - password for incoming ssh login\n"
+  send_user "  \[SSH_CMD\] - ssh command to be executed, scp also supported\n"
+  exit
+}
+
+set passwd [lindex $argv 0]
+
+set timeout 5
+
+eval spawn -nottyinit -noecho [lrange $argv 1 end]
+
+expect {
+  "*yes/no*"    { 
+    send "yes\r"
+    exp_continue 
+    }
+
+  "*password:*" { 
+    send "${passwd}\r"; exp_continue 
+    }
+
+  "failed"      { 
+    exit 1 
+    }
+
+  timeout       abort
+}
+
+catch wait result
+
+exit [lindex $result 3]
+
+# vim:ts=2:sw=2:

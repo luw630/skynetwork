@@ -26,12 +26,13 @@ function TableTimer.doaction(timerid, request)
 	end
 	table_data.timer_id = -1
 
+	
 	if table_data.state ~= ETableState.TABLE_STATE_WAIT_CLIENT_ACTION 
-		or table_data.roomsvr_seat_index ~= request.roomsvr_seat_index
-		or request.rid ~= table_data.seats[table_data.roomsvr_seat_index].rid then
+		or table_data.action_seat_index ~= request.roomsvr_seat_index
+		or request.rid ~= table_data.seats[table_data.action_seat_index].rid then
 		return
 	end
-
+	
 	table_data.action_type = EActionType.ACTION_TYPE_TIMEOUT
 	table_data.state = ETableState.TABLE_STATE_CONTINUE
 	local roomgamelogic = logicmng.get_logicbyname("roomgamelogic")

@@ -167,11 +167,15 @@ function PlayerdataDAO.query_player_playgame(rid)
 		end
 		playgame = tabletool.deepcopy(playerdbinit.playgame)
 		playgame.rid = rid
+		--playgame.zhanji = json.decode(playgame.zhanji)
 		--保存数据
 		PlayerdataDAO.save_player_playgame("insert", rid, playgame)
 		return true, playgame
 	elseif responsemsg.isredisormysql then
 		responsemsg.data[1].update_time = nil
+		
+		responsemsg.data[1].record = json.decode(responsemsg.data[1].record)
+		
 		PlayerdataDAO.save_player_playgame("update", rid, responsemsg.data[1])		
 		return false, responsemsg.data[1]
 	end
@@ -195,12 +199,13 @@ function PlayerdataDAO.save_player_playgame(cmd, rid, playgame)
 		rediscmdopt1 = "playgame",
 		rediscmdopt2 = json.encode(playgame),
 		mysqltable = "role_playgame",
-		mysqldata = playgame,
+		mysqldata = tabletool.deepcopy(playgame),
 		mysqlcondition = {
 			rid = rid,
 		},
 		choosedb = 3,
 	}
+	noticemsg.mysqldata.record = json.encode(playgame.record)
 
 	local f = dao[cmd]
 	if f == nil then

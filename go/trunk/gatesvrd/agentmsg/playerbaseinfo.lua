@@ -3,6 +3,7 @@ local filelog = require "filelog"
 local msghelper = require "agenthelper"
 local playerdatadao = require "playerdatadao"
 local table = table
+local chessrule = require "chessrule"
 require "enum"
 
 local  PlayerBaseinfo = {}
@@ -51,6 +52,11 @@ function  PlayerBaseinfo.process(session, source, fd, request)
 	end
 	responsemsg.baseinfo = {}
 	msghelper:copy_base_info(responsemsg.baseinfo, info, playgame, money)
+
+	responsemsg.baseinfo.levelrule = {}
+
+	chessrule.checklevel( playgame.level,playgame.record,responsemsg.baseinfo.levelrule )
+
 	msghelper:send_resmsgto_client(fd, "PlayerBaseinfoRes", responsemsg)
 end
 

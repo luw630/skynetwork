@@ -23,7 +23,7 @@ skynet.start(function()
     if proxys ~= nil then
         for id, conf in pairs(proxys) do
             local svr = skynet.newservice("proxy", id)
-            conf.svr_id = httpsvr
+            conf.svr_id = skynet.getenv("svr_id")
             skynet.call(svr, "lua", "init", conf)            
         end 
     end

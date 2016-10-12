@@ -1,0 +1,93 @@
+version=4
+rechargecfg={ 
+	[1]	= {
+		id=1,
+		pid="com.juzhongjoy.texas.6yuan",	
+	    name = "4200",
+	    des = "4200 聚众币",
+	    price=600,
+	    --显示排序优先级
+	    seq = 1,
+	    awards={
+        	[1]={
+	            id=1,   --物品id 1表示筹码
+        		num=4200,
+        	},
+        },
+        paychannels={
+        	[600]=1,
+        },
+	},
+	[2]	= {
+		id=2,
+		pid="com.juzhongjoy.texas.30yuan",
+	    name = "21000",
+	    des = "21000 聚众币",
+	    price=3000,
+	    --显示排序优先级
+	    seq = 2,
+	   	awards={
+        	[1]={
+	            id=1,   --物品id 1表示筹码
+        		num=21000,
+        	},
+        },
+        paychannels={
+        	[3000]=1,
+        },
+	},
+	[3]	= {
+		id=3,
+		pid="com.juzhongjoy.texas.98yuan",
+	    name = "70000",
+	    des = "70000 聚众币",
+	    price=9800,
+	    --显示排序优先级
+	    seq = 3,
+	   	awards={
+        	[1]={
+	            id=1,   --物品id 1表示筹码
+        		num=70000,
+        	},
+        },
+        paychannels={
+        	[9800]=1,
+        },
+	},
+	[4]	= {
+		id=4,
+		pid="com.juzhongjoy.texas.198yuan",
+	    name = "150000",
+	    des = "150000 聚众币",
+	    price=19800,
+	    --显示排序优先级
+	    seq = 4,
+	   	awards={
+        	[1]={
+	            id=1,   --物品id 1表示筹码
+        		num=150000,
+        	},
+        },
+        paychannels={
+        	[19800]=1,
+        },
+	},
+	[5]	= {
+		id=5,
+		pid="com.juzhongjoy.texas.518yuan",
+	    name = "400000",
+	    des = "400000 聚众币",
+	    price=51800,
+	    --显示排序优先级
+	    seq = 5,
+	   	awards={
+        	[1]={
+	            id=1,   --物品id 1表示筹码
+        		num=400000,
+        	},
+        },
+        paychannels={
+        	[51800]=1,
+        },
+	},
+}

@@ -1,0 +1,32 @@
+root = "../../../common/"
+projectdir="../"
+thread = 8
+--logservice="snlua"
+logger = "systemlog"
+logpath = "."
+harbor = 0
+start = "main"	-- main script
+bootstrap = "snlua bootstrap"	-- The service for bootstrap
+luaservice = root.."service/?.lua;"..projectdir.."globaldbsvrd/?.lua;"..root.."skynet/service/?.lua"
+lualoader = root.."skynet/lualib/loader.lua"
+--preload = "./examples/preload.lua"	-- run preload.lua before every lua service run
+snax = projectdir.."service/?.lua;"..root.."core/?.lua;"..projectdir.."globaldbsvrd/?.lua"
+-- snax_interface_g = "snax_g"
+cpath = root.."skynet/cservice/?.so"
+lua_path = root.."skynet/lualib/?.lua;"..root.."core/?.lua;"..projectdir.."globaldbsvrd/globaldbsvrmsg/?.lua;"..projectdir.."common/?.lua"
+lua_cpath = root.."skynet/luaclib/?.so;"..root.."core/3rd/lua-cjson/?.so;"..root.."core/3rd/lua-snapshot/?.so"
+cluster=projectdir.."config/svr/config_clusters"
+cfgcenter_config=projectdir.."globaldbsvrd/config_cfgcenter"
+svrs_config=projectdir.."config/svr/config_svrs"
+dbhash_config=projectdir.."config/svr/config_dbhash"
+
+svr_id = "globaldbsvr_1"
+
+---日志系统配置
+error = true
+info = false
+warning = false
+obj = true
+protomsg = false
+
+daemon = "./skynet.pid"

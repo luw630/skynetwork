@@ -1,0 +1,2 @@
+table_log_player	time_stamp,uid,game_id,room_type,chips_change					1	time
+money_log		time_stamp,uid,act_type,act_num,act_reason,total_money,is_robot			1	time

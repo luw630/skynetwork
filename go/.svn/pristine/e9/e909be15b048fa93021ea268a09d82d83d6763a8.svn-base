@@ -1,0 +1,4 @@
+export PROJECTROOT="/home/luwei/framework/"
+export PROJECTDIR="./go/debug"
+export PROJECTSVN="http://svn.twotael.com/svn/framework"
+export PROJECTSKYNET="./go/skynet/skynet"

@@ -39,6 +39,22 @@ local function get_datadbsvr_id(rid)
 	return cfgdbhash[rid % 128 + 1]
 end
 
+local function get_globaldbsvr_id(key)
+	if cfgdbhash == nil then
+		cfgdbhash = configdao.get_cfgdbhash()
+		if cfgdbhash ~= nil then
+			cfgdbhash = cfgdbhash.globaldbsvrs
+		end
+	end
+	local num
+	if type(key) == "string" then
+		num = base.strtohash(key)
+	else
+		num = key
+	end  
+	return cfgdbhash[num % 128 + 1]
+end
+
 function MsgProxy.init(svr_id)
 	if svr_id == nil then
 		svr_id = skynet.getenv("svr_id")
@@ -142,12 +158,7 @@ end
 function MsgProxy.sendrpc_reqmsgto_gatesvrd(gatesvr_id,service_id, ...)
 	local status, result1, result2, result3, result4
 	init_svrs_indexs()
-	if skynet.getenv("svr_id") ~= gatesvr_id 
-		and cfgclusters[gatesvr_id] then
-		status, result1, result2, result3, result4 = base.pcall(skynet.call, proxy, "lua", "request", gatesvr_id, service_id, "request", ...)		
-	else
-		status, result1, result2, result3, result4 = base.pcall(skynet.call, service_id, "request", ...)
-	end
+	status, result1, result2, result3, result4 = base.pcall(skynet.call, proxy, "lua", "request", gatesvr_id, service_id, "request", ...)		
 	if not status then
 		--filelog.sys_error("MsgProxy.sendrpc_reqmsgto_gatesvrd error server exception", result1)
 		return nil
@@ -746,6 +757,24 @@ function MsgProxy.sendrpc_noticemsgto_logindbsvrd(uid, ...)
 	local svrs = svrs_indexs["logindbsvrs"]
 	local index = uid % (#svrs) + 1
 	local svr_id = svrs[index]
+	skynet.send(proxy, "lua", "notice", svr_id, svr_id, ...)
+	return true
+end
+
+-------------------和globaldbsvrd相关的交互接口-----------------------
+function MsgProxy.sendrpc_reqmsgto_globaldbsvrd(key, ...)
+	local status, result1, result2, result3, result4
+	local svr_id = get_globaldbsvr_id(key)
+	status, result1, result2, result3, result4 = skynet.call(proxy, "lua", "request", svr_id, svr_id, ...)		
+	if not status then
+		filelog.sys_error("MsgProxy.sendrpc_reqmsgto_datadbsvrd error server exception", result1)
+		return nil
+	end
+	return result1, result2, result3, result4
+end
+
+function MsgProxy.sendrpc_noticemsgto_globaldbsvrd(key, ...)
+	local svr_id = get_globaldbsvr_id(key)
 	skynet.send(proxy, "lua", "notice", svr_id, svr_id, ...)
 	return true
 end

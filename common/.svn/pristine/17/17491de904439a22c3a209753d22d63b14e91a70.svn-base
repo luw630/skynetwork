@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>朋友桌德州</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link href="{{ static_url('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ static_url('css/AdminLTE.min.css') }}" rel="stylesheet">
+    <style>
+        body {
+            font-family: "Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","WenQuanYi Micro Hei",sans-serif
+        }
+        h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, .lead, a, .a, label, option, input, span, select, button, textarea, div {
+            font-family: "Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","Microsoft YaHei UI","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif
+        }
+    }
+    </style>
+  </head>
+  <body style="padding-top: 17%;">
+    <div class="container">
+        <div class="col-sm-offset-4 col-sm-4">
+            <div class="box box-solid box-warning">
+                <div class="box-header">
+                    <div class="box-title">
+                        {{error_code}}
+                    </div>
+                </div>
+                <div class="box-body">
+                    <h2 class="page-header">{{error_reason}}</h2>
+                    <a href="/">返回首页</a>
+                </div>
+            </div>
+        </div>
+    </div>
+  </body>
+</html>

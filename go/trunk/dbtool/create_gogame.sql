@@ -28,7 +28,8 @@ create table if not exists role_playgame(
                                             dan int(11) NOT NULL DEFAULT '0' comment '段位',     
                                             winnum int(11) NOT NULL DEFAULT '0' comment '胜局', 
                                             losenum int(11) NOT NULL DEFAULT '0' comment '败局', 
-                                            drawnum int(11) NOT NULL DEFAULT '0' comment '和局', 
+                                            drawnum int(11) NOT NULL DEFAULT '0' comment '和局',
+                                            record varchar(256)  DEFAULT ""  comment '战绩',
                                             update_time timestamp on update current_timestamp default current_timestamp,
                                             primary key(rid) 
                                         )engine = InnoDB, charset = utf8;

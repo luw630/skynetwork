@@ -2,6 +2,8 @@ local skynet = require "skynet"
 local filelog = require "filelog"
 local msghelper = require "logindbsvrhelper"
 local base = require "base"
+local msgproxy = require "msgproxy"
+local configdao = require "configdao"
 local filename = "logindbsvrcmd.lua"
 local LogindbsvrCMD = {}
 
@@ -35,6 +37,19 @@ end
 function LogindbsvrCMD.close(...)
 	local server = msghelper:get_server()
 	server:exit_service()	
+end
+
+function LogindbsvrCMD.reload(...)
+	base.skynet_retpack(1)
+	filelog.sys_error("LogindbsvrCMD.reload start")
+
+	configdao.reload()
+
+	skynet.sleep(200)
+
+	msgproxy.reload()
+	
+	filelog.sys_error("LogindbsvrCMD.reload end")
 end
 
 return LogindbsvrCMD

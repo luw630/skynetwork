@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>朋友桌德州</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link href="{{ static_url('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ static_url('css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ static_url('css/bootstrap-dialog.min.css') }}" rel="stylesheet">
+    <link href="{{ static_url('css/AdminLTE.min.css') }}" rel="stylesheet">
+    <link href="{{ static_url('css/skins/skin-blue.min.css') }}" rel="stylesheet">
+    <style>
+        body {
+            font-family: "Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","WenQuanYi Micro Hei",sans-serif
+        }
+        h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, .lead, a, .a, label, option, input, span, select, button, textarea, div {
+            font-family: "Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","Microsoft YaHei UI","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif
+        }
+    }
+    </style>
+  </head>
+  <body class="skin-blue sidebar-collapse">
+    <div class="wrapper">
+
+      <header class="main-header hide">
+
+        <a href="/" class="logo">
+          <span class="logo-mini">后台</span>
+          <span class="logo-lg">德州后台</span>
+        </a>
+
+        <nav class="navbar navbar-static-top" role="navigation">
+          <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+          </a>
+        </nav>
+      </header>
+      <aside class="main-sidebar">
+
+        <section class="sidebar">
+
+          <ul class="sidebar-menu">
+            <li class="header">功能</li>
+            </li>
+          </ul>
+        </section>
+      </aside>
+
+      <div class="content-wrapper">
+
+        <section class="content">
+          <div class="row">
+            <div class="col-lg-12">
+              <button class="btn btn-default runsh" type="submit" data-shell="./runall.sh">更新并开服</button>
+              <button class="btn btn-default runsh" type="submit" data-shell="./reloadall.sh">重新加载配置</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <span>当前服务器时间：</span>
+              <span id="server_time1"></span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <input type="text" class="form-control" id="server_time2">
+              <button class="btn btn-default" type="submit" id="settime">设置服务器时间</button>
+            </div>
+          </div>
+		  <div class="row">
+            <div class="col-lg-12">
+              <span>用户rid：</span>
+			  <input type="text" class="form-control" id="player_rid">
+              <!-- <span id="server_time1"></span> -->
+			  <span>刷新筹码个数：</span>
+			  <input type="text" class="form-control" id="chips_count">
+			  <button class="btn btn-default" type="submit" id = "update_chips" data-shell="./updatechips.sh">刷新筹码个数</button>
+			</div>
+          </div>
+        </section>
+      </div>
+
+      <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+          
+        </div>
+        <strong>Copyright &copy; 2016</strong>
+      </footer>
+    </div>
+    <script src="{{ static_url('js/jquery.min.js') }}"></script>
+    <script src="{{ static_url('js/bootstrap.min.js') }}"></script>
+    <script src="{{ static_url('js/app.min.js') }}"></script>
+    <script src="{{ static_url('js/bootstrap-dialog.min.js') }}"></script>
+    <script src="{{ static_url('js/admin.js') }}"></script>
+    <script src="{{ static_url('js/index.js') }}"></script>
+
+  </body>
+</html>

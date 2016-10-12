@@ -1,0 +1,4 @@
+money			time_stamp,num,beforetotal,rid,reasion,aftertotal				1	time
+match_result    time_stamp,match_instance_id,match_template_id,awards,rid,rank,reason      1   time
+matchtablelog   time_stamp,match_instance_id,match_template_id,table_id,result,system_recovery 1 time
+tablelog        time_stamp,room_type,game_type,create_rid,identify_code,table_id,result,system_recovery   1 time

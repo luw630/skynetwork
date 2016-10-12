@@ -78,6 +78,7 @@ function  SitdownTable.process(session, source, fd, request)
 		rolename = server.info.rolename,
 		logo = server.info.logo,
 		sex = server.info.sex,
+		level = server.playgame.level
 	}	
 	processing:set_process_state(true)
 	responsemsg, seatinfo = msgproxy.sendrpc_reqmsgto_roomsvrd(nil, server.roomsvr_id, server.roomsvr_table_address, "sitdowntable", request)
